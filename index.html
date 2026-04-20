@@ -210,6 +210,28 @@
       </div>
     </div>
 
+    <!-- Game 2 CTA -->
+    <div id="g2-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('pd-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 2 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:4px;">🤝 The Trust Game</div>
+          <div style="font-size:13px;color:var(--text-muted);">Cooperation · Trust · Fairness · Strategy</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('pd-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g2-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🤝</div>
+        <div>
+          <div style="font-size:14px;font-weight:500;">Trust game — complete ✓</div>
+          <div id="g2-preview" style="font-size:13px;color:var(--teal);"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('pd-intro')">Replay</button>
+      </div>
+    </div>
+
     <!-- Progress -->
     <div style="margin:1.25rem 0;">
       <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px;">
@@ -327,6 +349,136 @@
   </div>
 </div>
 
+<!-- SCREEN: PD INTRO -->
+<div id="screen-pd-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 2 of 10</span>
+    <h1 style="font-size:24px;font-weight:500;margin:10px 0 1.25rem;">🤝 The Trust Game</h1>
+    <div style="text-align:center;margin-bottom:1.25rem;">
+      <svg width="96" height="72" viewBox="0 0 96 72">
+        <rect x="4" y="20" width="38" height="32" rx="8" fill="var(--amber)" opacity="0.18"/>
+        <rect x="54" y="20" width="38" height="32" rx="8" fill="var(--amber)" opacity="0.18"/>
+        <text x="23" y="42" text-anchor="middle" font-size="22" font-family="sans-serif">🤝</text>
+        <text x="73" y="42" text-anchor="middle" font-size="22" font-family="sans-serif">🤖</text>
+        <path d="M42 36 Q48 28 54 36" stroke="var(--amber)" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
+      </svg>
+    </div>
+    <div class="surface" style="margin-bottom:1rem;">
+      <p style="color:var(--text-muted);line-height:1.75;font-size:14px;">10 rounds against an AI opponent. Each round, you both secretly choose: <strong style="color:var(--text);">Cooperate</strong> or <strong style="color:var(--text);">Defect</strong>. Mutual cooperation pays both. Defecting on a cooperator pays more — but the AI learns and responds to every move you make.</p>
+    </div>
+    <div class="card" style="margin-bottom:1rem;">
+      <p style="font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">How points work</p>
+      <div style="display:grid;gap:7px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;">
+          <span>Both cooperate</span><span style="color:var(--teal);font-weight:500;">+3 each 🤝</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;">
+          <span>You defect, AI cooperates</span><span style="color:var(--amber);font-weight:500;">+5 you, +0 AI</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;">
+          <span>You cooperate, AI defects</span><span style="color:var(--red);font-weight:500;">+0 you, +5 AI</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;">
+          <span>Both defect</span><span style="color:var(--text-muted);font-weight:500;">+1 each 😐</span>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:1rem;">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">What this measures</p>
+      <p style="font-weight:500;">Cooperation · Trust · Fairness · Strategic thinking</p>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">10</div><div class="stat-lbl">rounds</div></div>
+      <div class="stat-cell"><div class="stat-val">~3</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">4</div><div class="stat-lbl">profiles</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startPD()">Start game →</button>
+  </div>
+</div>
+
+<!-- SCREEN: PD GAME -->
+<div id="screen-pd-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--text-muted);">Round <span id="pd-round-num">1</span> of 10</span>
+      <span style="font-size:13px;color:var(--text-muted);">You: <strong id="pd-your-score" style="color:var(--text);">0</strong> · AI: <strong id="pd-ai-score" style="color:var(--text-muted);">0</strong></span>
+    </div>
+    <div class="progress-track" style="margin-bottom:1.5rem;"><div id="pd-prog" class="progress-fill" style="width:0%;"></div></div>
+
+    <!-- Round history -->
+    <div id="pd-history" style="margin-bottom:1.25rem;"></div>
+
+    <!-- Choice state -->
+    <div id="pd-choice-state">
+      <p style="font-size:15px;font-weight:500;margin-bottom:14px;text-align:center;">What do you do this round?</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+        <button class="btn btn-secondary" style="padding:22px 10px;font-size:15px;flex-direction:column;gap:8px;height:auto;" onclick="pdChoice('C')">
+          <span style="font-size:30px;">🤝</span>
+          <span style="font-size:14px;font-weight:500;">Cooperate</span>
+          <span style="font-size:11px;color:var(--text-hint);">+3 if mutual</span>
+        </button>
+        <button class="btn btn-primary" style="padding:22px 10px;font-size:15px;flex-direction:column;gap:8px;height:auto;" onclick="pdChoice('D')">
+          <span style="font-size:30px;">🔪</span>
+          <span style="font-size:14px;font-weight:500;">Defect</span>
+          <span style="font-size:11px;opacity:0.7;">+5 if AI cooperates</span>
+        </button>
+      </div>
+      <p style="font-size:11px;color:var(--text-hint);text-align:center;">Simultaneous reveal — AI doesn't know your choice yet</p>
+    </div>
+
+    <!-- Reveal state -->
+    <div id="pd-reveal-state" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div class="surface" style="text-align:center;padding:1.25rem 0.75rem;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">You</div>
+          <div id="pd-reveal-you" style="font-size:36px;margin-bottom:6px;"></div>
+          <div id="pd-reveal-you-label" style="font-size:13px;font-weight:500;"></div>
+        </div>
+        <div class="surface" style="text-align:center;padding:1.25rem 0.75rem;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">AI</div>
+          <div id="pd-reveal-ai" style="font-size:36px;margin-bottom:6px;"></div>
+          <div id="pd-reveal-ai-label" style="font-size:13px;font-weight:500;"></div>
+        </div>
+      </div>
+      <div id="pd-round-outcome" class="surface" style="text-align:center;padding:1rem;margin-bottom:1rem;font-size:14px;line-height:1.6;"></div>
+      <button id="pd-next-btn" class="btn btn-primary btn-full" style="padding:14px;" onclick="pdNextRound()">Next round →</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: PD RESULTS -->
+<div id="screen-pd-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.75rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🤝</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Game 2 complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">The Trust Game · Prisoner's Dilemma</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Cooperation score</div>
+      <div id="pd-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="pd-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="card" style="margin-bottom:1rem;">
+      <p style="font-size:13px;font-weight:500;margin-bottom:6px;">What this means</p>
+      <p id="pd-r-desc" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.25rem;">
+      <div class="stat-cell"><div id="pd-r-coop" class="stat-val"></div><div class="stat-lbl">Cooperated</div></div>
+      <div class="stat-cell"><div id="pd-r-defect" class="stat-val"></div><div class="stat-lbl">Defected</div></div>
+      <div class="stat-cell"><div id="pd-r-pts" class="stat-val"></div><div class="stat-lbl">Your pts</div></div>
+    </div>
+    <div style="margin-bottom:1.5rem;">
+      <p style="font-size:13px;font-weight:500;margin-bottom:10px;">Career matches — from this game</p>
+      <div id="pd-r-careers" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Full career profile unlocks after all 10 games are complete.</p>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showScreen('dashboard');enterDashboard();">Back to dashboard →</button>
+  </div>
+</div>
+
 <script>
 const BC = {
   blue:   { fill:'#3b82f6', shine:'#93c5fd', label:'Blue — lower risk',   bg:'#E6F1FB', tc:'#1e40af', max:64 },
@@ -346,7 +498,7 @@ function lsSet(k, v) { try { localStorage.setItem(k, v); return true; } catch(e)
 function lsDel(k) { try { localStorage.removeItem(k); } catch(e) {} }
 
 // ─── Screen routing ─────────────────────────────────────────
-const SCREENS = ['landing','auth','dashboard','game-intro','game','results'];
+const SCREENS = ['landing','auth','dashboard','game-intro','game','results','pd-intro','pd-game','pd-results'];
 function showScreen(id) {
   SCREENS.forEach(s => {
     const el = document.getElementById('screen-' + s);
@@ -359,7 +511,7 @@ function showScreen(id) {
 
 function updateNav(id) {
   const nr = document.getElementById('nav-right');
-  if (id === 'dashboard' || id === 'game-intro' || id === 'game' || id === 'results') {
+  if (id === 'dashboard' || id === 'game-intro' || id === 'game' || id === 'results' || id === 'pd-intro' || id === 'pd-game' || id === 'pd-results') {
     nr.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="handleLogout()">Logout</button>`;
   } else {
     nr.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>`;
@@ -463,8 +615,12 @@ function enterDashboard() {
   document.getElementById('g1-done').style.display = bartDone ? 'block' : 'none';
   if (bartDone) document.getElementById('g1-preview').textContent = bartDone.label + ' · Score ' + bartDone.bartScore.toFixed(1);
 
+  const pdDone = scores.find(s => s.game === 'PD');
+  document.getElementById('g2-cta').style.display  = bartDone && !pdDone ? 'block' : 'none';
+  document.getElementById('g2-done').style.display = pdDone ? 'block' : 'none';
+  if (pdDone) document.getElementById('g2-preview').textContent = pdDone.label + ' · Score ' + pdDone.cooperationScore;
+
   const rest = [
-    {icon:'🤝',name:"Prisoner's Dilemma",sub:'Cooperation'},
     {icon:'🗼',name:'Tower of Hanoi',sub:'Planning'},
     {icon:'😶',name:'Face reading',sub:'Emotional IQ'},
     {icon:'⚡',name:'Go / No-Go',sub:'Impulse control'},
@@ -485,18 +641,23 @@ function enterDashboard() {
 
   if (scores.length > 0) {
     document.getElementById('scores-section').style.display = 'block';
-    document.getElementById('scores-list').innerHTML = scores.map(s =>
-      `<div class="score-row">
+    document.getElementById('scores-list').innerHTML = scores.map(s => {
+      const gameInfo = s.game === 'BART'
+        ? { icon: '🎈', name: 'Balloon game',  scoreLabel: s.label, scoreVal: s.bartScore ? s.bartScore.toFixed(1) : '—' }
+        : s.game === 'PD'
+        ? { icon: '🤝', name: 'Trust game',    scoreLabel: s.label, scoreVal: s.cooperationScore }
+        : { icon: '🎮', name: s.game,           scoreLabel: s.label || '—', scoreVal: '—' };
+      return `<div class="score-row">
         <div>
-          <div style="font-weight:500;font-size:14px;">🎈 Balloon game</div>
+          <div style="font-weight:500;font-size:14px;">${gameInfo.icon} ${gameInfo.name}</div>
           <div style="font-size:12px;color:var(--text-muted);">${new Date(s.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>
         </div>
         <div style="text-align:right;">
-          <div style="font-size:13px;font-weight:500;color:var(--amber);">${s.label}</div>
-          <div style="font-size:12px;color:var(--text-muted);">Score ${s.bartScore ? s.bartScore.toFixed(1) : '—'}</div>
+          <div style="font-size:13px;font-weight:500;color:var(--amber);">${gameInfo.scoreLabel}</div>
+          <div style="font-size:12px;color:var(--text-muted);">Score ${gameInfo.scoreVal}</div>
         </div>
-      </div>`
-    ).join('');
+      </div>`;
+    }).join('');
   }
   showScreen('dashboard');
 }
@@ -592,6 +753,163 @@ function endGame() {
   document.getElementById('r-avg').textContent    = avgP.toFixed(1);
   document.getElementById('r-careers').innerHTML  = prof.careers.map(c=>`<span class="tag">${c}</span>`).join('');
   showScreen('results');
+}
+
+// ─── Prisoner's Dilemma ──────────────────────────────────────
+const PD_ROUNDS = 10;
+const PD_PAYOFF = { CC:[3,3], CD:[0,5], DC:[5,0], DD:[1,1] };
+let pdRound = 0, pdPlayerMoves = [], pdAIMoves = [], pdPlayerPts = 0, pdAIPts = 0, pdWaiting = false;
+
+function startPD() {
+  pdRound = 0; pdPlayerMoves = []; pdAIMoves = []; pdPlayerPts = 0; pdAIPts = 0; pdWaiting = false;
+  showScreen('pd-game');
+  pdSetupRound();
+}
+
+function pdSetupRound() {
+  document.getElementById('pd-round-num').textContent = pdRound + 1;
+  document.getElementById('pd-prog').style.width = (pdRound / PD_ROUNDS * 100) + '%';
+  document.getElementById('pd-your-score').textContent = pdPlayerPts;
+  document.getElementById('pd-ai-score').textContent = pdAIPts;
+  document.getElementById('pd-choice-state').style.display = 'block';
+  document.getElementById('pd-reveal-state').style.display = 'none';
+  pdWaiting = false;
+  pdRenderHistory();
+}
+
+function pdAIMove() {
+  // Round 0: always cooperate (olive branch)
+  if (pdRound === 0) return 'C';
+  // 10% random noise to keep it human-feeling
+  if (Math.random() < 0.1) return Math.random() < 0.5 ? 'C' : 'D';
+  // Tit-for-Tat: mirror the player's last move
+  return pdPlayerMoves[pdRound - 1];
+}
+
+function pdChoice(playerMove) {
+  if (pdWaiting) return;
+  pdWaiting = true;
+
+  const aiMove = pdAIMove();
+  pdPlayerMoves.push(playerMove);
+  pdAIMoves.push(aiMove);
+
+  const key = playerMove + aiMove;
+  const [pp, ap] = PD_PAYOFF[key];
+  pdPlayerPts += pp;
+  pdAIPts    += ap;
+  pdRound++;
+
+  // Update header
+  document.getElementById('pd-round-num').textContent = pdRound;
+  document.getElementById('pd-prog').style.width = (pdRound / PD_ROUNDS * 100) + '%';
+  document.getElementById('pd-your-score').textContent = pdPlayerPts;
+  document.getElementById('pd-ai-score').textContent = pdAIPts;
+
+  // Reveal
+  document.getElementById('pd-choice-state').style.display = 'none';
+  document.getElementById('pd-reveal-state').style.display = 'block';
+
+  document.getElementById('pd-reveal-you').textContent = playerMove === 'C' ? '🤝' : '🔪';
+  document.getElementById('pd-reveal-ai').textContent  = aiMove   === 'C' ? '🤝' : '🔪';
+  document.getElementById('pd-reveal-you-label').textContent = playerMove === 'C' ? 'Cooperated' : 'Defected';
+  document.getElementById('pd-reveal-ai-label').textContent  = aiMove   === 'C' ? 'Cooperated' : 'Defected';
+
+  const msgs = {
+    CC: `Both cooperated — <strong>+3 points each.</strong> Trust pays off. 🤝`,
+    CD: `AI defected while you cooperated — <strong>you get +0, AI gets +5.</strong> Watch your back. 😤`,
+    DC: `You defected while AI cooperated — <strong>you get +5, AI gets +0.</strong>`,
+    DD: `Both defected — <strong>+1 point each.</strong> Mutual distrust costs everyone. 😐`
+  };
+  document.getElementById('pd-round-outcome').innerHTML = msgs[key];
+
+  const nextBtn = document.getElementById('pd-next-btn');
+  if (pdRound >= PD_ROUNDS) {
+    nextBtn.textContent = 'See results →';
+    nextBtn.onclick = pdEndGame;
+  } else {
+    nextBtn.textContent = 'Next round →';
+    nextBtn.onclick = pdNextRound;
+  }
+
+  pdRenderHistory();
+}
+
+function pdNextRound() {
+  pdSetupRound();
+}
+
+function pdRenderHistory() {
+  const el = document.getElementById('pd-history');
+  if (pdPlayerMoves.length === 0) {
+    el.innerHTML = '<p style="font-size:12px;color:var(--text-hint);text-align:center;padding:8px 0;">Your choices will appear here</p>';
+    return;
+  }
+  const rows = [...pdPlayerMoves].reverse().slice(0, 5).map((pm, ri) => {
+    const i = pdPlayerMoves.length - 1 - ri;
+    const am = pdAIMoves[i];
+    const [pp] = PD_PAYOFF[pm + am];
+    const ptsColor = pp >= 3 ? 'var(--teal)' : pp === 0 ? 'var(--red)' : 'var(--text-muted)';
+    return `<div style="display:flex;align-items:center;font-size:12px;padding:5px 9px;background:var(--surface);border-radius:6px;margin-bottom:3px;">
+      <span style="color:var(--text-hint);width:26px;flex-shrink:0;font-size:11px;">R${i+1}</span>
+      <span style="flex:1;">You ${pm === 'C' ? '🤝' : '🔪'}</span>
+      <span style="flex:1;">AI ${am === 'C' ? '🤝' : '🔪'}</span>
+      <span style="font-weight:500;color:${ptsColor};font-size:12px;">+${pp} pts</span>
+    </div>`;
+  });
+  el.innerHTML = rows.join('');
+}
+
+function pdGetProfile(cooperations) {
+  const rate = cooperations / PD_ROUNDS;
+  const score = Math.round(rate * 100);
+  if (rate >= 0.8) return {
+    score, label:'The Collaborator',
+    desc:"You default to trust and look for mutual benefit. You build deep, lasting relationships and create positive-sum outcomes wherever you go. Environments that reward collective success — teams, institutions, communities — are where you'll do your best work.",
+    careers:['Team Leadership','Social Impact','HR & People Ops','Education','Diplomacy','NGO Management']
+  };
+  if (rate >= 0.5) return {
+    score, label:'The Strategist',
+    desc:"You balance cooperation with self-interest well. You cooperate when it makes strategic sense and pull back when it doesn't. You're adaptable — neither naively trusting nor coldly self-serving. This is one of the most effective profiles in complex organisations.",
+    careers:['Management Consulting','Business Development','Corporate Law','Product Management','Policy','Negotiation']
+  };
+  if (rate >= 0.3) return {
+    score, label:'The Opportunist',
+    desc:"You cooperate selectively and move quickly when you spot an advantage. Self-reliance comes naturally to you. This gives you an edge in competitive environments — though trust takes longer to build and you may underestimate how much it compounds over time.",
+    careers:['Sales','Growth Hacking','Competitive Intelligence','Trading','Talent Acquisition','Sports Management']
+  };
+  return {
+    score, label:'The Competitor',
+    desc:"You prioritise personal advantage and operate independently. You make tough calls without hesitation and don't need validation from others to act. Environments that reward individual performance and decisiveness are where you thrive.",
+    careers:['Investment Banking','Solo Entrepreneurship','Litigation','Proprietary Trading','Competitive Sport','Independent Research']
+  };
+}
+
+function pdEndGame() {
+  const cooperations  = pdPlayerMoves.filter(m => m === 'C').length;
+  const defections    = pdPlayerMoves.filter(m => m === 'D').length;
+  const prof = pdGetProfile(cooperations);
+  const result = {
+    game:'PD', cooperationScore:prof.score, label:prof.label, desc:prof.desc, careers:prof.careers,
+    cooperations, defections, playerScore:pdPlayerPts, aiScore:pdAIPts, date:new Date().toISOString()
+  };
+
+  const emailKey = safeKey('rl_ue_', user.email);
+  const latest = lsGet(emailKey);
+  const ud = latest ? JSON.parse(latest) : { ...user, scores:[] };
+  ud.scores = (ud.scores || []).filter(s => s.game !== 'PD');
+  ud.scores.push(result);
+  lsSet(emailKey, JSON.stringify(ud));
+  user = ud;
+
+  document.getElementById('pd-r-score').textContent   = prof.score;
+  document.getElementById('pd-r-label').textContent   = prof.label;
+  document.getElementById('pd-r-desc').textContent    = prof.desc;
+  document.getElementById('pd-r-coop').textContent    = cooperations + '/10';
+  document.getElementById('pd-r-defect').textContent  = defections + '/10';
+  document.getElementById('pd-r-pts').textContent     = pdPlayerPts;
+  document.getElementById('pd-r-careers').innerHTML   = prof.careers.map(c=>`<span class="tag">${c}</span>`).join('');
+  showScreen('pd-results');
 }
 
 // ─── Init ────────────────────────────────────────────────────
