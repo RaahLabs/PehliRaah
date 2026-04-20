@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raah Labs — Know Your Path</title>
+  <meta name="description" content="10 science-backed games. 25 minutes. Discover the careers you're built for." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --amber: #BA7517;
+      --amber-light: #FAEEDA;
+      --amber-dark: #854F0B;
+      --amber-deep: #633806;
+      --teal: #0F6E56;
+      --teal-light: #E1F5EE;
+      --red-light: #FCEBEB;
+      --red: #A32D2D;
+      --bg: #FAFAF8;
+      --surface: #F2F0EA;
+      --card: #FFFFFF;
+      --border: rgba(0,0,0,0.1);
+      --border-strong: rgba(0,0,0,0.18);
+      --text: #1A1A18;
+      --text-muted: #6B6B66;
+      --text-hint: #9A9A94;
+      --radius: 10px;
+      --radius-lg: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #17171A;
+        --surface: #1F1F24;
+        --card: #28282E;
+        --border: rgba(255,255,255,0.1);
+        --border-strong: rgba(255,255,255,0.18);
+        --text: #F0EFE8;
+        --text-muted: #9A9A94;
+        --text-hint: #6B6B66;
+        --amber-light: #2A1E0A;
+        --teal-light: #0A1E18;
+        --red-light: #1E0A0A;
+      }
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .container { max-width: 520px; margin: 0 auto; padding: 2rem 1.25rem; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 0.5px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 10; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-badge { width: 32px; height: 32px; background: var(--amber); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--amber-light); font-size: 16px; font-weight: 500; flex-shrink: 0; }
+    .logo-name { font-size: 16px; font-weight: 500; color: var(--text); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s; padding: 11px 20px; }
+    .btn-primary { background: var(--amber); color: var(--amber-light); }
+    .btn-primary:hover { background: var(--amber-dark); }
+    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-secondary { background: transparent; color: var(--text); border: 0.5px solid var(--border-strong); }
+    .btn-secondary:hover { background: var(--surface); }
+    .btn-secondary:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-full { width: 100%; padding: 13px 20px; }
+    .btn-sm { padding: 7px 14px; font-size: 13px; }
+    .card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+    .surface { background: var(--surface); border-radius: var(--radius); padding: 1rem; }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
+    input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+      width: 100%; padding: 10px 12px; border: 0.5px solid var(--border-strong); border-radius: var(--radius);
+      background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px;
+      transition: border-color 0.15s; outline: none;
+    }
+    input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(186,117,23,0.12); }
+    .tab-bar { display: flex; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+    .tab-bar button { flex: 1; padding: 10px; border: none; background: transparent; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+    .tab-bar button.active { background: var(--amber); color: var(--amber-light); }
+    .err-box { background: var(--red-light); color: var(--red); font-size: 13px; border-radius: var(--radius); padding: 9px 12px; margin-bottom: 12px; display: none; }
+    .pill { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: var(--amber-light); color: var(--amber-dark); letter-spacing: 0.02em; }
+    .tag { display: inline-block; font-size: 13px; padding: 5px 14px; border-radius: 20px; background: var(--amber-light); color: var(--amber-dark); font-weight: 500; }
+    .phone-row { display: flex; gap: 8px; }
+    .cc-badge { padding: 10px 12px; background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: var(--radius); font-size: 14px; color: var(--text); white-space: nowrap; flex-shrink: 0; }
+    .stat-grid { display: grid; gap: 10px; }
+    .stat-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .stat-cell { background: var(--surface); border-radius: var(--radius); padding: 14px; text-align: center; }
+    .stat-val { font-size: 20px; font-weight: 500; color: var(--text); }
+    .stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    .game-highlight { border: 1.5px solid var(--amber) !important; cursor: pointer; }
+    .game-highlight:hover { background: var(--amber-light); }
+    .done-border { border: 1.5px solid var(--teal) !important; }
+    .progress-track { background: var(--surface); border-radius: 4px; height: 5px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--amber); border-radius: 4px; transition: width 0.4s ease; }
+    .section-label { font-size: 11px; font-weight: 500; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 10px; }
+    .back-btn { background: none; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 0; margin-bottom: 1.25rem; display: inline-flex; align-items: center; gap: 6px; }
+    .back-btn:hover { color: var(--text); }
+    #balloon-wrap { transition: transform 0.12s ease-out; transform-origin: bottom center; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.25s ease-out; }
+    .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
+    .score-row:last-child { border-bottom: none; }
+    .live-dot { display: inline-block; width: 7px; height: 7px; background: #22c55e; border-radius: 50%; margin-right: 6px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="main-nav">
+  <a class="logo" href="#" onclick="goHome()">
+    <div class="logo-badge">R</div>
+    <span class="logo-name">Raah Labs</span>
+  </a>
+  <div id="nav-right">
+    <button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>
+  </div>
+</nav>
+
+<!-- SCREEN: LANDING -->
+<div id="screen-landing" class="screen">
+  <div class="container" style="padding-top:3rem;">
+    <p style="font-size:11px;color:var(--amber);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Know your path</p>
+    <h1 style="font-size:30px;font-weight:500;line-height:1.3;margin-bottom:14px;">Discover the careers<br>you're built for</h1>
+    <p style="color:var(--text-muted);line-height:1.75;max-width:420px;margin-bottom:2rem;">10 science-backed games. 25 minutes. A clear picture of your personality — and where you'll thrive. Enterprise-grade assessments used by BCG and JP Morgan, now available to every student.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2.5rem;">
+      <button class="btn btn-primary" onclick="showAuth('signup')">Create free account →</button>
+      <button class="btn btn-secondary" onclick="showAuth('login')">Login</button>
+    </div>
+    <div class="stat-grid stat-grid-3" style="max-width:320px;">
+      <div class="stat-cell"><div class="stat-val">10</div><div class="stat-lbl">games</div></div>
+      <div class="stat-cell"><div class="stat-val">~25</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val" style="color:var(--amber);">₹500</div><div class="stat-lbl">one-time</div></div>
+    </div>
+    <div class="card" style="margin-top:2rem;max-width:440px;">
+      <p style="font-size:13px;font-weight:500;margin-bottom:6px;">Why Raah?</p>
+      <p style="font-size:14px;color:var(--text-muted);line-height:1.7;">Pymetrics charges thousands. Hogan, CEB, SHL charge per seat. Raah gives every Indian student the same science at 1/20th the price — with clear career direction at the end.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: AUTH -->
+<div id="screen-auth" class="screen">
+  <div class="container" style="max-width:420px;">
+    <button class="back-btn" onclick="showScreen('landing')">← Back</button>
+    <div class="tab-bar">
+      <button id="tab-su" class="active" onclick="switchTab('signup')">Sign up</button>
+      <button id="tab-li" onclick="switchTab('login')">Login</button>
+    </div>
+    <!-- Signup -->
+    <div id="form-signup">
+      <div class="field"><label>Full name</label><input type="text" id="su-name" placeholder="Your name" /></div>
+      <div class="field"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com" /></div>
+      <div class="field">
+        <label>Mobile number</label>
+        <div class="phone-row">
+          <span class="cc-badge">🇮🇳 +91</span>
+          <input type="tel" id="su-mobile" placeholder="9876543210" maxlength="10" style="flex:1;" />
+        </div>
+        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">10-digit number, no spaces</span>
+      </div>
+      <div class="field"><label>Password</label><input type="password" id="su-pw" placeholder="Min. 6 characters" /></div>
+      <div class="err-box" id="su-err"></div>
+      <button class="btn btn-primary btn-full" id="su-btn" onclick="handleSignup()">Create account →</button>
+    </div>
+    <!-- Login -->
+    <div id="form-login" style="display:none;">
+      <div class="field">
+        <label>Email or mobile number</label>
+        <input type="text" id="li-id" placeholder="you@email.com  or  9876543210" />
+        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">Either works</span>
+      </div>
+      <div class="field"><label>Password</label><input type="password" id="li-pw" placeholder="••••••••" /></div>
+      <div class="err-box" id="li-err"></div>
+      <button class="btn btn-primary btn-full" id="li-btn" onclick="handleLogin()">Login →</button>
+      <p style="font-size:13px;color:var(--text-muted);text-align:center;margin-top:14px;">No account yet? <a href="#" onclick="switchTab('signup')" style="color:var(--amber);text-decoration:none;">Sign up free</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: DASHBOARD -->
+<div id="screen-dashboard" class="screen">
+  <div class="container">
+    <p id="dash-greet" style="font-size:20px;font-weight:500;margin-bottom:4px;"></p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.5rem;">Complete all 10 games to unlock your full career profile.</p>
+
+    <!-- Game 1 CTA -->
+    <div id="g1-cta" class="card game-highlight fade-in" style="margin-bottom:1rem;" onclick="showScreen('game-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 1 of 10 · Start here</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:4px;">🎈 The Balloon Game</div>
+          <div style="font-size:13px;color:var(--text-muted);">Risk tolerance · Impulse control · Learning</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('game-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g1-done" style="display:none;" class="card done-border" style="margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🎈</div>
+        <div>
+          <div style="font-size:14px;font-weight:500;">Balloon game — complete ✓</div>
+          <div id="g1-preview" style="font-size:13px;color:var(--teal);"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('game-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div style="margin:1.25rem 0;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px;">
+        <span>Overall progress</span><span id="prog-txt">0 / 10 games</span>
+      </div>
+      <div class="progress-track"><div id="prog-fill" class="progress-fill" style="width:0%;"></div></div>
+    </div>
+
+    <!-- Coming next -->
+    <p class="section-label">Coming next</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:2rem;" id="games-grid"></div>
+
+    <!-- Scores -->
+    <div id="scores-section" style="display:none;">
+      <p class="section-label">Your results</p>
+      <div class="card" id="scores-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN: GAME INTRO -->
+<div id="screen-game-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 1 of 10</span>
+    <h1 style="font-size:24px;font-weight:500;margin:10px 0 1.25rem;">🎈 The Balloon Game</h1>
+    <div style="display:flex;justify-content:center;margin-bottom:1.25rem;">
+      <svg width="80" height="100" viewBox="0 0 90 110">
+        <ellipse cx="45" cy="46" rx="36" ry="42" fill="#EF9F27"/>
+        <ellipse cx="31" cy="28" rx="13" ry="9" fill="#FAC775" opacity="0.55"/>
+        <path d="M45 88 Q42 98 45 104" stroke="#BA7517" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="surface" style="margin-bottom:1rem;">
+      <p style="color:var(--text-muted);line-height:1.75;font-size:14px;">A balloon appears on screen. Each <strong style="color:var(--text);">Pump</strong> earns you ₹5. Hit <strong style="color:var(--text);">Collect</strong> to bank your money safely. If it pops before you collect — you lose all earnings for that round. 30 balloons total.</p>
+    </div>
+    <div class="card" style="margin-bottom:1rem;">
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">What this measures</p>
+      <p style="font-weight:500;">Risk tolerance · Impulse control · Learning from outcomes</p>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">30</div><div class="stat-lbl">balloons</div></div>
+      <div class="stat-cell"><div class="stat-val">~5</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">3</div><div class="stat-lbl">colours</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startGame()">Start game →</button>
+  </div>
+</div>
+
+<!-- SCREEN: GAME -->
+<div id="screen-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--text-muted);">Balloon <span id="g-num">1</span> of 30</span>
+      <span style="font-size:13px;color:var(--text-muted);">Banked: <strong id="g-banked" style="color:var(--text);">₹0</strong></span>
+    </div>
+    <div class="progress-track" style="margin-bottom:1.75rem;"><div id="g-prog" class="progress-fill" style="width:3.33%;"></div></div>
+
+    <div style="display:flex;justify-content:center;min-height:190px;align-items:center;position:relative;margin-bottom:1rem;">
+      <div id="balloon-wrap">
+        <svg width="110" height="140" viewBox="0 0 110 140">
+          <ellipse id="b-body" cx="55" cy="58" rx="44" ry="52" fill="#EF9F27"/>
+          <ellipse id="b-shine" cx="38" cy="35" rx="15" ry="10" fill="#FAC775" opacity="0.5"/>
+          <path d="M55 110 Q52 122 55 128" stroke="#BA7517" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div id="g-boom" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:60px;line-height:1;">💥</div>
+    </div>
+
+    <div style="text-align:center;margin-bottom:6px;">
+      <span id="g-badge" style="display:inline-block;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;"></span>
+    </div>
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">This balloon worth</div>
+      <div id="g-earn" style="font-size:38px;font-weight:500;color:var(--amber);line-height:1.1;">₹0</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:5px;">Pumps: <span id="g-pumps">0</span></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+      <button id="g-pbtn" class="btn btn-secondary" style="padding:18px;font-size:16px;" onclick="pump()">Pump 🎈</button>
+      <button id="g-cbtn" class="btn btn-primary" style="padding:18px;" onclick="collect()">Collect ₹<span id="g-camt">0</span></button>
+    </div>
+    <p style="font-size:12px;color:var(--text-hint);text-align:center;">Blue = safer · Yellow = medium · Red = volatile</p>
+  </div>
+</div>
+
+<!-- SCREEN: RESULTS -->
+<div id="screen-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.75rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🎯</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Game 1 complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">The Balloon Game · BART</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Your risk score</div>
+      <div id="r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div id="r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="card" style="margin-bottom:1rem;">
+      <p style="font-size:13px;font-weight:500;margin-bottom:6px;">What this means</p>
+      <p id="r-desc" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.25rem;">
+      <div class="stat-cell"><div id="r-banked" class="stat-val"></div><div class="stat-lbl">Banked</div></div>
+      <div class="stat-cell"><div id="r-pops" class="stat-val"></div><div class="stat-lbl">Pops</div></div>
+      <div class="stat-cell"><div id="r-avg" class="stat-val"></div><div class="stat-lbl">Avg pumps</div></div>
+    </div>
+    <div style="margin-bottom:1.5rem;">
+      <p style="font-size:13px;font-weight:500;margin-bottom:10px;">Career matches — from this game</p>
+      <div id="r-careers" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:10px;">Full career profile unlocks after all 10 games are complete.</p>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showScreen('dashboard');enterDashboard();">Back to dashboard →</button>
+  </div>
+</div>
+
+<script>
+const BC = {
+  blue:   { fill:'#3b82f6', shine:'#93c5fd', label:'Blue — lower risk',   bg:'#E6F1FB', tc:'#1e40af', max:64 },
+  yellow: { fill:'#d97706', shine:'#fcd34d', label:'Yellow — medium risk', bg:'#FEF3C7', tc:'#92400e', max:32 },
+  red:    { fill:'#dc2626', shine:'#fca5a5', label:'Red — higher risk',    bg:'#FEE2E2', tc:'#991b1b', max:16 }
+};
+const EARN = 5, TOTAL = 30;
+let user = null, gameActive = false;
+let balloons = [], ti = 0, pumps = 0, thresh = 0, bcol = '', banked = 0, trials = [];
+
+// ─── Storage helpers ───────────────────────────────────────
+function safeKey(prefix, val) {
+  return prefix + val.toLowerCase().replace(/[^a-z0-9]/g, '_');
+}
+function lsGet(k) { try { return localStorage.getItem(k); } catch(e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); return true; } catch(e) { return false; } }
+function lsDel(k) { try { localStorage.removeItem(k); } catch(e) {} }
+
+// ─── Screen routing ─────────────────────────────────────────
+const SCREENS = ['landing','auth','dashboard','game-intro','game','results'];
+function showScreen(id) {
+  SCREENS.forEach(s => {
+    const el = document.getElementById('screen-' + s);
+    if (el) el.classList.remove('active');
+  });
+  const target = document.getElementById('screen-' + id);
+  if (target) target.classList.add('active');
+  updateNav(id);
+}
+
+function updateNav(id) {
+  const nr = document.getElementById('nav-right');
+  if (id === 'dashboard' || id === 'game-intro' || id === 'game' || id === 'results') {
+    nr.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="handleLogout()">Logout</button>`;
+  } else {
+    nr.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>`;
+  }
+}
+
+function goHome() {
+  if (user) { enterDashboard(); } else { showScreen('landing'); }
+}
+
+// ─── Auth UI ────────────────────────────────────────────────
+function showAuth(tab) { showScreen('auth'); switchTab(tab); }
+function switchTab(tab) {
+  document.getElementById('form-signup').style.display = tab === 'signup' ? 'block' : 'none';
+  document.getElementById('form-login').style.display  = tab === 'login'  ? 'block' : 'none';
+  document.getElementById('tab-su').classList.toggle('active', tab === 'signup');
+  document.getElementById('tab-li').classList.toggle('active', tab === 'login');
+}
+function showErr(id, msg) { const e = document.getElementById(id); if(e){e.textContent=msg;e.style.display='block';} }
+function clrErr(id) { const e = document.getElementById(id); if(e) e.style.display='none'; }
+
+// ─── Signup ─────────────────────────────────────────────────
+function handleSignup() {
+  clrErr('su-err');
+  const name   = document.getElementById('su-name').value.trim();
+  const email  = document.getElementById('su-email').value.trim().toLowerCase();
+  const mobile = document.getElementById('su-mobile').value.replace(/\s/g,'');
+  const pw     = document.getElementById('su-pw').value;
+
+  if (!name)                                  { showErr('su-err','Enter your name.'); return; }
+  if (!email || !email.includes('@'))         { showErr('su-err','Enter a valid email address.'); return; }
+  if (!mobile || mobile.length !== 10 || !/^\d+$/.test(mobile)) { showErr('su-err','Enter a valid 10-digit mobile number.'); return; }
+  if (!pw || pw.length < 6)                   { showErr('su-err','Password must be at least 6 characters.'); return; }
+
+  const btn = document.getElementById('su-btn');
+  btn.disabled = true; btn.textContent = 'Creating account...';
+
+  const emailKey  = safeKey('rl_ue_', email);
+  const mobileKey = safeKey('rl_um_', mobile);
+
+  if (lsGet(emailKey))  { showErr('su-err','Email already registered. Please login.'); btn.disabled=false; btn.textContent='Create account →'; return; }
+  if (lsGet(mobileKey)) { showErr('su-err','Mobile number already registered. Please login.'); btn.disabled=false; btn.textContent='Create account →'; return; }
+
+  const u = { name, email, mobile, password: pw, scores: [], createdAt: new Date().toISOString() };
+  lsSet(emailKey, JSON.stringify(u));
+  lsSet(mobileKey, JSON.stringify({ emailKey }));
+  lsSet('rl_session', JSON.stringify({ emailKey, name }));
+  user = u;
+  btn.disabled = false; btn.textContent = 'Create account →';
+  enterDashboard();
+}
+
+// ─── Login ──────────────────────────────────────────────────
+function handleLogin() {
+  clrErr('li-err');
+  const id = document.getElementById('li-id').value.trim().toLowerCase();
+  const pw = document.getElementById('li-pw').value;
+  if (!id) { showErr('li-err','Enter your email or mobile number.'); return; }
+  if (!pw) { showErr('li-err','Enter your password.'); return; }
+
+  const btn = document.getElementById('li-btn');
+  btn.disabled = true; btn.textContent = 'Logging in...';
+
+  let uData = null;
+  const cleanId = id.replace(/\s/g,'');
+  if (/^\d{10}$/.test(cleanId)) {
+    const mref = lsGet(safeKey('rl_um_', cleanId));
+    if (!mref) { showErr('li-err','No account with this mobile number.'); btn.disabled=false; btn.textContent='Login →'; return; }
+    const ur = lsGet(JSON.parse(mref).emailKey);
+    if (ur) uData = JSON.parse(ur);
+  } else {
+    const ur = lsGet(safeKey('rl_ue_', id));
+    if (ur) uData = JSON.parse(ur);
+  }
+
+  if (!uData)           { showErr('li-err','No account found. Please sign up.'); btn.disabled=false; btn.textContent='Login →'; return; }
+  if (uData.password !== pw) { showErr('li-err','Incorrect password.'); btn.disabled=false; btn.textContent='Login →'; return; }
+
+  const emailKey = safeKey('rl_ue_', uData.email);
+  lsSet('rl_session', JSON.stringify({ emailKey, name: uData.name }));
+  user = uData;
+  btn.disabled = false; btn.textContent = 'Login →';
+  enterDashboard();
+}
+
+function handleLogout() {
+  lsDel('rl_session');
+  user = null;
+  showScreen('landing');
+}
+
+// ─── Dashboard ───────────────────────────────────────────────
+function enterDashboard() {
+  if (!user) return;
+  document.getElementById('dash-greet').textContent = 'Hey, ' + user.name.split(' ')[0] + ' 👋';
+  const scores = user.scores || [];
+  document.getElementById('prog-txt').textContent  = scores.length + ' / 10 games';
+  document.getElementById('prog-fill').style.width = (scores.length * 10) + '%';
+  const bartDone = scores.find(s => s.game === 'BART');
+  document.getElementById('g1-cta').style.display  = bartDone ? 'none' : 'block';
+  document.getElementById('g1-done').style.display = bartDone ? 'block' : 'none';
+  if (bartDone) document.getElementById('g1-preview').textContent = bartDone.label + ' · Score ' + bartDone.bartScore.toFixed(1);
+
+  const rest = [
+    {icon:'🤝',name:"Prisoner's Dilemma",sub:'Cooperation'},
+    {icon:'🗼',name:'Tower of Hanoi',sub:'Planning'},
+    {icon:'😶',name:'Face reading',sub:'Emotional IQ'},
+    {icon:'⚡',name:'Go / No-Go',sub:'Impulse control'},
+    {icon:'🔢',name:'Digit memory',sub:'Memory'},
+    {icon:'💸',name:'Money exchange',sub:'Fairness'},
+    {icon:'⏱',name:'Reaction time',sub:'Speed'},
+    {icon:'🔷',name:'Pattern finder',sub:'Reasoning'},
+    {icon:'📊',name:'Big 5 survey',sub:'Personality'}
+  ];
+  document.getElementById('games-grid').innerHTML = rest.map(g =>
+    `<div class="card" style="opacity:0.5;">
+      <div style="font-size:20px;margin-bottom:6px;">${g.icon}</div>
+      <div style="font-size:13px;font-weight:500;margin-bottom:2px;">${g.name}</div>
+      <div style="font-size:12px;color:var(--text-muted);">${g.sub}</div>
+      <div style="font-size:11px;color:var(--text-hint);margin-top:6px;">🔒 Coming soon</div>
+    </div>`
+  ).join('');
+
+  if (scores.length > 0) {
+    document.getElementById('scores-section').style.display = 'block';
+    document.getElementById('scores-list').innerHTML = scores.map(s =>
+      `<div class="score-row">
+        <div>
+          <div style="font-weight:500;font-size:14px;">🎈 Balloon game</div>
+          <div style="font-size:12px;color:var(--text-muted);">${new Date(s.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px;font-weight:500;color:var(--amber);">${s.label}</div>
+          <div style="font-size:12px;color:var(--text-muted);">Score ${s.bartScore ? s.bartScore.toFixed(1) : '—'}</div>
+        </div>
+      </div>`
+    ).join('');
+  }
+  showScreen('dashboard');
+}
+
+// ─── BART Game ───────────────────────────────────────────────
+function makeBalloons() {
+  const a = [...Array(10).fill('blue'), ...Array(10).fill('yellow'), ...Array(10).fill('red')];
+  for (let i = a.length-1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a.map(c => ({ color:c, threshold: Math.floor(Math.random()*BC[c].max)+1 }));
+}
+function startGame() { balloons = makeBalloons(); ti=0; banked=0; trials=[]; showScreen('game'); setupBalloon(); }
+function setupBalloon() {
+  const b = balloons[ti]; bcol=b.color; thresh=b.threshold; pumps=0; gameActive=true;
+  const c = BC[bcol];
+  document.getElementById('g-num').textContent = ti+1;
+  document.getElementById('g-banked').textContent = '₹'+banked;
+  document.getElementById('g-earn').textContent = '₹0';
+  document.getElementById('g-camt').textContent = '0';
+  document.getElementById('g-pumps').textContent = '0';
+  document.getElementById('g-boom').style.display = 'none';
+  document.getElementById('balloon-wrap').style.display = 'block';
+  document.getElementById('balloon-wrap').style.transform = 'scale(1)';
+  document.getElementById('g-prog').style.width = ((ti+1)/TOTAL*100)+'%';
+  document.getElementById('g-pbtn').disabled = false;
+  document.getElementById('g-cbtn').disabled = false;
+  document.getElementById('b-body').setAttribute('fill', c.fill);
+  document.getElementById('b-shine').setAttribute('fill', c.shine);
+  const badge = document.getElementById('g-badge');
+  badge.textContent = c.label; badge.style.background = c.bg; badge.style.color = c.tc;
+}
+function pump() {
+  if (!gameActive) return;
+  pumps++;
+  const earn = pumps * EARN;
+  document.getElementById('g-earn').textContent = '₹'+earn;
+  document.getElementById('g-camt').textContent = earn;
+  document.getElementById('g-pumps').textContent = pumps;
+  const sc = 1 + (pumps/BC[bcol].max)*1.5;
+  document.getElementById('balloon-wrap').style.transform = 'scale('+Math.min(sc,3)+')';
+  if (pumps >= thresh) explodeBalloon();
+}
+function explodeBalloon() {
+  gameActive = false;
+  trials.push({ color:bcol, pumps, exploded:true, earned:0 });
+  document.getElementById('balloon-wrap').style.display = 'none';
+  document.getElementById('g-boom').style.display = 'block';
+  document.getElementById('g-earn').textContent = '💥 Popped!';
+  document.getElementById('g-pbtn').disabled = true;
+  document.getElementById('g-cbtn').disabled = true;
+  setTimeout(() => {
+    document.getElementById('g-boom').style.display = 'none';
+    document.getElementById('balloon-wrap').style.display = 'block';
+    ti++; if (ti >= TOTAL) endGame(); else setupBalloon();
+  }, 1300);
+}
+function collect() {
+  if (!gameActive || pumps === 0) return;
+  gameActive = false;
+  const earned = pumps * EARN; banked += earned;
+  trials.push({ color:bcol, pumps, exploded:false, earned });
+  document.getElementById('g-pbtn').disabled = true;
+  document.getElementById('g-cbtn').disabled = true;
+  document.getElementById('g-banked').textContent = '₹'+banked;
+  setTimeout(() => { ti++; if (ti >= TOTAL) endGame(); else setupBalloon(); }, 350);
+}
+function calcBART(tr) { const ok=tr.filter(t=>!t.exploded); if(!ok.length)return 0; return ok.reduce((s,t)=>s+t.pumps,0)/ok.length; }
+function getProfile(sc) {
+  if (sc < 8)  return { label:'Very cautious',        desc:'You strongly prefer certainty over reward. You protect what you have and avoid risk even when odds are in your favour. Reliability is your greatest asset.', careers:['Compliance','Auditing','Research','Administration','Quality control'] };
+  if (sc < 16) return { label:'Calculated risk-taker', desc:'You weigh risk and reward thoughtfully. You take measured chances when the odds make sense — a clear sign of sound judgement and strategic thinking.', careers:['Engineering','Medicine','Law','Data science','Consulting'] };
+  if (sc < 28) return { label:'Risk-tolerant',         desc:'You are comfortable with uncertainty and push limits when upside exists. You thrive in fast-moving, dynamic environments where others hesitate.', careers:['Entrepreneurship','Sales','Marketing','Product management','Journalism'] };
+  return        { label:'High risk appetite',          desc:'You actively seek high-stakes situations. Bold decisions energise you rather than freeze you. You belong where the stakes are real and the rewards are large.', careers:['Investment banking','Startups','Venture capital','Trading','Sports management'] };
+}
+function endGame() {
+  const bartScore = calcBART(trials);
+  const prof = getProfile(bartScore);
+  const pops = trials.filter(t => t.exploded).length;
+  const avgP = trials.reduce((s,t)=>s+t.pumps,0)/trials.length;
+  const result = { game:'BART', bartScore, label:prof.label, desc:prof.desc, careers:prof.careers, totalBanked:banked, pops, avgPumps:avgP, date:new Date().toISOString() };
+
+  const emailKey = safeKey('rl_ue_', user.email);
+  const latest = lsGet(emailKey);
+  const ud = latest ? JSON.parse(latest) : { ...user, scores:[] };
+  ud.scores = (ud.scores||[]).filter(s => s.game !== 'BART');
+  ud.scores.push(result);
+  lsSet(emailKey, JSON.stringify(ud));
+  user = ud;
+
+  document.getElementById('r-score').textContent = bartScore.toFixed(1);
+  document.getElementById('r-label').textContent = prof.label;
+  document.getElementById('r-desc').textContent  = prof.desc;
+  document.getElementById('r-banked').textContent = '₹'+banked;
+  document.getElementById('r-pops').textContent   = pops;
+  document.getElementById('r-avg').textContent    = avgP.toFixed(1);
+  document.getElementById('r-careers').innerHTML  = prof.careers.map(c=>`<span class="tag">${c}</span>`).join('');
+  showScreen('results');
+}
+
+// ─── Init ────────────────────────────────────────────────────
+(function init() {
+  const session = lsGet('rl_session');
+  if (session) {
+    const sd = JSON.parse(session);
+    const ur = lsGet(sd.emailKey);
+    user = ur ? JSON.parse(ur) : { name: sd.name, email:'', scores:[] };
+    enterDashboard(); return;
+  }
+  showScreen('landing');
+})();
+</script>
+</body>
+</html>
