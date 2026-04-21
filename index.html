@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Behavior Games Prototype</title>
+  <style>
+    body { font-family: Arial; max-width: 800px; margin: auto; padding: 20px; }
+    .game { margin-top: 20px; padding: 15px; border: 1px solid #ccc; border-radius: 8px; }
+    button { margin: 5px; padding: 8px 12px; }
+  </style>
+</head>
+
+<body>
+
+<h2>Behavior Assessment Prototype</h2>
+
+<div class="game">
+<h3>🎈 Risk Game (Balloon)</h3>
+<label>Average Pumps:</label>
+<input type="number" id="risk" value="20">
+</div>
+
+<div class="game">
+<h3>🤝 Trust Game</h3>
+<label>Trust Level:</label>
+<select id="trust">
+  <option value="high">High</option>
+  <option value="low">Low</option>
+</select>
+</div>
+
+<div class="game">
+<h3>🧠 Planning Game (Hanoi)</h3>
+<label>Planning Efficiency (0–1):</label>
+<input type="number" step="0.1" id="planning" value="0.6">
+</div>
+
+<div class="game">
+<h3>⚡ Learning Behavior</h3>
+<label>Response After Loss:</label>
+<select id="loss">
+  <option value="improves">Improves</option>
+  <option value="no_change">No Change</option>
+</select>
+</div>
+
+<br>
+<button onclick="runAnalysis()">Generate Insights</button>
+
+<div id="results"></div>
+
+<script>
+
+let feedbackLog = [];
+
+function runAnalysis() {
+  const data = {
+    riskLevel: parseInt(document.getElementById("risk").value),
+    trust: document.getElementById("trust").value,
+    planning: parseFloat(document.getElementById("planning").value),
+    lossResponse: document.getElementById("loss").value
+  };
+
+  const insights = generateInsights(data);
+  displayInsights(insights);
+}
+
+function generateInsights(data) {
+  let insights = [];
+
+  if (data.riskLevel > 25 && data.lossResponse === "no_change") {
+    insights.push("You take risks even after losses. High upside, but risky in structured jobs.");
+  } else if (data.riskLevel < 10) {
+    insights.push("You avoid risk. You prefer stable and predictable environments.");
+  }
+
+  if (data.lossResponse === "improves") {
+    insights.push("You learn from mistakes quickly. Strong adaptability.");
+  } else {
+    insights.push("You don’t adjust quickly after setbacks.");
+  }
+
+  if (data.trust === "high") {
+    insights.push("You trust easily. Good for teamwork, risky in competitive setups.");
+  } else {
+    insights.push("You are cautious with trust. Protects you but may limit collaboration.");
+  }
+
+  if (data.planning > 0.8) {
+    insights.push("You plan before acting. Strong structured thinking.");
+  } else {
+    insights.push("You act first and figure things out later.");
+  }
+
+  return insights;
+}
+
+function displayInsights(insights) {
+  const container = document.getElementById("results");
+  container.innerHTML = "<h3>Your Insights</h3>";
+
+  insights.forEach(insight => {
+    const div = document.createElement("div");
+    div.className = "game";
+
+    div.innerHTML = `
+      <p>${insight}</p>
+      <button onclick="captureFeedback('yes')">Yes</button>
+      <button onclick="captureFeedback('somewhat')">Somewhat</button>
+      <button onclick="captureFeedback('no')">No</button>
+    `;
+
+    container.appendChild(div);
+  });
+
+  const finishBtn = document.createElement("button");
+  finishBtn.innerText = "See Accuracy";
+  finishBtn.onclick = showAccuracy;
+
+  container.appendChild(finishBtn);
+}
+
+function captureFeedback(response) {
+  feedbackLog.push(response);
+}
+
+function showAccuracy() {
+  const total = feedbackLog.length;
+  const positive = feedbackLog.filter(r => r === "yes").length;
+  const score = Math.round((positive / total) * 100);
+
+  document.getElementById("results").innerHTML = `
+    <h3>Accuracy Score: ${score}%</h3>
+    <p>This tells how accurate users feel the insights are.</p>
+  `;
+}
+
+</script>
+
+</body>
+</html>
