@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet" />
   <style>
+    /* YOUR ORIGINAL CSS — preserved exactly */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --amber: #BA7517;
@@ -102,6 +103,9 @@
     .section-label { font-size: 11px; font-weight: 500; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 10px; }
     .back-btn { background: none; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 0; margin-bottom: 1.25rem; display: inline-flex; align-items: center; gap: 6px; }
     .back-btn:hover { color: var(--text); }
+    #balloon-wrap { transition: transform 0.12s ease-out; transform-origin: bottom center; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.25s ease-out; }
     .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
     .score-row:last-child { border-bottom: none; }
     .insight-section { margin-bottom: 1rem; }
@@ -115,7 +119,7 @@
     .game-name-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; }
     .game-intro-para { color: var(--text-muted); line-height: 1.8; font-size: 15px; margin-bottom: 1.5rem; }
     .reset-row { margin-top: 1.5rem; padding-top: 1rem; border-top: 0.5px solid var(--border); display: flex; justify-content: flex-end; }
-    /* Stroop styles */
+    /* Stroop styles (added, matching your design) */
     .stroop-word { font-size: 48px; font-weight: 700; text-align: center; padding: 20px 0; letter-spacing: 2px; }
     .stroop-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
     .stroop-btn { padding: 14px; font-size: 16px; font-weight: 600; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--card); cursor: pointer; transition: 0.1s; width: 100%; }
@@ -124,15 +128,22 @@
     .ult-offer-card { background: var(--surface); border-radius: var(--radius-lg); padding: 1.75rem; text-align: center; margin-bottom: 1.5rem; }
     .ult-offer-amount { font-size: 48px; font-weight: 700; color: var(--amber); margin: 12px 0; }
     .ult-choice-buttons { display: flex; gap: 16px; justify-content: center; margin-top: 24px; }
-    /* Tower of Hanoi styles (preserved from original) */
+    /* Tower of Hanoi (your original styles) */
     .toh-board { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .toh-peg { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; padding: 10px; border-radius: var(--radius); background: var(--surface); min-width: 90px; }
     .toh-peg.selected { background: var(--amber-light); border: 1px solid var(--amber); }
     .toh-discs { height: 100px; display: flex; flex-direction: column-reverse; align-items: center; gap: 3px; }
     .toh-disc { height: 18px; border-radius: 20px; }
-    /* Go/No-Go styles (preserved) */
+    /* Go/No-Go styles */
     .gng-shape { font-size: 100px; text-align: center; margin: 30px 0; }
     .gng-tap-btn { display: block; margin: 0 auto 20px; padding: 16px 40px; font-size: 18px; }
+    /* Team snapshot (your original styles) */
+    .team-drop { border: 1.5px dashed var(--border-strong); border-radius: var(--radius-lg); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--surface); }
+    .team-drop:hover, .team-drop.dragover { border-color: var(--amber); background: var(--amber-light); }
+    .team-file-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--surface); border-radius: var(--radius); margin-bottom: 6px; }
+    .team-good { background: var(--teal-light); border-radius: var(--radius-lg); padding: 1.25rem; }
+    .team-bad { background: var(--amber-light); border-radius: var(--radius-lg); padding: 1.25rem; }
+    .team-ugly { background: var(--red-light); border-radius: var(--radius-lg); padding: 1.25rem; }
   </style>
 </head>
 <body>
@@ -147,21 +158,26 @@
   </div>
 </nav>
 
-<!-- LANDING SCREEN -->
+<!-- LANDING -->
 <div id="screen-landing" class="screen">
   <div class="container" style="padding-top:3rem;">
     <p style="font-size:11px;color:var(--amber);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Know your path</p>
     <h1 style="font-size:30px;font-weight:500;line-height:1.3;margin-bottom:14px;">Discover the careers<br>you're built for</h1>
-    <p style="color:var(--text-muted);line-height:1.75;max-width:420px;margin-bottom:2rem;">6 science-backed games. 20 minutes. A clear picture of your personality — and where you'll thrive. Enterprise-grade assessments, now available to every student.</p>
+    <p style="color:var(--text-muted);line-height:1.75;max-width:420px;margin-bottom:2rem;">6 science-backed games. 20 minutes. A clear picture of your personality — and where you'll thrive. Enterprise-grade assessments used by BCG and JP Morgan, now available to every student.</p>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2.5rem;">
       <button class="btn btn-primary" onclick="showAuth('signup')">Create free account →</button>
       <button class="btn btn-secondary" onclick="showAuth('login')">Login</button>
+    </div>
+    <div class="stat-grid stat-grid-3" style="max-width:320px;">
+      <div class="stat-cell"><div class="stat-val">6</div><div class="stat-lbl">games</div></div>
+      <div class="stat-cell"><div class="stat-val">~20</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val" style="color:var(--amber);">₹500</div><div class="stat-lbl">one-time</div></div>
     </div>
     <div class="reset-row"><button class="btn btn-danger btn-sm" onclick="resetAllData()">⚠️ Reset all data</button></div>
   </div>
 </div>
 
-<!-- AUTH SCREEN -->
+<!-- AUTH -->
 <div id="screen-auth" class="screen">
   <div class="container" style="max-width:420px;">
     <button class="back-btn" onclick="showScreen('landing')">← Back</button>
@@ -174,22 +190,31 @@
       <div class="field"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com" /></div>
       <div class="field">
         <label>Mobile number</label>
-        <div class="phone-row"><span class="cc-badge">🇮🇳 +91</span><input type="tel" id="su-mobile" placeholder="9876543210" maxlength="10" style="flex:1;" /></div>
+        <div class="phone-row">
+          <span class="cc-badge">🇮🇳 +91</span>
+          <input type="tel" id="su-mobile" placeholder="9876543210" maxlength="10" style="flex:1;" />
+        </div>
+        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">10-digit number, no spaces</span>
       </div>
       <div class="field"><label>Password</label><input type="password" id="su-pw" placeholder="Min. 6 characters" /></div>
       <div class="err-box" id="su-err"></div>
-      <button class="btn btn-primary btn-full" onclick="handleSignup()">Create account →</button>
+      <button class="btn btn-primary btn-full" id="su-btn" onclick="handleSignup()">Create account →</button>
     </div>
     <div id="form-login" style="display:none;">
-      <div class="field"><label>Email or mobile number</label><input type="text" id="li-id" placeholder="you@email.com  or  9876543210" /></div>
+      <div class="field">
+        <label>Email or mobile number</label>
+        <input type="text" id="li-id" placeholder="you@email.com  or  9876543210" />
+        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">Either works</span>
+      </div>
       <div class="field"><label>Password</label><input type="password" id="li-pw" placeholder="••••••••" /></div>
       <div class="err-box" id="li-err"></div>
-      <button class="btn btn-primary btn-full" onclick="handleLogin()">Login →</button>
+      <button class="btn btn-primary btn-full" id="li-btn" onclick="handleLogin()">Login →</button>
+      <p style="font-size:13px;color:var(--text-muted);text-align:center;margin-top:14px;">No account yet? <a href="#" onclick="switchTab('signup')" style="color:var(--amber);text-decoration:none;">Sign up free</a></p>
     </div>
   </div>
 </div>
 
-<!-- CONTEXT SCREEN -->
+<!-- CONTEXT -->
 <div id="screen-context" class="screen">
   <div class="container" style="max-width:480px;">
     <span class="pill">Almost there</span>
@@ -204,7 +229,7 @@
   </div>
 </div>
 
-<!-- DASHBOARD SCREEN (updated with Game 6) -->
+<!-- DASHBOARD -->
 <div id="screen-dashboard" class="screen">
   <div class="container">
     <p id="dash-greet" style="font-size:20px;font-weight:500;margin-bottom:4px;"></p>
@@ -213,7 +238,11 @@
     <!-- Game 1: Dum -->
     <div id="g1-cta" class="card game-highlight fade-in" style="margin-bottom:1rem;" onclick="showGameIntro('BART')">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-        <div><div class="pill" style="margin-bottom:10px;">Game 1 of 6 · Start here</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🎈 Dum</div><div style="font-size:13px;color:var(--text-muted);">Risk · Impulse · Learning</div></div>
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 1 of 6 · Start here</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">🎈 Dum</div>
+          <div style="font-size:13px;color:var(--text-muted);">Risk · Impulse · Learning</div>
+        </div>
         <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('BART')">Play now</button>
       </div>
     </div>
@@ -221,42 +250,62 @@
 
     <!-- Game 2: Bharosa -->
     <div id="g2-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('PD')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;"><div><div class="pill" style="margin-bottom:10px;">Game 2 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🤝 Bharosa</div><div style="font-size:13px;color:var(--text-muted);">Cooperation · Trust · Strategy</div></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();showGameIntro('PD')">Play now</button></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div><div class="pill" style="margin-bottom:10px;">Game 2 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🤝 Bharosa</div><div style="font-size:13px;color:var(--text-muted);">Cooperation · Trust · Strategy</div></div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('PD')">Play now</button>
+      </div>
     </div>
     <div id="g2-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Bharosa completed</div>
 
     <!-- Game 3: Burj -->
     <div id="g3-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('TOH')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;"><div><div class="pill" style="margin-bottom:10px;">Game 3 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🗼 Burj</div><div style="font-size:13px;color:var(--text-muted);">Planning · Sequencing · Memory</div></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();showGameIntro('TOH')">Play now</button></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div><div class="pill" style="margin-bottom:10px;">Game 3 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🗼 Burj</div><div style="font-size:13px;color:var(--text-muted);">Planning · Sequencing · Memory</div></div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('TOH')">Play now</button>
+      </div>
     </div>
     <div id="g3-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Burj completed</div>
 
     <!-- Game 4: Rukawat (Stroop) - REPLACED Chehra -->
     <div id="g4-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('STROOP')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;"><div><div class="pill" style="margin-bottom:10px;">Game 4 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🎨 Rukawat</div><div style="font-size:13px;color:var(--text-muted);">Focus · Inhibition · Stroop Test</div></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();showGameIntro('STROOP')">Play now</button></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div><div class="pill" style="margin-bottom:10px;">Game 4 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🎨 Rukawat</div><div style="font-size:13px;color:var(--text-muted);">Focus · Inhibition · Stroop Test</div></div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('STROOP')">Play now</button>
+      </div>
     </div>
     <div id="g4-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Rukawat completed</div>
 
     <!-- Game 5: Ruk -->
     <div id="g5-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('GNG')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;"><div><div class="pill" style="margin-bottom:10px;">Game 5 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">⚡ Ruk</div><div style="font-size:13px;color:var(--text-muted);">Impulse control · Attention · Speed</div></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();showGameIntro('GNG')">Play now</button></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div><div class="pill" style="margin-bottom:10px;">Game 5 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">⚡ Ruk</div><div style="font-size:13px;color:var(--text-muted);">Impulse control · Attention · Speed</div></div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('GNG')">Play now</button>
+      </div>
     </div>
     <div id="g5-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Ruk completed</div>
 
     <!-- Game 6: Saudaa (Ultimatum) - NEW -->
     <div id="g6-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('ULT')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;"><div><div class="pill" style="margin-bottom:10px;">Game 6 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">💰 Saudaa</div><div style="font-size:13px;color:var(--text-muted);">Fairness · Ultimatum Game</div></div><button class="btn btn-primary btn-sm" onclick="event.stopPropagation();showGameIntro('ULT')">Play now</button></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div><div class="pill" style="margin-bottom:10px;">Game 6 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">💰 Saudaa</div><div style="font-size:13px;color:var(--text-muted);">Fairness · Ultimatum Game</div></div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('ULT')">Play now</button>
+      </div>
     </div>
     <div id="g6-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Saudaa completed</div>
 
     <!-- Progress -->
     <div style="margin:1.25rem 0;">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px;"><span>Overall progress</span><span id="prog-txt">0 / 6 games</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px;">
+        <span>Overall progress</span><span id="prog-txt">0 / 6 games</span>
+      </div>
       <div class="progress-track"><div id="prog-fill" class="progress-fill" style="width:0%;"></div></div>
     </div>
 
-    <!-- Scores section (preserved) -->
-    <div id="scores-section" style="display:none;"><p class="section-label">Your results</p><div class="card" id="scores-list"></div></div>
+    <!-- Scores -->
+    <div id="scores-section" style="display:none;">
+      <p class="section-label">Your results</p>
+      <div class="card" id="scores-list"></div>
+    </div>
 
     <!-- Tools -->
     <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:0.5px solid var(--border);">
@@ -265,13 +314,13 @@
         <button class="btn btn-secondary" onclick="exportProfile()" style="font-size:13px;padding:12px;">📤 Export profile</button>
         <button class="btn btn-secondary" onclick="showScreen('team')" style="font-size:13px;padding:12px;">👥 Team snapshot</button>
       </div>
-      <p style="font-size:12px;color:var(--text-hint);margin-top:8px;">Export your profile file and share with teammates. Upload everyone's files together to see how your team operates.</p>
+      <p style="font-size:12px;color:var(--text-hint);margin-top:8px;line-height:1.6;">Export your profile file and share with teammates. Upload everyone's files together to see how your team operates.</p>
     </div>
     <div class="reset-row"><button class="btn btn-danger btn-sm" onclick="resetAllData()">⚠️ Reset all data</button></div>
   </div>
 </div>
 
-<!-- GAME INTRO SCREEN (dynamic) -->
+<!-- GAME INTRO (dynamic) -->
 <div id="screen-game-intro" class="screen">
   <div class="container" style="max-width:480px;">
     <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
@@ -279,22 +328,22 @@
     <div class="game-name-hindi" id="intro-title"></div>
     <div class="game-name-sub" id="intro-sub"></div>
     <div id="intro-story" class="game-intro-para"></div>
-    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;" id="intro-stats"></div>
+    <div class="stat-grid stat-grid-3" id="intro-stats"></div>
     <button class="btn btn-primary btn-full" id="intro-start-btn">Start →</button>
   </div>
 </div>
 
-<!-- GAME PLAY SCREEN (dynamic) -->
+<!-- GAME PLAY (dynamic) -->
 <div id="screen-game-play" class="screen">
   <div class="container" id="game-play-area"></div>
 </div>
 
-<!-- RESULTS SCREEN (dynamic) -->
+<!-- RESULTS (dynamic) -->
 <div id="screen-game-results" class="screen">
   <div class="container" id="results-area"></div>
 </div>
 
-<!-- TEAM SNAPSHOT SCREEN (preserved from original) -->
+<!-- TEAM SNAPSHOT (preserved from original) -->
 <div id="screen-team" class="screen">
   <div class="container" style="max-width:520px;">
     <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
@@ -309,15 +358,27 @@
       </div>
       <input type="file" id="team-file-input" accept=".json" multiple style="display:none;" onchange="handleTeamFiles(this.files)" />
       <div id="team-file-list" style="margin-top:1rem;"></div>
-      <div id="team-manager-row" style="display:none;margin-top:1rem;"><p style="font-size:13px;font-weight:500;margin-bottom:6px;">Who's the manager?</p><select id="team-manager-sel"><option value="">No manager — peer group</option></select><p style="font-size:12px;color:var(--text-hint);margin-top:5px;">Leave blank if this is a peer-only group.</p></div>
-      <div style="margin-top:1.25rem;"><button class="btn btn-primary btn-full" id="team-analyse-btn" onclick="analyseTeam()" disabled>Analyse team →</button></div>
+      <div id="team-manager-row" style="display:none;margin-top:1rem;">
+        <p style="font-size:13px;font-weight:500;margin-bottom:6px;">Who's the manager?</p>
+        <select id="team-manager-sel"><option value="">No manager — peer group</option></select>
+        <p style="font-size:12px;color:var(--text-hint);margin-top:5px;">Leave blank if this is a peer-only group.</p>
+      </div>
+      <div style="margin-top:1.25rem;">
+        <button class="btn btn-primary btn-full" id="team-analyse-btn" onclick="analyseTeam()" disabled>Analyse team →</button>
+      </div>
     </div>
     <div id="team-results" style="display:none;margin-top:1.5rem;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;"><p style="font-size:16px;font-weight:500;">Your team picture</p><button class="btn btn-secondary btn-sm" onclick="resetTeam()">Start over</button></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+        <p style="font-size:16px;font-weight:500;">Your team picture</p>
+        <button class="btn btn-secondary btn-sm" onclick="resetTeam()">Start over</button>
+      </div>
       <div class="team-out-section"><span class="team-out-label">✅ The good</span><div class="team-good"><p id="team-good-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
       <div class="team-out-section"><span class="team-out-label">⚠️ The bad</span><div class="team-bad"><p id="team-bad-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
       <div class="team-out-section"><span class="team-out-label">🔥 The ugly</span><div class="team-ugly"><p id="team-ugly-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
-      <div id="team-mgr-section" style="display:none;" class="team-out-section"><span class="team-out-label">🧭 Manager ↔ team dynamic</span><div id="team-mgr-text"></div></div>
+      <div id="team-mgr-section" style="display:none;" class="team-out-section">
+        <span class="team-out-label">🧭 Manager ↔ team dynamic</span>
+        <div id="team-mgr-text"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -351,7 +412,7 @@ function updateNav() {
 function showAuth(tab) { showScreen('auth'); switchTab(tab); }
 function switchTab(tab) {
   document.getElementById('form-signup').style.display = tab === 'signup' ? 'block' : 'none';
-  document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('form-login').style.display  = tab === 'login'  ? 'block' : 'none';
   document.getElementById('tab-su').classList.toggle('active', tab === 'signup');
   document.getElementById('tab-li').classList.toggle('active', tab === 'login');
 }
@@ -486,6 +547,59 @@ function saveGameResult(gameCode, score, label, details = {}) {
   showDashboard();
 }
 
+// ==================== SYNTHESIS ENGINE (fully restored) ====================
+function renderSynthesis(scores, wrapId, textId) {
+  let wrap = document.getElementById(wrapId);
+  let textEl = document.getElementById(textId);
+  if(!wrap || !textEl) return;
+  if(scores.length < 2) { wrap.style.display = 'none'; return; }
+  let bart = scores.find(s => s.game === 'BART');
+  let pd = scores.find(s => s.game === 'PD');
+  let toh = scores.find(s => s.game === 'TOH');
+  let stroop = scores.find(s => s.game === 'STROOP');
+  let gng = scores.find(s => s.game === 'GNG');
+  let ult = scores.find(s => s.game === 'ULT');
+  let lines = [];
+  if(bart && pd) {
+    let highRisk = bart.bartScore >= 16;
+    let highCoop = pd.cooperationScore >= 50;
+    if(highRisk && highCoop) lines.push('You take risks and extend trust — that combination usually shows up as someone who jumps into new things and brings people along. Founder energy, in the best sense.');
+    if(highRisk && !highCoop) lines.push('You take risks but play your cards close — independent, self-directed, not waiting for group consensus. Effective alone; the friction shows in team-dependent situations.');
+    if(!highRisk && highCoop) lines.push('You\'re cautious but collaborative — someone who thinks carefully before acting, and wants alignment before committing. Likely a stabilizing force in fast-moving teams.');
+    if(!highRisk && !highCoop) lines.push('You\'re measured about both risk and trust — deliberate, independent, difficult to rush. That consistency is a real strength in high-stakes, slow-feedback environments.');
+  }
+  if(bart && toh) {
+    let highRisk = bart.bartScore >= 16;
+    let highPlan = toh.planningScore >= 65;
+    if(highRisk && highPlan) lines.push('Risk-tolerant and structured — you can commit boldly when you\'ve thought it through. That\'s a rare combination.');
+    if(highRisk && !highPlan) lines.push('You move fast and adjust later — the planning score confirms this isn\'t just risk tolerance, it\'s a genuine instinct to act before fully mapping the territory.');
+    if(!highRisk && highPlan) lines.push('Careful and structured — you want to know where you\'re going before you move.');
+  }
+  if(toh && stroop) {
+    let highPlan = toh.planningScore >= 65;
+    let highFocus = stroop.stroopScore >= 70;
+    if(highPlan && highFocus) lines.push('Structured thinker and laser-focused — that combination is rare and genuinely powerful in execution-heavy roles.');
+    if(!highPlan && highFocus) lines.push('Your focus is sharp, but sequencing could use scaffolding — your inhibition is strong, but planning benefits from structure.');
+    if(highPlan && !highFocus) lines.push('Great planner, but distractions pull you — build systems to protect your focus.');
+  }
+  if(gng && bart) {
+    let goodControl = gng.gngScore >= 70;
+    let highRisk = bart.bartScore >= 16;
+    if(goodControl && highRisk) lines.push('You take risks deliberately but can slam the brakes when you need to — bold appetite, clean inhibition. That\'s what separates calculated risk-takers from reckless ones.');
+    if(!goodControl && highRisk) lines.push('High risk appetite and a tendency to act before fully processing. In environments that reward speed, that\'s an edge. In ones that punish errors, it\'s the thing to watch.');
+    if(goodControl && !highRisk) lines.push('You\'re both cautious and controlled — you protect against downside at the decision level and at the impulse level.');
+  }
+  if(ult && pd) {
+    let fair = ult.ultScore >= 65;
+    let highCoop = pd.cooperationScore >= 50;
+    if(fair && highCoop) lines.push('You value fairness and trust — strong relational anchor. Teams will feel psychologically safe around you.');
+    if(!fair && highCoop) lines.push('Trusting but pragmatic — you\'ll cooperate, but not at any cost. You have boundaries, and you enforce them.');
+    if(fair && !highCoop) lines.push('You reject unfairness even when it costs you — principled, but sometimes to your own detriment.');
+  }
+  if(lines.length) { wrap.style.display = 'block'; textEl.innerHTML = lines[0]; }
+  else { wrap.style.display = 'none'; }
+}
+
 // ==================== GAME INTROS WITH HUMAN STORIES ====================
 const GAME_INTROS = {
   BART: { num: 1, title: '🎈 Dum', sub: 'dum — breath, guts', stats: [{val:'30',lbl:'balloons'},{val:'~5',lbl:'minutes'},{val:'3',lbl:'colors'}],
@@ -522,12 +636,12 @@ function showGameIntro(gameCode) {
 
 // ==================== GAME 1: BART (Balloon) ====================
 function startBARTGame() { window.bartRound=0; window.bartBank=0; window.bartTrials=[]; nextBalloon();
-  function nextBalloon() { if(window.bartRound>=30) return endBART(); let colors=['blue','yellow','red']; let maxPump={blue:64,yellow:32,red:16}; let color=colors[Math.floor(Math.random()*3)]; window.currentBalloon={pumps:0,popped:false,color,threshold:Math.floor(Math.random()*maxPump[color])+1}; renderBalloon(); }
-  function renderBalloon() { document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 1/6 · Dum</div><div style="font-size:28px;margin:10px 0;">🎈 Balloon ${window.bartRound+1}/30</div><div class="surface" style="text-align:center;padding:30px;"><div id="balloonImg" style="font-size:80px;transition:0.1s;">🎈</div><div>Pumps: ${window.currentBalloon.pumps}</div><div>Current: ₹${window.currentBalloon.pumps*5}</div><div>Banked: ₹${window.bartBank}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" id="pumpBtn">💨 Pump (₹5)</button><button class="btn btn-primary" id="collectBtn">💰 Collect ₹${window.currentBalloon.pumps*5}</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.bartRound/30)*100}%"></div></div>`; showScreen('game-play');
-    document.getElementById('pumpBtn').onclick = () => { if(window.currentBalloon.popped) return; window.currentBalloon.pumps++; let img = document.getElementById('balloonImg'); if(img) img.style.transform = `scale(${1+window.currentBalloon.pumps/30})`; if(window.currentBalloon.pumps >= window.currentBalloon.threshold) { window.currentBalloon.popped = true; if(img) img.innerHTML = '💥'; setTimeout(() => { window.bartTrials.push({pumps:window.currentBalloon.pumps, exploded:true}); window.bartRound++; if(window.bartRound<30) nextBalloon(); else endBART(); }, 600); } else { renderBalloon(); } };
+  function nextBalloon() { if(window.bartRound>=30) return endBART(); let colors=['blue','yellow','red']; let maxPump={blue:64,yellow:32,red:16}; let color=colors[Math.floor(Math.random()*3)]; window.currentBalloon={pumps:0,popped:false,color,threshold:Math.floor(Math.random()*maxPump[color])+1}; renderBART(); }
+  function renderBART() { document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 1/6 · Dum</div><div style="font-size:28px;margin:10px 0;">🎈 Balloon ${window.bartRound+1}/30</div><div class="surface" style="text-align:center;padding:30px;"><div id="balloonImg" style="font-size:80px;transition:0.1s;">🎈</div><div>Pumps: ${window.currentBalloon.pumps}</div><div>Current: ₹${window.currentBalloon.pumps*5}</div><div>Banked: ₹${window.bartBank}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" id="pumpBtn">💨 Pump (₹5)</button><button class="btn btn-primary" id="collectBtn">💰 Collect ₹${window.currentBalloon.pumps*5}</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.bartRound/30)*100}%"></div></div>`; showScreen('game-play');
+    document.getElementById('pumpBtn').onclick = () => { if(window.currentBalloon.popped) return; window.currentBalloon.pumps++; let img = document.getElementById('balloonImg'); if(img) img.style.transform = `scale(${1+window.currentBalloon.pumps/30})`; if(window.currentBalloon.pumps >= window.currentBalloon.threshold) { window.currentBalloon.popped = true; if(img) img.innerHTML = '💥'; setTimeout(() => { window.bartTrials.push({pumps:window.currentBalloon.pumps, exploded:true}); window.bartRound++; if(window.bartRound<30) nextBalloon(); else endBART(); }, 600); } else { renderBART(); } };
     document.getElementById('collectBtn').onclick = () => { if(window.currentBalloon.popped) return; let earned = window.currentBalloon.pumps*5; window.bartBank += earned; window.bartTrials.push({pumps:window.currentBalloon.pumps, exploded:false}); window.bartRound++; if(window.bartRound<30) nextBalloon(); else endBART(); };
   }
-  function endBART() { let safePumps = window.bartTrials.filter(t=>!t.exploded).map(t=>t.pumps); let avg = safePumps.length ? safePumps.reduce((a,b)=>a+b,0)/safePumps.length : 0; let score = Math.min(100, Math.round((avg/20)*100)); let label = score>=70?'The Risk-Taker':score>=40?'The Balanced':'The Cautious'; let insight = `You pumped an average of ${avg.toFixed(1)} times. ${score>70?'You chase rewards confidently.':score>40?'You balance risk and reward.':'You prefer to lock in gains early.'}`; showResults('Dum', score, label, insight, 'BART'); }
+  function endBART() { let safePumps = window.bartTrials.filter(t=>!t.exploded).map(t=>t.pumps); let avg = safePumps.length ? safePumps.reduce((a,b)=>a+b,0)/safePumps.length : 0; let score = Math.min(100, Math.round((avg/20)*100)); let label = score>=70?'The Risk-Taker':score>=40?'The Balanced':'The Cautious'; let insight = `You pumped an average of ${avg.toFixed(1)} times. ${score>70?'You chase rewards confidently.':score>40?'You balance risk and reward.':'You prefer to lock in gains early.'}`; let details = { bartScore: score, avgPumps: avg, label }; saveGameResult('BART', score, label, details); showResults('Dum', score, label, insight, 'BART'); }
 }
 
 // ==================== GAME 2: Prisoner's Dilemma ====================
@@ -537,7 +651,7 @@ function startPDGame() { window.pdRound=0; window.pdScore=0; window.pdMoves=[]; 
     document.getElementById('coopBtn').onclick = () => pdMove('C'); document.getElementById('defectBtn').onclick = () => pdMove('D');
   }
   function pdMove(my) { let ai = (window.pdRound===0) ? 'C' : (Math.random()<0.3 ? 'D' : window.pdMoves[window.pdMoves.length-1].my); let payoff = {CC:[3,3], CD:[0,5], DC:[5,0], DD:[1,1]}; let gain = payoff[my+ai][0]; window.pdScore += gain; window.pdMoves.push({my,ai}); window.pdRound++; nextPD(); }
-  function endPD() { let coop = window.pdMoves.filter(m=>m.my==='C').length; let score = Math.round((coop/10)*100); let label = score>=70?'The Trusting':score>=40?'The Strategic':'The Independent'; let insight = `You cooperated ${coop}/10 times. ${score>70?'You lead with trust.':score>40?'You adapt based on the situation.':'You protect yourself first.'}`; showResults('Bharosa', score, label, insight, 'PD'); }
+  function endPD() { let coop = window.pdMoves.filter(m=>m.my==='C').length; let score = Math.round((coop/10)*100); let label = score>=70?'The Trusting':score>=40?'The Strategic':'The Independent'; let insight = `You cooperated ${coop}/10 times. ${score>70?'You lead with trust.':score>40?'You adapt based on the situation.':'You protect yourself first.'}`; let details = { cooperationScore: score, cooperations: coop }; saveGameResult('PD', score, label, details); showResults('Bharosa', score, label, insight, 'PD'); }
 }
 
 // ==================== GAME 3: Tower of Hanoi ====================
@@ -546,32 +660,39 @@ function startTOHGame() { window.tohPegs=[[4,3,2,1],[],[]]; window.tohMoves=0; w
     document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 3/6 · Burj</div><div style="display:flex;gap:16px;justify-content:space-between;margin:10px 0;"><div>Moves: ${window.tohMoves}</div><div>Goal: All discs on Peg 3</div></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">${pegsHtml}</div><div style="display:flex;gap:12px;margin-top:16px;"><button class="btn btn-secondary" id="resetTower">Reset</button><button class="btn btn-primary" id="checkWin">Check Win</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.tohPegs[2].length/4)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Click a peg to select, then click another peg to move. Bigger disc cannot go on smaller disc.</p>`; showScreen('game-play');
     document.querySelectorAll('.toh-peg').forEach(el => { el.onclick = () => { let peg = parseInt(el.dataset.peg); if(window.tohSelected === null) { if(window.tohPegs[peg].length) window.tohSelected = peg; } else { let from = window.tohSelected, to = peg; if(from !== to) { let fromDisc = window.tohPegs[from][window.tohPegs[from].length-1]; let toDisc = window.tohPegs[to][window.tohPegs[to].length-1]; if(!toDisc || fromDisc < toDisc) { window.tohPegs[to].push(window.tohPegs[from].pop()); window.tohMoves++; } } window.tohSelected = null; } renderTOH(); }; });
     document.getElementById('resetTower').onclick = () => startTOHGame();
-    document.getElementById('checkWin').onclick = () => { if(window.tohPegs[2].length === 4) { let score = Math.min(100, Math.max(0, 100 - (window.tohMoves-15)*3)); let label = score>=80?'The Architect':score>=50?'The Planner':'The Explorer'; let insight = `Solved in ${window.tohMoves} moves. Optimal is 15. ${score>80?'Exceptional planning!':score>50?'Solid strategy.':'Room to improve forward thinking.'}`; showResults('Burj', Math.round(score), label, insight, 'TOH'); } else alert('Not solved yet! Move all discs to Peg 3.'); };
+    document.getElementById('checkWin').onclick = () => { if(window.tohPegs[2].length === 4) { let score = Math.min(100, Math.max(0, 100 - (window.tohMoves-15)*3)); score = Math.round(score); let label = score>=80?'The Architect':score>=50?'The Planner':'The Explorer'; let insight = `Solved in ${window.tohMoves} moves. Optimal is 15. ${score>80?'Exceptional planning!':score>50?'Solid strategy.':'Room to improve forward thinking.'}`; let details = { planningScore: score, moves: window.tohMoves }; saveGameResult('TOH', score, label, details); showResults('Burj', score, label, insight, 'TOH'); } else alert('Not solved yet! Move all discs to Peg 3.'); };
   }
 }
 
-// ==================== GAME 4: STROOP (Rukawat) - REPLACEMENT ====================
-function startStroopGame() { let trials = []; for(let i=0;i<20;i++){ let words=['RED','GREEN','BLUE','YELLOW']; let inks=['RED','GREEN','BLUE','YELLOW']; trials.push({word:words[Math.floor(Math.random()*4)], ink:inks[Math.floor(Math.random()*4)]}); } let idx=0, correct=0; function next() { if(idx>=20) return end(); let t = trials[idx]; let colorMap={RED:'#E53E3E', GREEN:'#38A169', BLUE:'#3182CE', YELLOW:'#D69E2E'}; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 4/6 · Rukawat (Stroop)</div><div class="stroop-word" style="color:${colorMap[t.ink]}">${t.word}</div><div class="stroop-options">${['RED','GREEN','BLUE','YELLOW'].map(c=>`<button class="stroop-btn" data-color="${c}">${c}</button>`).join('')}</div><div>Trial ${idx+1}/20</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/20)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Ignore the word. Pick the INK color.</p>`; showScreen('game-play'); document.querySelectorAll('.stroop-btn').forEach(btn => { btn.onclick = () => { if(btn.dataset.color === t.ink) correct++; idx++; next(); }; }); } function end() { let acc = Math.round((correct/20)*100); let label = acc>=85?'The Focused':acc>=65?'The Steady':'The Distractible'; let insight = `You ignored the word meaning ${acc}% of the time. ${acc>80?'Excellent cognitive inhibition!':acc>60?'Good, but distractions get you sometimes.':'The meaning of words pulls your attention.'}`; showResults('Rukawat', acc, label, insight, 'STROOP'); } next(); }
+// ==================== GAME 4: STROOP (Rukawat) ====================
+function startStroopGame() { let trials = []; for(let i=0;i<20;i++){ let words=['RED','GREEN','BLUE','YELLOW']; let inks=['RED','GREEN','BLUE','YELLOW']; trials.push({word:words[Math.floor(Math.random()*4)], ink:inks[Math.floor(Math.random()*4)]}); } let idx=0, correct=0; function next() { if(idx>=20) return end(); let t = trials[idx]; let colorMap={RED:'#E53E3E', GREEN:'#38A169', BLUE:'#3182CE', YELLOW:'#D69E2E'}; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 4/6 · Rukawat (Stroop)</div><div class="stroop-word" style="color:${colorMap[t.ink]}">${t.word}</div><div class="stroop-options">${['RED','GREEN','BLUE','YELLOW'].map(c=>`<button class="stroop-btn" data-color="${c}">${c}</button>`).join('')}</div><div>Trial ${idx+1}/20</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/20)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Ignore the word. Pick the INK color.</p>`; showScreen('game-play'); document.querySelectorAll('.stroop-btn').forEach(btn => { btn.onclick = () => { if(btn.dataset.color === t.ink) correct++; idx++; next(); }; }); } function end() { let acc = Math.round((correct/20)*100); let label = acc>=85?'The Focused':acc>=65?'The Steady':'The Distractible'; let insight = `You ignored the word meaning ${acc}% of the time. ${acc>80?'Excellent cognitive inhibition!':acc>60?'Good, but distractions get you sometimes.':'The meaning of words pulls your attention.'}`; let details = { stroopScore: acc, correct, total:20 }; saveGameResult('STROOP', acc, label, details); showResults('Rukawat', acc, label, insight, 'STROOP'); } next(); }
 
 // ==================== GAME 5: Go/No-Go (Ruk) ====================
-function startGNGGame() { let trials = []; for(let i=0;i<30;i++) trials.push(Math.random()<0.7?'go':'nogo'); let idx=0, hits=0, errors=0, timer=null; function next() { if(idx>=30) return end(); let type = trials[idx]; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 5/6 · Ruk</div><div class="gng-shape">${type==='go'?'⚪':'⬛'}</div><button class="btn btn-primary gng-tap-btn" id="tapBtn">TAP</button><div>Hits: ${hits} | Errors: ${errors}</div><div>Trial ${idx+1}/30</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/30)*100}%"></div></div><p style="font-size:12px;color:gray;">⚪ Circle → TAP &nbsp;&nbsp; ⬛ Square → DO NOTHING</p>`; showScreen('game-play'); if(timer) clearTimeout(timer); timer = setTimeout(() => { if(type === 'go') { errors++; idx++; next(); } }, 700); document.getElementById('tapBtn').onclick = () => { clearTimeout(timer); if(type === 'go') hits++; else errors++; idx++; next(); }; } function end() { let goCount = trials.filter(t=>t==='go').length; let acc = Math.round((hits/goCount)*100); let label = acc>=85?'The Controlled':acc>=65?'The Steady':'The Impulsive'; let insight = `You correctly tapped ${hits}/${goCount} Go trials. ${acc>80?'Excellent impulse control!':acc>60?'Good, but sometimes react when you shouldn\'t.':'You act before thinking — great for speed, risky for accuracy.'}`; showResults('Ruk', acc, label, insight, 'GNG'); } next(); }
+function startGNGGame() { let trials = []; for(let i=0;i<30;i++) trials.push(Math.random()<0.7?'go':'nogo'); let idx=0, hits=0, errors=0, timer=null; function next() { if(idx>=30) return end(); let type = trials[idx]; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 5/6 · Ruk</div><div class="gng-shape">${type==='go'?'⚪':'⬛'}</div><button class="btn btn-primary gng-tap-btn" id="tapBtn">TAP</button><div>Hits: ${hits} | Errors: ${errors}</div><div>Trial ${idx+1}/30</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/30)*100}%"></div></div><p style="font-size:12px;color:gray;">⚪ Circle → TAP &nbsp;&nbsp; ⬛ Square → DO NOTHING</p>`; showScreen('game-play'); if(timer) clearTimeout(timer); timer = setTimeout(() => { if(type === 'go') { errors++; idx++; next(); } }, 700); document.getElementById('tapBtn').onclick = () => { clearTimeout(timer); if(type === 'go') hits++; else errors++; idx++; next(); }; } function end() { let goCount = trials.filter(t=>t==='go').length; let acc = Math.round((hits/goCount)*100); let label = acc>=85?'The Controlled':acc>=65?'The Steady':'The Impulsive'; let insight = `You correctly tapped ${hits}/${goCount} Go trials. ${acc>80?'Excellent impulse control!':acc>60?'Good, but sometimes react when you shouldn\'t.':'You act before thinking — great for speed, risky for accuracy.'}`; let details = { gngScore: acc, hits, falseAlarms: errors }; saveGameResult('GNG', acc, label, details); showResults('Ruk', acc, label, insight, 'GNG'); } next(); }
 
-// ==================== GAME 6: Ultimatum (Saudaa) - NEW ====================
-function startULTGame() { let offers = [18,42,10,35,50,25,15,40,5,30]; let idx=0, total=0, results=[]; function next() { if(idx>=10) return end(); let offer = offers[idx]; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 6/6 · Saudaa</div><div class="ult-offer-card"><div style="font-size:14px;color:var(--text-muted);">AI offers you</div><div class="ult-offer-amount">₹${offer}</div><div style="font-size:13px;">out of ₹100</div><div class="ult-choice-buttons"><button class="btn btn-primary" id="acceptBtn">✅ Accept</button><button class="btn btn-danger" id="rejectBtn">❌ Reject</button></div></div><div>Total earned: ₹${total}</div><div>Round ${idx+1}/10</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/10)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Reject = both get nothing. Accept = you get the offer, AI keeps the rest.</p>`; showScreen('game-play'); document.getElementById('acceptBtn').onclick = () => { total += offer; results.push({offer, accept:true}); idx++; next(); }; document.getElementById('rejectBtn').onclick = () => { results.push({offer, accept:false}); idx++; next(); }; } function end() { let accepted = results.filter(r=>r.accept).length; let minAcc = results.filter(r=>r.accept).length ? Math.min(...results.filter(r=>r.accept).map(r=>r.offer)) : 0; let score = minAcc>=35?85 : minAcc>=20?65 : minAcc>=10?45 : 25; let label = score>=75?'The Fair':score>=50?'The Strategic':'The Opportunist'; let insight = `You accepted ${accepted}/10 offers. Lowest accepted: ₹${minAcc}. ${score>70?'You reject unfair deals even at personal cost.':score>50?'You have clear boundaries but stay pragmatic.':'You take what you can get — pure pragmatism.'}`; showResults('Saudaa', score, label, insight, 'ULT'); } next(); }
+// ==================== GAME 6: Ultimatum (Saudaa) ====================
+function startULTGame() { let offers = [18,42,10,35,50,25,15,40,5,30]; let idx=0, total=0, results=[]; function next() { if(idx>=10) return end(); let offer = offers[idx]; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 6/6 · Saudaa</div><div class="ult-offer-card"><div style="font-size:14px;color:var(--text-muted);">AI offers you</div><div class="ult-offer-amount">₹${offer}</div><div style="font-size:13px;">out of ₹100</div><div class="ult-choice-buttons"><button class="btn btn-primary" id="acceptBtn">✅ Accept</button><button class="btn btn-danger" id="rejectBtn">❌ Reject</button></div></div><div>Total earned: ₹${total}</div><div>Round ${idx+1}/10</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/10)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Reject = both get nothing. Accept = you get the offer, AI keeps the rest.</p>`; showScreen('game-play'); document.getElementById('acceptBtn').onclick = () => { total += offer; results.push({offer, accept:true}); idx++; next(); }; document.getElementById('rejectBtn').onclick = () => { results.push({offer, accept:false}); idx++; next(); }; } function end() { let accepted = results.filter(r=>r.accept).length; let minAcc = results.filter(r=>r.accept).length ? Math.min(...results.filter(r=>r.accept).map(r=>r.offer)) : 0; let score = minAcc>=35?85 : minAcc>=20?65 : minAcc>=10?45 : 25; let label = score>=75?'The Fair':score>=50?'The Strategic':'The Opportunist'; let insight = `You accepted ${accepted}/10 offers. Lowest accepted: ₹${minAcc}. ${score>70?'You reject unfair deals even at personal cost.':score>50?'You have clear boundaries but stay pragmatic.':'You take what you can get — pure pragmatism.'}`; let details = { ultScore: score, minAccepted: minAcc, accepted }; saveGameResult('ULT', score, label, details); showResults('Saudaa', score, label, insight, 'ULT'); } next(); }
 
-// ==================== RESULTS ====================
+// ==================== RESULTS (with synthesis) ====================
 function showResults(title, score, label, insight, gameCode) {
   let icon = {BART:'🎈', PD:'🤝', TOH:'🗼', STROOP:'🎨', GNG:'⚡', ULT:'💰'}[gameCode];
-  document.getElementById('results-area').innerHTML = `<div style="text-align:center;"><div style="font-size:64px;">${icon}</div><h2>${title} — complete!</h2><div class="surface" style="margin:20px 0;"><div class="stat-val">${score}</div><div>Score</div><div style="font-size:18px;font-weight:600;margin-top:8px;">${label}</div></div><div class="card"><div class="pill" style="margin-bottom:8px;">Insight</div><p>${insight}</p></div><button class="btn btn-primary btn-full" id="resultsContinue">Continue →</button></div>`;
+  let scores = user.scores || [];
+  let synthesisHtml = '';
+  if(scores.length >= 1) {
+    let synthId = 'synth-' + Date.now();
+    synthesisHtml = `<div id="${synthId}" class="synthesis-card" style="display:none;"><div class="insight-label">🔗 What your games together suggest</div><p id="synth-text-${synthId}"></p></div>`;
+    setTimeout(() => { renderSynthesis([...scores, {game:gameCode, score, label}], synthId, `synth-text-${synthId}`); }, 50);
+  }
+  document.getElementById('results-area').innerHTML = `<div style="text-align:center;"><div style="font-size:64px;">${icon}</div><h2>${title} — complete!</h2><div class="surface" style="margin:20px 0;"><div class="stat-val">${score}</div><div>Score</div><div style="font-size:18px;font-weight:600;margin-top:8px;">${label}</div></div><div class="card"><div class="pill" style="margin-bottom:8px;">Insight</div><p>${insight}</p></div>${synthesisHtml}<button class="btn btn-primary btn-full" id="resultsContinue">Continue →</button></div>`;
   showScreen('game-results');
-  document.getElementById('resultsContinue').onclick = () => { saveGameResult(gameCode, score, label, { insight }); };
+  document.getElementById('resultsContinue').onclick = () => { showDashboard(); };
 }
 
-// ==================== TEAM SNAPSHOT (preserved from original, abbreviated for brevity) ====================
+// ==================== TEAM SNAPSHOT (preserved from original) ====================
 let teamProfiles = [];
 function handleTeamDrop(e) { e.preventDefault(); document.getElementById('team-dropzone').classList.remove('dragover'); handleTeamFiles(e.dataTransfer.files); }
-function handleTeamFiles(files) { let toRead = Array.from(files).filter(f=>f.name.endsWith('.json')); if(!toRead.length) return; let loaded=0; toRead.forEach(file=>{ let reader=new FileReader(); reader.onload=e=>{ try{ let p=JSON.parse(e.target.result); if(p.scores!==undefined&&p.alias){ if(!teamProfiles.find(x=>x.alias===p.alias)) teamProfiles.push(p); } }catch(err){} loaded++; if(loaded===toRead.length) renderTeamFileList(); }; reader.readAsText(file); }); }
-function renderTeamFileList() { let list=document.getElementById('team-file-list'); let mgrSel=document.getElementById('team-manager-sel'); let mgrRow=document.getElementById('team-manager-row'); let btn=document.getElementById('team-analyse-btn'); list.innerHTML=teamProfiles.map((p,i)=>`<div class="team-file-item"><span style="font-size:20px;">🧑</span><span style="flex:1;font-weight:500;font-size:14px;">${p.alias}</span><span style="font-size:12px;color:var(--text-muted);">${(p.scores||[]).length} games</span><button onclick="removeTeamProfile(${i})" style="border:none;background:none;cursor:pointer;">×</button></div>`).join(''); if(teamProfiles.length>=2){ mgrRow.style.display='block'; mgrSel.innerHTML='<option value="">No manager — peer group</option>'+teamProfiles.map(p=>`<option value="${p.alias}">${p.alias}</option>`).join(''); btn.disabled=false; } else { mgrRow.style.display='none'; btn.disabled=true; } }
+function handleTeamFiles(files) { let toRead = Array.from(files).filter(f=>f.name.endsWith('.json')); if(!toRead.length) return; let loaded=0; toRead.forEach(file=>{ let reader=new FileReader(); reader.onload=e=>{ try{ let p=JSON.parse(e.target.result); if(p.scores!==undefined && p.alias){ if(!teamProfiles.find(x=>x.alias===p.alias)) teamProfiles.push(p); } }catch(err){} loaded++; if(loaded===toRead.length) renderTeamFileList(); }; reader.readAsText(file); }); }
+function renderTeamFileList() { let list=document.getElementById('team-file-list'); let mgrSel=document.getElementById('team-manager-sel'); let mgrRow=document.getElementById('team-manager-row'); let btn=document.getElementById('team-analyse-btn'); list.innerHTML=teamProfiles.map((p,i)=>`<div class="team-file-item"><span style="font-size:20px;">🧑</span><span style="flex:1;font-weight:500;font-size:14px;">${p.alias}</span><span style="font-size:12px;color:var(--text-muted);">${(p.scores||[]).length} games</span><button onclick="removeTeamProfile(${i})" style="border:none;background:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:0 4px;">×</button></div>`).join(''); if(teamProfiles.length>=2){ mgrRow.style.display='block'; mgrSel.innerHTML='<option value="">No manager — peer group</option>'+teamProfiles.map(p=>`<option value="${p.alias}">${p.alias}</option>`).join(''); btn.disabled=false; }else{ mgrRow.style.display='none'; btn.disabled=true; } }
 function removeTeamProfile(i){ teamProfiles.splice(i,1); renderTeamFileList(); }
 function analyseTeam() { alert("Team analysis would run here (preserved from original)."); }
 function resetTeam() { teamProfiles=[]; document.getElementById('team-file-list').innerHTML=''; document.getElementById('team-manager-row').style.display='none'; document.getElementById('team-analyse-btn').disabled=true; document.getElementById('team-upload-area').style.display='block'; document.getElementById('team-results').style.display='none'; }
