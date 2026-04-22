@@ -1,0 +1,1722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raah Labs — Know Your Path</title>
+  <meta name="description" content="10 science-backed games. 25 minutes. Discover the careers you're built for." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --amber: #BA7517;
+      --amber-light: #FAEEDA;
+      --amber-dark: #854F0B;
+      --amber-deep: #633806;
+      --teal: #0F6E56;
+      --teal-light: #E1F5EE;
+      --red-light: #FCEBEB;
+      --red: #A32D2D;
+      --bg: #FAFAF8;
+      --surface: #F2F0EA;
+      --card: #FFFFFF;
+      --border: rgba(0,0,0,0.1);
+      --border-strong: rgba(0,0,0,0.18);
+      --text: #1A1A18;
+      --text-muted: #6B6B66;
+      --text-hint: #9A9A94;
+      --radius: 10px;
+      --radius-lg: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #17171A;
+        --surface: #1F1F24;
+        --card: #28282E;
+        --border: rgba(255,255,255,0.1);
+        --border-strong: rgba(255,255,255,0.18);
+        --text: #F0EFE8;
+        --text-muted: #9A9A94;
+        --text-hint: #6B6B66;
+        --amber-light: #2A1E0A;
+        --teal-light: #0A1E18;
+        --red-light: #1E0A0A;
+      }
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .container { max-width: 520px; margin: 0 auto; padding: 2rem 1.25rem; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 0.5px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 10; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-badge { width: 32px; height: 32px; background: var(--amber); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--amber-light); font-size: 16px; font-weight: 500; flex-shrink: 0; }
+    .logo-name { font-size: 16px; font-weight: 500; color: var(--text); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s; padding: 11px 20px; }
+    .btn-primary { background: var(--amber); color: var(--amber-light); }
+    .btn-primary:hover { background: var(--amber-dark); }
+    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-secondary { background: transparent; color: var(--text); border: 0.5px solid var(--border-strong); }
+    .btn-secondary:hover { background: var(--surface); }
+    .btn-secondary:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-full { width: 100%; padding: 13px 20px; }
+    .btn-sm { padding: 7px 14px; font-size: 13px; }
+    .card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+    .surface { background: var(--surface); border-radius: var(--radius); padding: 1rem; }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
+    input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+      width: 100%; padding: 10px 12px; border: 0.5px solid var(--border-strong); border-radius: var(--radius);
+      background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px;
+      transition: border-color 0.15s; outline: none;
+    }
+    input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(186,117,23,0.12); }
+    .tab-bar { display: flex; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+    .tab-bar button { flex: 1; padding: 10px; border: none; background: transparent; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+    .tab-bar button.active { background: var(--amber); color: var(--amber-light); }
+    .err-box { background: var(--red-light); color: var(--red); font-size: 13px; border-radius: var(--radius); padding: 9px 12px; margin-bottom: 12px; display: none; }
+    .pill { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: var(--amber-light); color: var(--amber-dark); letter-spacing: 0.02em; }
+    .tag { display: inline-block; font-size: 13px; padding: 5px 14px; border-radius: 20px; background: var(--amber-light); color: var(--amber-dark); font-weight: 500; }
+    .phone-row { display: flex; gap: 8px; }
+    .cc-badge { padding: 10px 12px; background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: var(--radius); font-size: 14px; color: var(--text); white-space: nowrap; flex-shrink: 0; }
+    .stat-grid { display: grid; gap: 10px; }
+    .stat-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .stat-cell { background: var(--surface); border-radius: var(--radius); padding: 14px; text-align: center; }
+    .stat-val { font-size: 20px; font-weight: 500; color: var(--text); }
+    .stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    .game-highlight { border: 1.5px solid var(--amber) !important; cursor: pointer; }
+    .game-highlight:hover { background: var(--amber-light); }
+    .done-border { border: 1.5px solid var(--teal) !important; }
+    .progress-track { background: var(--surface); border-radius: 4px; height: 5px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--amber); border-radius: 4px; transition: width 0.4s ease; }
+    .section-label { font-size: 11px; font-weight: 500; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 10px; }
+    .back-btn { background: none; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 0; margin-bottom: 1.25rem; display: inline-flex; align-items: center; gap: 6px; }
+    .back-btn:hover { color: var(--text); }
+    #balloon-wrap { transition: transform 0.12s ease-out; transform-origin: bottom center; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-in { animation: fadeIn 0.25s ease-out; }
+    .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
+    .score-row:last-child { border-bottom: none; }
+    /* ── Face Reading (FER / Chehra) ── */
+    .fer-face-wrap { display:flex; justify-content:center; align-items:center; margin:1rem 0; }
+    .fer-opt-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:1rem; }
+    .fer-opt { padding:15px 10px; border-radius:var(--radius); border:1.5px solid var(--border-strong); background:var(--card); color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; cursor:pointer; transition:all 0.15s; width:100%; }
+    .fer-opt:hover:not(:disabled) { border-color:var(--amber); background:var(--amber-light); }
+    .fer-opt.correct { border-color:var(--teal) !important; background:var(--teal-light) !important; color:var(--teal) !important; }
+    .fer-opt.wrong { border-color:var(--red) !important; background:var(--red-light) !important; color:var(--red) !important; }
+    .fer-opt:disabled { cursor:not-allowed; opacity:0.75; }
+    @keyframes ferPop { 0%{transform:scale(1)} 50%{transform:scale(1.04)} 100%{transform:scale(1)} }
+    .fer-pop { animation:ferPop 0.3s ease; }
+    /* ── Insight output blocks ── */
+    .insight-section { margin-bottom: 1rem; }
+    .insight-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-hint); margin-bottom: 10px; display: block; }
+    .insight-items { display: flex; flex-direction: column; gap: 8px; }
+    .insight-item { font-size: 14px; color: var(--text-muted); line-height: 1.65; display: flex; gap: 10px; align-items: flex-start; }
+    .insight-dot { color: var(--amber); font-weight: 700; flex-shrink: 0; line-height: 1.65; }
+    .blindspot-card { background: var(--red-light); border: 0.5px solid rgba(163,45,45,0.2); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+    .synthesis-card { background: var(--amber-light); border: 0.5px solid rgba(186,117,23,0.3); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+    /* ── Tower of Hanoi / Burj ── */
+    .toh-board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .toh-peg-col { display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 8px 4px 6px; border-radius: var(--radius); border: 1.5px solid transparent; transition: background 0.15s, border-color 0.15s; user-select: none; }
+    .toh-peg-col:hover { background: rgba(186,117,23,0.06); }
+    .toh-peg-col.selected { background: var(--amber-light); border-color: var(--amber); }
+    .toh-disc-area { position: relative; width: 100%; height: 120px; }
+    .toh-rod { position: absolute; left: 50%; transform: translateX(-50%); width: 7px; height: 120px; background: var(--border-strong); border-radius: 4px; top: 0; z-index: 0; }
+    .toh-disc { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 5px; z-index: 1; cursor: grab; transition: box-shadow 0.12s; }
+    .toh-disc.top-disc:hover { box-shadow: 0 0 0 2.5px var(--amber); }
+    .toh-disc.top-disc:active { cursor: grabbing; }
+    .toh-base { width: 88%; height: 7px; background: var(--text-muted); border-radius: 4px; opacity: 0.45; margin-top: 1px; }
+    .toh-peg-label { font-size: 11px; color: var(--text-hint); margin-top: 7px; text-align: center; }
+    .toh-timer-ring { font-size: 26px; font-weight: 500; color: var(--amber); line-height: 1; }
+    .toh-timer-warn { color: var(--red) !important; }
+    @keyframes tohShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
+    .toh-shake { animation: tohShake 0.35s ease-in-out; }
+    @keyframes tohWin { 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
+    .toh-win { animation: tohWin 0.4s ease-in-out 2; }
+    /* ── Context / B5 / Team ── */
+    .ctx-opt { width:100%; padding:14px 16px; border-radius:var(--radius); border:1.5px solid var(--border-strong); background:var(--card); color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; cursor:pointer; transition:all 0.15s; text-align:left; margin-bottom:8px; display:flex; align-items:center; gap:12px; }
+    .ctx-opt:hover { border-color:var(--amber); background:var(--amber-light); }
+    .ctx-opt.selected { border-color:var(--amber); background:var(--amber-light); color:var(--amber-dark); }
+    .ctx-opt .ctx-icon { font-size:20px; flex-shrink:0; }
+    .ctx-opt .ctx-text { flex:1; }
+    .ctx-opt .ctx-check { width:18px;height:18px;border-radius:50%;border:1.5px solid var(--border-strong);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:11px; }
+    .ctx-opt.selected .ctx-check { background:var(--amber);border-color:var(--amber);color:white; }
+    .b5-q { font-size:20px;font-weight:500;line-height:1.4;margin:1.5rem 0; }
+    .b5-opt { width:100%;padding:18px 20px;border-radius:var(--radius);border:1.5px solid var(--border-strong);background:var(--card);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;cursor:pointer;transition:all 0.15s;text-align:left;margin-bottom:10px;line-height:1.5; }
+    .b5-opt:hover { border-color:var(--amber); background:var(--amber-light); }
+    .team-drop { border:1.5px dashed var(--border-strong);border-radius:var(--radius-lg);padding:2rem;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--surface); }
+    .team-drop:hover,.team-drop.dragover { border-color:var(--amber);background:var(--amber-light); }
+    .team-file-item { display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface);border-radius:var(--radius);margin-bottom:6px; }
+    .team-out-section { margin-bottom:1.25rem; }
+    .team-out-label { font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-hint);margin-bottom:8px;display:block; }
+    .team-good { background:var(--teal-light);border:0.5px solid rgba(15,110,86,0.2);border-radius:var(--radius-lg);padding:1.25rem; }
+    .team-bad  { background:var(--amber-light);border:0.5px solid rgba(186,117,23,0.2);border-radius:var(--radius-lg);padding:1.25rem; }
+    .team-ugly { background:var(--red-light);border:0.5px solid rgba(163,45,45,0.2);border-radius:var(--radius-lg);padding:1.25rem; }
+    .team-dyn  { background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:0.75rem; }
+    select { width:100%;padding:10px 12px;border:0.5px solid var(--border-strong);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:15px;outline:none; }
+    select:focus { border-color:var(--amber); }
+    /* ── Go/No-Go / Ruk ── */
+    .gng-arena { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 260px; position: relative; user-select: none; }
+    .gng-shape-wrap { display: flex; align-items: center; justify-content: center; width: 160px; height: 160px; position: relative; }
+    .gng-tap-btn { width: 100%; padding: 22px; font-size: 18px; font-weight: 500; border-radius: var(--radius-lg); border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.1s; background: var(--amber); color: var(--amber-light); -webkit-tap-highlight-color: transparent; }
+    .gng-tap-btn:active { transform: scale(0.97); }
+    .gng-tap-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    @keyframes gngCorrect { 0%{background:var(--teal)} 100%{background:var(--amber)} }
+    @keyframes gngWrong   { 0%{background:var(--red)}  100%{background:var(--amber)} }
+    .gng-flash-correct { animation: gngCorrect 0.35s ease-out forwards; }
+    .gng-flash-wrong   { animation: gngWrong   0.35s ease-out forwards; }
+    .gng-feedback-strip { text-align: center; font-size: 13px; font-weight: 500; height: 20px; margin: 8px 0; transition: opacity 0.2s; }
+    .gng-stat-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1rem; }
+    .gng-stat-cell { background: var(--surface); border-radius: var(--radius); padding: 10px 8px; text-align: center; }
+    .gng-stat-val { font-size: 22px; font-weight: 500; color: var(--text); line-height: 1; }
+    .gng-stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    .gng-trial-dots { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; margin: 0.75rem 0; }
+    .gng-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border-strong); }
+    .gng-dot.hit   { background: var(--teal); }
+    .gng-dot.miss  { background: var(--text-hint); }
+    .gng-dot.fa    { background: var(--red); }
+    .gng-dot.cr    { background: var(--surface); border: 1.5px solid var(--border-strong); }
+    /* ── Game name display ── */
+    .game-name-hindi { font-size: 28px; font-weight: 500; margin: 8px 0 2px; letter-spacing: -0.01em; }
+    .game-name-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .game-intro-para { color: var(--text-muted); line-height: 1.8; font-size: 15px; margin-bottom: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="main-nav">
+  <a class="logo" href="#" onclick="goHome()">
+    <div class="logo-badge">R</div>
+    <span class="logo-name">Raah Labs</span>
+  </a>
+  <div id="nav-right">
+    <button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: LANDING
+     ═══════════════════════════════════════════ -->
+<div id="screen-landing" class="screen">
+  <div class="container" style="padding-top:3rem;">
+    <p style="font-size:11px;color:var(--amber);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Know your path</p>
+    <h1 style="font-size:30px;font-weight:500;line-height:1.3;margin-bottom:14px;">Discover the careers<br>you're built for</h1>
+    <p style="color:var(--text-muted);line-height:1.75;max-width:420px;margin-bottom:2rem;">10 science-backed games. 25 minutes. A clear picture of your personality — and where you'll thrive. Enterprise-grade assessments used by BCG and JP Morgan, now available to every student.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2.5rem;">
+      <button class="btn btn-primary" onclick="showAuth('signup')">Create free account →</button>
+      <button class="btn btn-secondary" onclick="showAuth('login')">Login</button>
+    </div>
+    <div class="stat-grid stat-grid-3" style="max-width:320px;">
+      <div class="stat-cell"><div class="stat-val">10</div><div class="stat-lbl">games</div></div>
+      <div class="stat-cell"><div class="stat-val">~25</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val" style="color:var(--amber);">₹500</div><div class="stat-lbl">one-time</div></div>
+    </div>
+    <div class="card" style="margin-top:2rem;max-width:440px;">
+      <p style="font-size:13px;font-weight:500;margin-bottom:6px;">Why Raah?</p>
+      <p style="font-size:14px;color:var(--text-muted);line-height:1.7;">Pymetrics charges thousands. Hogan, CEB, SHL charge per seat. Raah gives every Indian student the same science at 1/20th the price — with clear career direction at the end.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: AUTH
+     ═══════════════════════════════════════════ -->
+<div id="screen-auth" class="screen">
+  <div class="container" style="max-width:420px;">
+    <button class="back-btn" onclick="showScreen('landing')">← Back</button>
+    <div class="tab-bar">
+      <button id="tab-su" class="active" onclick="switchTab('signup')">Sign up</button>
+      <button id="tab-li" onclick="switchTab('login')">Login</button>
+    </div>
+    <div id="form-signup">
+      <div class="field"><label>Full name</label><input type="text" id="su-name" placeholder="Your name" /></div>
+      <div class="field"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com" /></div>
+      <div class="field">
+        <label>Mobile number</label>
+        <div class="phone-row">
+          <span class="cc-badge">🇮🇳 +91</span>
+          <input type="tel" id="su-mobile" placeholder="9876543210" maxlength="10" style="flex:1;" />
+        </div>
+        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">10-digit number, no spaces</span>
+      </div>
+      <div class="field"><label>Password</label><input type="password" id="su-pw" placeholder="Min. 6 characters" /></div>
+      <div class="err-box" id="su-err"></div>
+      <button class="btn btn-primary btn-full" id="su-btn" onclick="handleSignup()">Create account →</button>
+    </div>
+    <div id="form-login" style="display:none;">
+      <div class="field">
+        <label>Email or mobile number</label>
+        <input type="text" id="li-id" placeholder="you@email.com  or  9876543210" />
+        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">Either works</span>
+      </div>
+      <div class="field"><label>Password</label><input type="password" id="li-pw" placeholder="••••••••" /></div>
+      <div class="err-box" id="li-err"></div>
+      <button class="btn btn-primary btn-full" id="li-btn" onclick="handleLogin()">Login →</button>
+      <p style="font-size:13px;color:var(--text-muted);text-align:center;margin-top:14px;">No account yet? <a href="#" onclick="switchTab('signup')" style="color:var(--amber);text-decoration:none;">Sign up free</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: DASHBOARD
+     ═══════════════════════════════════════════ -->
+<div id="screen-dashboard" class="screen">
+  <div class="container">
+    <p id="dash-greet" style="font-size:20px;font-weight:500;margin-bottom:4px;"></p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.5rem;">Complete all 10 games to unlock your full career profile.</p>
+
+    <!-- Game 1: Dum -->
+    <div id="g1-cta" class="card game-highlight fade-in" style="margin-bottom:1rem;" onclick="showScreen('game-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 1 of 10 · Start here</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">🎈 Dum</div>
+          <div style="font-size:13px;color:var(--text-muted);">Risk · Impulse · Learning</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('game-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g1-done" style="display:none;" class="card done-border" style="margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🎈</div>
+        <div>
+          <div style="font-size:14px;font-weight:500;">Dum — complete ✓</div>
+          <div id="g1-preview" style="font-size:13px;color:var(--teal);"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('game-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- Game 2: Bharosa -->
+    <div id="g2-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('pd-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 2 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">🤝 Bharosa</div>
+          <div style="font-size:13px;color:var(--text-muted);">Cooperation · Trust · Strategy</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('pd-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g2-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🤝</div>
+        <div>
+          <div style="font-size:14px;font-weight:500;">Bharosa — complete ✓</div>
+          <div id="g2-preview" style="font-size:13px;color:var(--teal);"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('pd-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- Game 3: Burj -->
+    <div id="g3-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('toh-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 3 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">🗼 Burj</div>
+          <div style="font-size:13px;color:var(--text-muted);">Planning · Sequencing · Memory</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('toh-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g3-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🗼</div>
+        <div>
+          <div style="font-size:14px;font-weight:500;">Burj — complete ✓</div>
+          <div id="g3-preview" style="font-size:13px;color:var(--teal);"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('toh-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- Game 4: Chehra -->
+    <div id="g4-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('fer-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 4 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">😶 Chehra</div>
+          <div style="font-size:13px;color:var(--text-muted);">Emotional IQ · Empathy · Awareness</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('fer-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g4-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">😶</div>
+        <div>
+          <div style="font-size:14px;font-weight:500;">Chehra — complete ✓</div>
+          <div id="g4-preview" style="font-size:13px;color:var(--teal);"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('fer-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- Game 5: Ruk -->
+    <div id="g5-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('gng-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 5 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">⚡ Ruk</div>
+          <div style="font-size:13px;color:var(--text-muted);">Impulse control · Attention · Speed</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('gng-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g5-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">⚡</div>
+        <div>
+          <div style="font-size:14px;font-weight:500;">Ruk — complete ✓</div>
+          <div id="g5-preview" style="font-size:13px;color:var(--teal);"></div>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('gng-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div style="margin:1.25rem 0;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px;">
+        <span>Overall progress</span><span id="prog-txt">0 / 10 games</span>
+      </div>
+      <div class="progress-track"><div id="prog-fill" class="progress-fill" style="width:0%;"></div></div>
+    </div>
+
+    <!-- Scores -->
+    <div id="scores-section" style="display:none;">
+      <p class="section-label">Your results</p>
+      <div class="card" id="scores-list"></div>
+    </div>
+
+    <!-- Tools -->
+    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:0.5px solid var(--border);">
+      <p class="section-label">Tools</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <button class="btn btn-secondary" onclick="exportProfile()" style="font-size:13px;padding:12px;">📤 Export profile</button>
+        <button class="btn btn-secondary" onclick="showScreen('team')" style="font-size:13px;padding:12px;">👥 Team snapshot</button>
+      </div>
+      <p style="font-size:12px;color:var(--text-hint);margin-top:8px;line-height:1.6;">Export your profile file and share with teammates. Upload everyone's files together to see how your team operates.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: DUM INTRO (Game 1 — BART)
+     ═══════════════════════════════════════════ -->
+<div id="screen-game-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 1 of 10</span>
+    <div class="game-name-hindi">🎈 Dum</div>
+    <div class="game-name-sub">dum — breath, guts</div>
+
+    <div style="display:flex;justify-content:center;margin-bottom:1.5rem;">
+      <svg width="80" height="100" viewBox="0 0 90 110">
+        <ellipse cx="45" cy="46" rx="36" ry="42" fill="#EF9F27"/>
+        <ellipse cx="31" cy="28" rx="13" ry="9" fill="#FAC775" opacity="0.55"/>
+        <path d="M45 88 Q42 98 45 104" stroke="#BA7517" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <p class="game-intro-para">Picture a balloon sitting in front of you. Each pump fills it a little more and drops ₹5 in your pocket. The balloon gets bigger, the number climbs — and somewhere ahead, without warning, it pops. Pop before you collect, the round's money vanishes. Stop too early and you're leaving cash on the table. This is 30 rounds of that exact tension. Blue balloons are safer. Yellow are trickier. Red ones can go at any moment.</p>
+
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">30</div><div class="stat-lbl">balloons</div></div>
+      <div class="stat-cell"><div class="stat-val">~5</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">3</div><div class="stat-lbl">colours</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startGame()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: DUM GAME
+     ═══════════════════════════════════════════ -->
+<div id="screen-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--text-muted);">Balloon <span id="g-num">1</span> of 30</span>
+      <span style="font-size:13px;color:var(--text-muted);">Banked: <strong id="g-banked" style="color:var(--text);">₹0</strong></span>
+    </div>
+    <div class="progress-track" style="margin-bottom:1.75rem;"><div id="g-prog" class="progress-fill" style="width:3.33%;"></div></div>
+    <div style="display:flex;justify-content:center;min-height:190px;align-items:center;position:relative;margin-bottom:1rem;">
+      <div id="balloon-wrap">
+        <svg width="110" height="140" viewBox="0 0 110 140">
+          <ellipse id="b-body" cx="55" cy="58" rx="44" ry="52" fill="#EF9F27"/>
+          <ellipse id="b-shine" cx="38" cy="35" rx="15" ry="10" fill="#FAC775" opacity="0.5"/>
+          <path d="M55 110 Q52 122 55 128" stroke="#BA7517" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div id="g-boom" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:60px;line-height:1;">💥</div>
+    </div>
+    <div style="text-align:center;margin-bottom:6px;">
+      <span id="g-badge" style="display:inline-block;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;"></span>
+    </div>
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">This balloon worth</div>
+      <div id="g-earn" style="font-size:38px;font-weight:500;color:var(--amber);line-height:1.1;">₹0</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:5px;">Pumps: <span id="g-pumps">0</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+      <button id="g-pbtn" class="btn btn-secondary" style="padding:18px;font-size:16px;" onclick="pump()">Pump 🎈</button>
+      <button id="g-cbtn" class="btn btn-primary" style="padding:18px;" onclick="collect()">Collect ₹<span id="g-camt">0</span></button>
+    </div>
+    <p style="font-size:12px;color:var(--text-hint);text-align:center;">Blue = safer · Yellow = medium · Red = volatile</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: DUM RESULTS
+     ═══════════════════════════════════════════ -->
+<div id="screen-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🎈</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Dum — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 1 · Risk &amp; Impulse</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Risk score</div>
+      <div id="r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">avg pumps on safe balloons</div>
+      <div id="r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1rem;">
+      <div class="stat-cell"><div id="r-banked" class="stat-val"></div><div class="stat-lbl">Banked</div></div>
+      <div class="stat-cell"><div id="r-pops" class="stat-val"></div><div class="stat-lbl">Pops</div></div>
+      <div class="stat-cell"><div id="r-trend" class="stat-val" style="font-size:15px;"></div><div class="stat-lbl">Trend</div></div>
+    </div>
+    <div class="card insight-section"><p class="insight-label">🟡 Sounds like you</p><div id="r-traits" class="insight-items"></div></div>
+    <div class="card insight-section"><p class="insight-label">🟢 Where you'll probably land well</p><div id="r-envs" class="insight-items"></div></div>
+    <div class="blindspot-card"><p class="insight-label" style="color:var(--red);">⚠️ The honest bit</p><p id="r-blindspot" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <div id="r-synthesis-wrap" class="synthesis-card" style="display:none;"><p class="insight-label">🔗 What your games together suggest</p><p id="r-synthesis" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('BART')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: BHAROSA INTRO (Game 2 — PD)
+     ═══════════════════════════════════════════ -->
+<div id="screen-pd-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 2 of 10</span>
+    <div class="game-name-hindi">🤝 Bharosa</div>
+    <div class="game-name-sub">bharosa — trust</div>
+
+    <div style="text-align:center;margin-bottom:1.25rem;">
+      <svg width="96" height="72" viewBox="0 0 96 72">
+        <rect x="4" y="20" width="38" height="32" rx="8" fill="var(--amber)" opacity="0.18"/>
+        <rect x="54" y="20" width="38" height="32" rx="8" fill="var(--amber)" opacity="0.18"/>
+        <text x="23" y="42" text-anchor="middle" font-size="22" font-family="sans-serif">🤝</text>
+        <text x="73" y="42" text-anchor="middle" font-size="22" font-family="sans-serif">🤖</text>
+        <path d="M42 36 Q48 28 54 36" stroke="var(--amber)" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
+      </svg>
+    </div>
+
+    <p class="game-intro-para">You're paired with a stranger — an AI — and neither of you can talk. Each round, you both make a move at the same time: work together, or look out for yourself. If you both cooperate, you both win something. But if you cooperate and they don't, you get nothing while they pocket more. The AI watches every move you make and adjusts its strategy round by round. Ten rounds. No chat. Just choices.</p>
+
+    <div class="card" style="margin-bottom:1rem;">
+      <p style="font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">How points work</p>
+      <div style="display:grid;gap:7px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;"><span>Both cooperate</span><span style="color:var(--teal);font-weight:500;">+3 each 🤝</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;"><span>You defect, AI cooperates</span><span style="color:var(--amber);font-weight:500;">+5 you, +0 AI</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;"><span>You cooperate, AI defects</span><span style="color:var(--red);font-weight:500;">+0 you, +5 AI</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;"><span>Both defect</span><span style="color:var(--text-muted);font-weight:500;">+1 each 😐</span></div>
+      </div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">10</div><div class="stat-lbl">rounds</div></div>
+      <div class="stat-cell"><div class="stat-val">~3</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">4</div><div class="stat-lbl">profiles</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startPD()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: BHAROSA GAME
+     ═══════════════════════════════════════════ -->
+<div id="screen-pd-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--text-muted);">Round <span id="pd-round-num">1</span> of 10</span>
+      <span style="font-size:13px;color:var(--text-muted);">You: <strong id="pd-your-score" style="color:var(--text);">0</strong> · AI: <strong id="pd-ai-score" style="color:var(--text-muted);">0</strong></span>
+    </div>
+    <div class="progress-track" style="margin-bottom:1.5rem;"><div id="pd-prog" class="progress-fill" style="width:0%;"></div></div>
+    <div id="pd-history" style="margin-bottom:1.25rem;"></div>
+    <div id="pd-choice-state">
+      <p style="font-size:15px;font-weight:500;margin-bottom:14px;text-align:center;">What do you do this round?</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+        <button class="btn btn-secondary" style="padding:22px 10px;font-size:15px;flex-direction:column;gap:8px;height:auto;" onclick="pdChoice('C')">
+          <span style="font-size:30px;">🤝</span><span style="font-size:14px;font-weight:500;">Cooperate</span><span style="font-size:11px;color:var(--text-hint);">+3 if mutual</span>
+        </button>
+        <button class="btn btn-primary" style="padding:22px 10px;font-size:15px;flex-direction:column;gap:8px;height:auto;" onclick="pdChoice('D')">
+          <span style="font-size:30px;">🔪</span><span style="font-size:14px;font-weight:500;">Defect</span><span style="font-size:11px;opacity:0.7;">+5 if AI cooperates</span>
+        </button>
+      </div>
+      <p style="font-size:11px;color:var(--text-hint);text-align:center;">Simultaneous reveal — AI doesn't know your choice yet</p>
+    </div>
+    <div id="pd-reveal-state" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div class="surface" style="text-align:center;padding:1.25rem 0.75rem;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">You</div>
+          <div id="pd-reveal-you" style="font-size:36px;margin-bottom:6px;"></div>
+          <div id="pd-reveal-you-label" style="font-size:13px;font-weight:500;"></div>
+        </div>
+        <div class="surface" style="text-align:center;padding:1.25rem 0.75rem;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">AI</div>
+          <div id="pd-reveal-ai" style="font-size:36px;margin-bottom:6px;"></div>
+          <div id="pd-reveal-ai-label" style="font-size:13px;font-weight:500;"></div>
+        </div>
+      </div>
+      <div id="pd-round-outcome" class="surface" style="text-align:center;padding:1rem;margin-bottom:1rem;font-size:14px;line-height:1.6;"></div>
+      <button id="pd-next-btn" class="btn btn-primary btn-full" style="padding:14px;" onclick="pdNextRound()">Next round →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: BHAROSA RESULTS
+     ═══════════════════════════════════════════ -->
+<div id="screen-pd-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🤝</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Bharosa — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 2 · Cooperation &amp; Strategy</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Cooperation score</div>
+      <div id="pd-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="pd-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1rem;">
+      <div class="stat-cell"><div id="pd-r-coop" class="stat-val"></div><div class="stat-lbl">Cooperated</div></div>
+      <div class="stat-cell"><div id="pd-r-defect" class="stat-val"></div><div class="stat-lbl">Defected</div></div>
+      <div class="stat-cell"><div id="pd-r-open" class="stat-val" style="font-size:13px;"></div><div class="stat-lbl">Opening move</div></div>
+    </div>
+    <div class="card insight-section"><p class="insight-label">🟡 Sounds like you</p><div id="pd-r-traits" class="insight-items"></div></div>
+    <div class="card insight-section"><p class="insight-label">🟢 Where you'll probably land well</p><div id="pd-r-envs" class="insight-items"></div></div>
+    <div class="blindspot-card"><p class="insight-label" style="color:var(--red);">⚠️ The honest bit</p><p id="pd-r-blindspot" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <div id="pd-r-synthesis-wrap" class="synthesis-card" style="display:none;"><p class="insight-label">🔗 What your games together suggest</p><p id="pd-r-synthesis" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('PD')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: BURJ INTRO (Game 3 — TOH)
+     ═══════════════════════════════════════════ -->
+<div id="screen-toh-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 3 of 10</span>
+    <div class="game-name-hindi">🗼 Burj</div>
+    <div class="game-name-sub">burj — tower</div>
+
+    <div style="display:flex;justify-content:center;margin-bottom:1.25rem;">
+      <svg width="200" height="88" viewBox="0 0 200 88">
+        <defs><marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#BA7517"/></marker></defs>
+        <rect x="5" y="74" width="56" height="7" rx="3" fill="#9A9A94" opacity="0.5"/>
+        <rect x="72" y="74" width="56" height="7" rx="3" fill="#9A9A94" opacity="0.5"/>
+        <rect x="139" y="74" width="56" height="7" rx="3" fill="#9A9A94" opacity="0.5"/>
+        <rect x="30" y="12" width="7" height="63" rx="3" fill="#9A9A94" opacity="0.4"/>
+        <rect x="97" y="12" width="7" height="63" rx="3" fill="#9A9A94" opacity="0.4"/>
+        <rect x="164" y="12" width="7" height="63" rx="3" fill="#9A9A94" opacity="0.4"/>
+        <rect x="6" y="65" width="56" height="10" rx="5" fill="#7C3F0A"/>
+        <rect x="11" y="54" width="46" height="10" rx="5" fill="#BA7517"/>
+        <rect x="16" y="43" width="36" height="10" rx="5" fill="#E8A840"/>
+        <rect x="21" y="32" width="26" height="10" rx="5" fill="#F5C870"/>
+        <line x1="68" y1="44" x2="134" y2="44" stroke="#BA7517" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowhead)"/>
+        <text x="167" y="10" text-anchor="middle" font-size="10" fill="#BA7517" font-family="DM Sans, sans-serif" font-weight="500">GOAL</text>
+      </svg>
+    </div>
+
+    <p class="game-intro-para">Three pegs. Four discs stacked on the first one — largest at the bottom, smallest on top. Your job: move the whole stack to the third peg. One disc at a time. A bigger disc can never sit on a smaller one. Sounds manageable until you're five moves deep and realize every path forward requires undoing what you just did. You have three minutes. An undo is allowed, but it costs you a move.</p>
+
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">4</div><div class="stat-lbl">discs</div></div>
+      <div class="stat-cell"><div class="stat-val">3:00</div><div class="stat-lbl">time limit</div></div>
+      <div class="stat-cell"><div class="stat-val">15</div><div class="stat-lbl">optimal moves</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startTOH()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: BURJ GAME
+     ═══════════════════════════════════════════ -->
+<div id="screen-toh-game" class="screen">
+  <div class="container" style="max-width:520px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:0.875rem;">
+      <div class="surface" style="padding:10px 8px;text-align:center;">
+        <div class="toh-timer-ring" id="toh-timer">3:00</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">time left</div>
+      </div>
+      <div class="surface" style="padding:10px 8px;text-align:center;">
+        <div style="font-size:26px;font-weight:500;color:var(--text);" id="toh-moves">0</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">moves</div>
+      </div>
+      <div class="surface" style="padding:10px 8px;text-align:center;">
+        <div style="font-size:26px;font-weight:500;color:var(--text-muted);" id="toh-undos">0</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">undos</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-hint);text-align:center;margin-bottom:0.75rem;">Tap a peg to select · Tap again to place · Drag on desktop</p>
+    <div id="toh-board" class="toh-board" style="background:var(--surface);border-radius:var(--radius-lg);padding:12px 10px;margin-bottom:0.875rem;"></div>
+    <p style="font-size:12px;font-weight:500;color:var(--amber);text-align:center;margin-bottom:0.875rem;">🎯 Move all discs to Peg 3</p>
+    <button class="btn btn-secondary btn-full" onclick="tohUndo()" style="font-size:13px;">↩ Undo  <span style="color:var(--text-hint);font-size:12px;">(costs 1 move)</span></button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: BURJ RESULTS
+     ═══════════════════════════════════════════ -->
+<div id="screen-toh-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🗼</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Burj — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 3 · Planning &amp; Sequencing</p>
+      <p id="toh-r-completed" style="font-size:14px;font-weight:500;margin-top:6px;"></p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Planning score</div>
+      <div id="toh-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="toh-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1rem;">
+      <div class="stat-cell"><div id="toh-r-moves" class="stat-val"></div><div class="stat-lbl">Moves</div></div>
+      <div class="stat-cell"><div id="toh-r-undos" class="stat-val"></div><div class="stat-lbl">Undos</div></div>
+      <div class="stat-cell"><div id="toh-r-time" class="stat-val"></div><div class="stat-lbl">Time used</div></div>
+    </div>
+    <div class="card insight-section"><p class="insight-label">🟡 Sounds like you</p><div id="toh-r-traits" class="insight-items"></div></div>
+    <div class="card insight-section"><p class="insight-label">🟢 Where you'll probably land well</p><div id="toh-r-envs" class="insight-items"></div></div>
+    <div class="blindspot-card"><p class="insight-label" style="color:var(--red);">⚠️ The honest bit</p><p id="toh-r-blindspot" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <div id="toh-r-synthesis-wrap" class="synthesis-card" style="display:none;"><p class="insight-label">🔗 What your games together suggest</p><p id="toh-r-synthesis" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('TOH')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: CHEHRA INTRO (Game 4 — FER)
+     ═══════════════════════════════════════════ -->
+<div id="screen-fer-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 4 of 10</span>
+    <div class="game-name-hindi">😶 Chehra</div>
+    <div class="game-name-sub">chehra — face</div>
+
+    <div style="display:flex;justify-content:center;margin-bottom:1.25rem;">
+      <svg width="200" height="80" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="22" cy="40" r="18" fill="#F0C8A0"/>
+        <path d="M14,46 Q22,55 30,46" stroke="#1E1E1E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="16" cy="36" rx="4" ry="4.5" fill="#1E1E1E"/>
+        <ellipse cx="28" cy="36" rx="4" ry="4.5" fill="#1E1E1E"/>
+        <circle cx="72" cy="40" r="18" fill="#F0C8A0"/>
+        <path d="M64,52 Q72,43 80,52" stroke="#1E1E1E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="66" cy="37" rx="4" ry="4.5" fill="#1E1E1E"/>
+        <ellipse cx="78" cy="37" rx="4" ry="4.5" fill="#1E1E1E"/>
+        <circle cx="128" cy="40" r="18" fill="#F0C8A0"/>
+        <path d="M120,52 Q128,43 136,52" stroke="#1E1E1E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <ellipse cx="122" cy="37" rx="4" ry="3.5" fill="#1E1E1E"/>
+        <ellipse cx="134" cy="37" rx="4" ry="3.5" fill="#1E1E1E"/>
+        <circle cx="178" cy="40" r="18" fill="#F0C8A0"/>
+        <ellipse cx="178" cy="50" rx="6" ry="7" fill="#1E1E1E"/>
+        <ellipse cx="170" cy="35" rx="5" ry="5.5" fill="#1E1E1E"/>
+        <ellipse cx="186" cy="35" rx="5" ry="5.5" fill="#1E1E1E"/>
+      </svg>
+    </div>
+
+    <p class="game-intro-para">Sixteen faces appear on screen, one at a time. Each one is showing you something. Your job is to pick what that something is — from four options. No timer, no pressure to rush. Just you, a face, and your read of it. Some are obvious. Some aren't. The ones that aren't are the interesting ones.</p>
+
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">16</div><div class="stat-lbl">faces</div></div>
+      <div class="stat-cell"><div class="stat-val">~3</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">8</div><div class="stat-lbl">emotions</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startFER()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: CHEHRA GAME
+     ═══════════════════════════════════════════ -->
+<div id="screen-fer-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--text-muted);">Face <span id="fer-num">1</span> of 16</span>
+      <span id="fer-feedback-pill" style="font-size:13px;font-weight:500;display:none;"></span>
+    </div>
+    <div class="progress-track" style="margin-bottom:1.25rem;"><div id="fer-prog" class="progress-fill" style="width:6.25%;"></div></div>
+    <div class="fer-face-wrap" id="fer-face-display"></div>
+    <p style="text-align:center;font-size:14px;color:var(--text-muted);margin-bottom:1rem;font-weight:500;">What emotion do you see?</p>
+    <div class="fer-opt-grid" id="fer-opts"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: CHEHRA RESULTS
+     ═══════════════════════════════════════════ -->
+<div id="screen-fer-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🧠</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Chehra — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 4 · Emotional IQ</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Emotional IQ score</div>
+      <div id="fer-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="fer-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1rem;">
+      <div class="stat-cell"><div id="fer-r-correct" class="stat-val"></div><div class="stat-lbl">Correct</div></div>
+      <div class="stat-cell"><div id="fer-r-wrong" class="stat-val"></div><div class="stat-lbl">Missed</div></div>
+      <div class="stat-cell"><div id="fer-r-accuracy" class="stat-val"></div><div class="stat-lbl">Accuracy</div></div>
+    </div>
+    <div class="card insight-section"><p class="insight-label">🟡 Sounds like you</p><div id="fer-r-traits" class="insight-items"></div></div>
+    <div class="card insight-section"><p class="insight-label">🟢 Where you'll probably land well</p><div id="fer-r-envs" class="insight-items"></div></div>
+    <div class="blindspot-card"><p class="insight-label" style="color:var(--red);">⚠️ The honest bit</p><p id="fer-r-blindspot" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <div id="fer-r-synthesis-wrap" class="synthesis-card" style="display:none;"><p class="insight-label">🔗 What your games together suggest</p><p id="fer-r-synthesis" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('FER')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: RUK INTRO (Game 5 — GNG)
+     ═══════════════════════════════════════════ -->
+<div id="screen-gng-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 5 of 10</span>
+    <div class="game-name-hindi">⚡ Ruk</div>
+    <div class="game-name-sub">ruk — stop</div>
+
+    <div style="display:flex;justify-content:center;gap:28px;margin-bottom:1.5rem;align-items:center;">
+      <div style="text-align:center;">
+        <svg width="72" height="72" viewBox="0 0 72 72">
+          <circle cx="36" cy="36" r="30" fill="#0F6E56" opacity="0.15" stroke="#0F6E56" stroke-width="2.5"/>
+          <circle cx="36" cy="36" r="20" fill="#0F6E56" opacity="0.55"/>
+        </svg>
+        <div style="font-size:13px;font-weight:500;color:var(--teal);margin-top:6px;">TAP ✓</div>
+        <div style="font-size:11px;color:var(--text-muted);">Circle = Go</div>
+      </div>
+      <div style="font-size:28px;color:var(--text-hint);">vs</div>
+      <div style="text-align:center;">
+        <svg width="72" height="72" viewBox="0 0 72 72">
+          <rect x="8" y="8" width="56" height="56" rx="6" fill="#A32D2D" opacity="0.12" stroke="#A32D2D" stroke-width="2.5"/>
+          <rect x="18" y="18" width="36" height="36" rx="4" fill="#A32D2D" opacity="0.5"/>
+        </svg>
+        <div style="font-size:13px;font-weight:500;color:var(--red);margin-top:6px;">HOLD BACK ✗</div>
+        <div style="font-size:11px;color:var(--text-muted);">Square = No-Go</div>
+      </div>
+    </div>
+
+    <p class="game-intro-para">Shapes will flash on screen — fast. When you see a circle, hit the button. When you see a square, don't touch anything. Your brain will want to tap everything that appears. That's the whole trap. Forty rounds, each shape visible for less than a third of a second. Quick enough to feel easy. Long enough to get under your skin.</p>
+
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">40</div><div class="stat-lbl">trials</div></div>
+      <div class="stat-cell"><div class="stat-val">~3</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">75%</div><div class="stat-lbl">are Go trials</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startGNG()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: RUK GAME
+     ═══════════════════════════════════════════ -->
+<div id="screen-gng-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div class="gng-stat-bar">
+      <div class="gng-stat-cell"><div class="gng-stat-val" id="gng-trial-num">1</div><div class="gng-stat-lbl">of 40</div></div>
+      <div class="gng-stat-cell"><div class="gng-stat-val" id="gng-hits" style="color:var(--teal);">0</div><div class="gng-stat-lbl">hits</div></div>
+      <div class="gng-stat-cell"><div class="gng-stat-val" id="gng-errors" style="color:var(--red);">0</div><div class="gng-stat-lbl">errors</div></div>
+    </div>
+    <div class="gng-trial-dots" id="gng-dots"></div>
+    <div class="gng-arena" id="gng-arena">
+      <div class="gng-shape-wrap" id="gng-shape-wrap"></div>
+      <div class="gng-feedback-strip" id="gng-feedback"></div>
+    </div>
+    <button class="gng-tap-btn" id="gng-tap-btn" onclick="gngTap()">TAP</button>
+    <p style="font-size:12px;color:var(--text-hint);text-align:center;margin-top:10px;">Circle → tap · Square → don't</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: RUK RESULTS
+     ═══════════════════════════════════════════ -->
+<div id="screen-gng-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">⚡</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Ruk — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 5 · Impulse Control &amp; Attention</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Impulse control score</div>
+      <div id="gng-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="gng-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1rem;">
+      <div class="stat-cell"><div id="gng-r-hits" class="stat-val"></div><div class="stat-lbl">Hits</div></div>
+      <div class="stat-cell"><div id="gng-r-fa" class="stat-val" style="color:var(--red);"></div><div class="stat-lbl">False alarms</div></div>
+      <div class="stat-cell"><div id="gng-r-rt" class="stat-val"></div><div class="stat-lbl">Avg RT (ms)</div></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1rem;">
+      <div class="stat-cell"><div id="gng-r-misses" class="stat-val"></div><div class="stat-lbl">Misses</div></div>
+      <div class="stat-cell"><div id="gng-r-fatigue" class="stat-val" style="font-size:14px;"></div><div class="stat-lbl">Attention trend</div></div>
+      <div class="stat-cell"><div id="gng-r-acc" class="stat-val"></div><div class="stat-lbl">Accuracy</div></div>
+    </div>
+    <div style="margin-bottom:1rem;">
+      <p style="font-size:11px;color:var(--text-hint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Trial map</p>
+      <div class="gng-trial-dots" id="gng-r-dots"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+        <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--teal);display:inline-block;"></span>Hit</span>
+        <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--text-hint);display:inline-block;"></span>Miss</span>
+        <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--red);display:inline-block;"></span>False alarm</span>
+        <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border-strong);display:inline-block;"></span>Correct reject</span>
+      </div>
+    </div>
+    <div class="card insight-section"><p class="insight-label">🟡 Sounds like you</p><div id="gng-r-traits" class="insight-items"></div></div>
+    <div class="card insight-section"><p class="insight-label">🟢 Where you'll probably land well</p><div id="gng-r-envs" class="insight-items"></div></div>
+    <div class="blindspot-card"><p class="insight-label" style="color:var(--red);">⚠️ The honest bit</p><p id="gng-r-blindspot" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <div id="gng-r-synthesis-wrap" class="synthesis-card" style="display:none;"><p class="insight-label">🔗 What your games together suggest</p><p id="gng-r-synthesis" style="font-size:14px;color:var(--text-muted);line-height:1.75;"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('GNG')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: CONTEXT CAPTURE
+     ═══════════════════════════════════════════ -->
+<div id="screen-context" class="screen">
+  <div class="container" style="max-width:480px;">
+    <span class="pill">Almost there</span>
+    <h1 style="font-size:22px;font-weight:500;margin:10px 0 6px;">A few things about you</h1>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.75rem;">Helps us make the results actually about you — not just anyone who plays the games.</p>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">Gender</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem;">
+      <button class="ctx-opt" id="ctx-g-m" onclick="ctxSelect('gender','M',['ctx-g-m','ctx-g-f','ctx-g-nb','ctx-g-skip'])"><span class="ctx-icon">👨</span><span class="ctx-text">Male</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-g-f" onclick="ctxSelect('gender','F',['ctx-g-m','ctx-g-f','ctx-g-nb','ctx-g-skip'])"><span class="ctx-icon">👩</span><span class="ctx-text">Female</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-g-nb" onclick="ctxSelect('gender','NB',['ctx-g-m','ctx-g-f','ctx-g-nb','ctx-g-skip'])"><span class="ctx-icon">🧑</span><span class="ctx-text">Non-binary</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-g-skip" onclick="ctxSelect('gender','skip',['ctx-g-m','ctx-g-f','ctx-g-nb','ctx-g-skip'])"><span class="ctx-icon">🤐</span><span class="ctx-text">Skip</span><span class="ctx-check">✓</span></button>
+    </div>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">Birth year</p>
+    <div style="margin-bottom:1.5rem;"><select id="ctx-dob-year" onchange="ctxSetVal('dobYear',this.value)"><option value="">Select year</option></select></div>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">Where you are right now</p>
+    <div style="margin-bottom:1.5rem;">
+      <button class="ctx-opt" id="ctx-w-startup" onclick="ctxSelect('work','startup',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🚀</span><span class="ctx-text">Fast startup / small company</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-w-mnc" onclick="ctxSelect('work','mnc',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🏢</span><span class="ctx-text">Large company / MNC</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-w-family" onclick="ctxSelect('work','family',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🏠</span><span class="ctx-text">Family business</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-w-govt" onclick="ctxSelect('work','govt',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🏛️</span><span class="ctx-text">Government / PSU</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-w-study" onclick="ctxSelect('work','studying',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🎓</span><span class="ctx-text">Still studying</span><span class="ctx-check">✓</span></button>
+    </div>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">What you're aiming for</p>
+    <div style="margin-bottom:1.75rem;">
+      <button class="ctx-opt" id="ctx-a-own" onclick="ctxSelect('aspiration','own',['ctx-a-own','ctx-a-lead','ctx-a-deep','ctx-a-fig'])"><span class="ctx-icon">⚡</span><span class="ctx-text">Build my own thing eventually</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-a-lead" onclick="ctxSelect('aspiration','lead',['ctx-a-own','ctx-a-lead','ctx-a-deep','ctx-a-fig'])"><span class="ctx-icon">🧭</span><span class="ctx-text">Lead teams and organizations</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-a-deep" onclick="ctxSelect('aspiration','deep',['ctx-a-own','ctx-a-lead','ctx-a-deep','ctx-a-fig'])"><span class="ctx-icon">🔬</span><span class="ctx-text">Go deep in my field</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-a-fig" onclick="ctxSelect('aspiration','figuring',['ctx-a-own','ctx-a-lead','ctx-a-deep','ctx-a-fig'])"><span class="ctx-icon">🌀</span><span class="ctx-text">Still figuring it out</span><span class="ctx-check">✓</span></button>
+    </div>
+    <div class="err-box" id="ctx-err"></div>
+    <button class="btn btn-primary btn-full" style="padding:15px;" onclick="saveContext()">Let's go →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: B5 QUESTION
+     ═══════════════════════════════════════════ -->
+<div id="screen-b5" class="screen">
+  <div class="container" style="max-width:480px;padding-top:3rem;">
+    <span class="pill" id="b5-pill">Quick question</span>
+    <p class="b5-q" id="b5-question"></p>
+    <div id="b5-options"></div>
+    <p style="font-size:12px;color:var(--text-hint);margin-top:1rem;">No right answers. This is just how you see yourself — the games tell us what you actually do.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SCREEN: TEAM DYNAMICS
+     ═══════════════════════════════════════════ -->
+<div id="screen-team" class="screen">
+  <div class="container" style="max-width:520px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Team snapshot</span>
+    <h1 style="font-size:22px;font-weight:500;margin:10px 0 6px;">How does your team operate?</h1>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.5rem;">Upload profile files from each team member. Everyone exports their own file from their dashboard — you upload them all here.</p>
+    <div id="team-upload-area">
+      <div class="team-drop" id="team-dropzone" onclick="document.getElementById('team-file-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleTeamDrop(event)">
+        <div style="font-size:32px;margin-bottom:8px;">📂</div>
+        <p style="font-weight:500;margin-bottom:4px;">Drop profile files here</p>
+        <p style="font-size:13px;color:var(--text-muted);">or tap to choose — upload 2 to 10 files</p>
+      </div>
+      <input type="file" id="team-file-input" accept=".json" multiple style="display:none;" onchange="handleTeamFiles(this.files)" />
+      <div id="team-file-list" style="margin-top:1rem;"></div>
+      <div id="team-manager-row" style="display:none;margin-top:1rem;">
+        <p style="font-size:13px;font-weight:500;margin-bottom:6px;">Who's the manager?</p>
+        <select id="team-manager-sel"><option value="">No manager — peer group</option></select>
+        <p style="font-size:12px;color:var(--text-hint);margin-top:5px;">Leave blank if this is a peer-only group.</p>
+      </div>
+      <div style="margin-top:1.25rem;">
+        <button class="btn btn-primary btn-full" style="padding:14px;" id="team-analyse-btn" onclick="analyseTeam()" disabled>Analyse team →</button>
+      </div>
+    </div>
+    <div id="team-results" style="display:none;margin-top:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+        <p style="font-size:16px;font-weight:500;">Your team picture</p>
+        <button class="btn btn-secondary btn-sm" onclick="resetTeam()">Start over</button>
+      </div>
+      <div class="team-out-section"><span class="team-out-label">✅ The good</span><div class="team-good"><p id="team-good-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
+      <div class="team-out-section"><span class="team-out-label">⚠️ The bad</span><div class="team-bad"><p id="team-bad-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
+      <div class="team-out-section"><span class="team-out-label">🔥 The ugly</span><div class="team-ugly"><p id="team-ugly-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
+      <div id="team-mgr-section" style="display:none;" class="team-out-section">
+        <span class="team-out-label">🧭 Manager ↔ team dynamic</span>
+        <div id="team-mgr-text"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// CORE UTILITIES
+// ═══════════════════════════════════════════════════════════
+const BC = {
+  blue:   { fill:'#3b82f6', shine:'#93c5fd', label:'Blue — lower risk',   bg:'#E6F1FB', tc:'#1e40af', max:64 },
+  yellow: { fill:'#d97706', shine:'#fcd34d', label:'Yellow — medium risk', bg:'#FEF3C7', tc:'#92400e', max:32 },
+  red:    { fill:'#dc2626', shine:'#fca5a5', label:'Red — higher risk',    bg:'#FEE2E2', tc:'#991b1b', max:16 }
+};
+const EARN = 5, TOTAL = 30;
+let user = null, gameActive = false;
+let balloons = [], ti = 0, pumps = 0, thresh = 0, bcol = '', banked = 0, trials = [];
+
+function safeKey(prefix, val) { return prefix + val.toLowerCase().replace(/[^a-z0-9]/g, '_'); }
+function lsGet(k) { try { return localStorage.getItem(k); } catch(e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); return true; } catch(e) { return false; } }
+function lsDel(k) { try { localStorage.removeItem(k); } catch(e) {} }
+
+// ═══════════════════════════════════════════════════════════
+// ROUTING
+// ═══════════════════════════════════════════════════════════
+const SCREENS = ['landing','auth','context','b5','dashboard','game-intro','game','results',
+  'pd-intro','pd-game','pd-results','toh-intro','toh-game','toh-results',
+  'fer-intro','fer-game','fer-results',
+  'gng-intro','gng-game','gng-results',
+  'team'];
+
+function showScreen(id) {
+  SCREENS.forEach(s => { const el = document.getElementById('screen-' + s); if (el) el.classList.remove('active'); });
+  const target = document.getElementById('screen-' + id);
+  if (target) target.classList.add('active');
+  updateNav(id);
+}
+
+function updateNav(id) {
+  const nr = document.getElementById('nav-right');
+  const loggedIn = ['dashboard','context','b5','game-intro','game','results',
+    'pd-intro','pd-game','pd-results','toh-intro','toh-game','toh-results',
+    'fer-intro','fer-game','fer-results','gng-intro','gng-game','gng-results','team'];
+  nr.innerHTML = loggedIn.includes(id)
+    ? `<button class="btn btn-secondary btn-sm" onclick="handleLogout()">Logout</button>`
+    : `<button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>`;
+}
+
+function goHome() { if (user) { enterDashboard(); } else { showScreen('landing'); } }
+
+// ═══════════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════════
+function showAuth(tab) { showScreen('auth'); switchTab(tab); }
+function switchTab(tab) {
+  document.getElementById('form-signup').style.display = tab === 'signup' ? 'block' : 'none';
+  document.getElementById('form-login').style.display  = tab === 'login'  ? 'block' : 'none';
+  document.getElementById('tab-su').classList.toggle('active', tab === 'signup');
+  document.getElementById('tab-li').classList.toggle('active', tab === 'login');
+}
+function showErr(id, msg) { const e = document.getElementById(id); if(e){e.textContent=msg;e.style.display='block';} }
+function clrErr(id) { const e = document.getElementById(id); if(e) e.style.display='none'; }
+
+function handleSignup() {
+  clrErr('su-err');
+  const name=document.getElementById('su-name').value.trim();
+  const email=document.getElementById('su-email').value.trim().toLowerCase();
+  const mobile=document.getElementById('su-mobile').value.replace(/\s/g,'');
+  const pw=document.getElementById('su-pw').value;
+  if (!name) { showErr('su-err','Enter your name.'); return; }
+  if (!email||!email.includes('@')) { showErr('su-err','Enter a valid email address.'); return; }
+  if (!mobile||mobile.length!==10||!/^\d+$/.test(mobile)) { showErr('su-err','Enter a valid 10-digit mobile number.'); return; }
+  if (!pw||pw.length<6) { showErr('su-err','Password must be at least 6 characters.'); return; }
+  const btn=document.getElementById('su-btn'); btn.disabled=true; btn.textContent='Creating account...';
+  const emailKey=safeKey('rl_ue_',email); const mobileKey=safeKey('rl_um_',mobile);
+  if (lsGet(emailKey)) { showErr('su-err','Email already registered.'); btn.disabled=false; btn.textContent='Create account →'; return; }
+  if (lsGet(mobileKey)) { showErr('su-err','Mobile already registered.'); btn.disabled=false; btn.textContent='Create account →'; return; }
+  const u={name,email,mobile,password:pw,scores:[],createdAt:new Date().toISOString()};
+  lsSet(emailKey,JSON.stringify(u)); lsSet(mobileKey,JSON.stringify({emailKey}));
+  lsSet('rl_session',JSON.stringify({emailKey,name}));
+  user=u; btn.disabled=false; btn.textContent='Create account →'; showContextScreen();
+}
+
+function handleLogin() {
+  clrErr('li-err');
+  const id=document.getElementById('li-id').value.trim().toLowerCase();
+  const pw=document.getElementById('li-pw').value;
+  if (!id) { showErr('li-err','Enter your email or mobile number.'); return; }
+  if (!pw) { showErr('li-err','Enter your password.'); return; }
+  const btn=document.getElementById('li-btn'); btn.disabled=true; btn.textContent='Logging in...';
+  let uData=null; const cleanId=id.replace(/\s/g,'');
+  if (/^\d{10}$/.test(cleanId)) {
+    const mref=lsGet(safeKey('rl_um_',cleanId));
+    if (!mref) { showErr('li-err','No account with this mobile number.'); btn.disabled=false; btn.textContent='Login →'; return; }
+    const ur=lsGet(JSON.parse(mref).emailKey); if (ur) uData=JSON.parse(ur);
+  } else {
+    const ur=lsGet(safeKey('rl_ue_',id)); if (ur) uData=JSON.parse(ur);
+  }
+  if (!uData) { showErr('li-err','No account found.'); btn.disabled=false; btn.textContent='Login →'; return; }
+  if (uData.password!==pw) { showErr('li-err','Incorrect password.'); btn.disabled=false; btn.textContent='Login →'; return; }
+  const emailKey=safeKey('rl_ue_',uData.email);
+  lsSet('rl_session',JSON.stringify({emailKey,name:uData.name}));
+  user=uData; btn.disabled=false; btn.textContent='Login →'; enterDashboard();
+}
+
+function handleLogout() { lsDel('rl_session'); user=null; showScreen('landing'); }
+
+// ═══════════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════════
+function enterDashboard() {
+  if (!user) return;
+  document.getElementById('dash-greet').textContent = 'Hey, ' + user.name.split(' ')[0] + ' 👋';
+  const scores = user.scores || [];
+  document.getElementById('prog-txt').textContent  = scores.length + ' / 10 games';
+  document.getElementById('prog-fill').style.width = (scores.length * 10) + '%';
+
+  const bartDone = scores.find(s=>s.game==='BART');
+  document.getElementById('g1-cta').style.display  = bartDone ? 'none' : 'block';
+  document.getElementById('g1-done').style.display = bartDone ? 'block' : 'none';
+  if (bartDone) document.getElementById('g1-preview').textContent = bartDone.label + ' · Score ' + bartDone.bartScore.toFixed(1);
+
+  const pdDone = scores.find(s=>s.game==='PD');
+  document.getElementById('g2-cta').style.display  = bartDone && !pdDone ? 'block' : 'none';
+  document.getElementById('g2-done').style.display = pdDone ? 'block' : 'none';
+  if (pdDone) document.getElementById('g2-preview').textContent = pdDone.label + ' · Score ' + pdDone.cooperationScore;
+
+  const tohDone = scores.find(s=>s.game==='TOH');
+  document.getElementById('g3-cta').style.display  = pdDone && !tohDone ? 'block' : 'none';
+  document.getElementById('g3-done').style.display = tohDone ? 'block' : 'none';
+  if (tohDone) document.getElementById('g3-preview').textContent = tohDone.label + ' · Score ' + tohDone.planningScore;
+
+  const ferDone = scores.find(s=>s.game==='FER');
+  document.getElementById('g4-cta').style.display  = tohDone && !ferDone ? 'block' : 'none';
+  document.getElementById('g4-done').style.display = ferDone ? 'block' : 'none';
+  if (ferDone) document.getElementById('g4-preview').textContent = ferDone.label + ' · Score ' + ferDone.ferScore;
+
+  const gngDone = scores.find(s=>s.game==='GNG');
+  document.getElementById('g5-cta').style.display  = ferDone && !gngDone ? 'block' : 'none';
+  document.getElementById('g5-done').style.display = gngDone ? 'block' : 'none';
+  if (gngDone) document.getElementById('g5-preview').textContent = gngDone.label + ' · Score ' + gngDone.gngScore;
+
+  if (scores.length > 0) {
+    document.getElementById('scores-section').style.display = 'block';
+    document.getElementById('scores-list').innerHTML = scores.map(s => {
+      const info = s.game==='BART' ? {icon:'🎈',name:'Dum',    label:s.label, val:s.bartScore?s.bartScore.toFixed(1):'—'}
+                 : s.game==='PD'   ? {icon:'🤝',name:'Bharosa', label:s.label, val:s.cooperationScore}
+                 : s.game==='TOH'  ? {icon:'🗼',name:'Burj',    label:s.label, val:s.planningScore}
+                 : s.game==='FER'  ? {icon:'😶',name:'Chehra',  label:s.label, val:s.ferScore}
+                 : s.game==='GNG'  ? {icon:'⚡',name:'Ruk',     label:s.label, val:s.gngScore}
+                 : {icon:'🎮',name:s.game,label:s.label||'—',val:'—'};
+      return `<div class="score-row">
+        <div>
+          <div style="font-weight:500;font-size:14px;">${info.icon} ${info.name}</div>
+          <div style="font-size:12px;color:var(--text-muted);">${new Date(s.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px;font-weight:500;color:var(--amber);">${info.label}</div>
+          <div style="font-size:12px;color:var(--text-muted);">Score ${info.val}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  showScreen('dashboard');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 1: DUM (BART)
+// ═══════════════════════════════════════════════════════════
+function makeBalloons() {
+  const a=[...Array(10).fill('blue'),...Array(10).fill('yellow'),...Array(10).fill('red')];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a.map(c=>({color:c,threshold:Math.floor(Math.random()*BC[c].max)+1}));
+}
+function startGame(){balloons=makeBalloons();ti=0;banked=0;trials=[];showScreen('game');setupBalloon();}
+function setupBalloon(){
+  const b=balloons[ti];bcol=b.color;thresh=b.threshold;pumps=0;gameActive=true;
+  const c=BC[bcol];
+  document.getElementById('g-num').textContent=ti+1;
+  document.getElementById('g-banked').textContent='₹'+banked;
+  document.getElementById('g-earn').textContent='₹0';
+  document.getElementById('g-camt').textContent='0';
+  document.getElementById('g-pumps').textContent='0';
+  document.getElementById('g-boom').style.display='none';
+  document.getElementById('balloon-wrap').style.display='block';
+  document.getElementById('balloon-wrap').style.transform='scale(1)';
+  document.getElementById('g-prog').style.width=((ti+1)/TOTAL*100)+'%';
+  document.getElementById('g-pbtn').disabled=false;
+  document.getElementById('g-cbtn').disabled=false;
+  document.getElementById('b-body').setAttribute('fill',c.fill);
+  document.getElementById('b-shine').setAttribute('fill',c.shine);
+  const badge=document.getElementById('g-badge');
+  badge.textContent=c.label;badge.style.background=c.bg;badge.style.color=c.tc;
+}
+function pump(){
+  if(!gameActive)return;
+  pumps++;const earn=pumps*EARN;
+  document.getElementById('g-earn').textContent='₹'+earn;
+  document.getElementById('g-camt').textContent=earn;
+  document.getElementById('g-pumps').textContent=pumps;
+  const sc=1+(pumps/BC[bcol].max)*1.5;
+  document.getElementById('balloon-wrap').style.transform='scale('+Math.min(sc,3)+')';
+  if(pumps>=thresh)explodeBalloon();
+}
+function explodeBalloon(){
+  gameActive=false;trials.push({color:bcol,pumps,exploded:true,earned:0});
+  document.getElementById('balloon-wrap').style.display='none';
+  document.getElementById('g-boom').style.display='block';
+  document.getElementById('g-earn').textContent='💥 Popped!';
+  document.getElementById('g-pbtn').disabled=true;document.getElementById('g-cbtn').disabled=true;
+  setTimeout(()=>{document.getElementById('g-boom').style.display='none';document.getElementById('balloon-wrap').style.display='block';ti++;if(ti>=TOTAL)endGame();else setupBalloon();},1300);
+}
+function collect(){
+  if(!gameActive||pumps===0)return;gameActive=false;
+  const earned=pumps*EARN;banked+=earned;trials.push({color:bcol,pumps,exploded:false,earned});
+  document.getElementById('g-pbtn').disabled=true;document.getElementById('g-cbtn').disabled=true;
+  document.getElementById('g-banked').textContent='₹'+banked;
+  setTimeout(()=>{ti++;if(ti>=TOTAL)endGame();else setupBalloon();},350);
+}
+function calcBART(tr){const ok=tr.filter(t=>!t.exploded);if(!ok.length)return 0;return ok.reduce((s,t)=>s+t.pumps,0)/ok.length;}
+function getProfile(bartScore,learningIndex,volatility){
+  let label,traits,environments,blindspot;
+  const learningNote=learningIndex>1.15?'You got bolder as the game progressed — warming up, chasing losses, or both. Worth noticing which.':learningIndex<0.85?'You pulled back as the game went on — active calibration in real time. Most people don\'t do this.':null;
+  const volNote=volatility>10?'Your pump counts swung a lot — inconsistent decision-making, or rapid adaptation. Depends on how you see it.':null;
+  if(bartScore<8){label='The Protector';traits=['You protect what you have — certainty matters more to you than potential upside.','You\'re probably the person who reads the fine print, or at least asks someone to.','When others are rushing in, you\'re the one still asking "but what\'s the actual downside?"'];if(learningNote)traits.push(learningNote);environments=['Places where being right matters more than being first — quality over speed.','Roles that reward consistency and reliability over bold, high-variance calls.','Teams that need someone to pump the brakes and ask the uncomfortable question before everyone commits.'];blindspot='The cautious approach is genuinely valuable. But you might be walking away from bets that were worth taking. Sometimes the safe choice costs more than the risky one — especially compounded over years.';}
+  else if(bartScore<16){label='The Calibrated';traits=['You don\'t avoid risk — you evaluate it. That distinction matters, and it\'s rarer than it sounds.','You adjust. Your approach to balloon 25 probably wasn\'t identical to balloon 5.','You\'re likely the person others want in the room before making a high-stakes call.'];if(learningNote)traits.push(learningNote);environments=['High-stakes environments where getting the risk/reward ratio right is the actual job.','Roles where your judgment is the product — consulting, clinical decisions, investment analysis.','Teams that need someone who can say "yes, and here\'s exactly how we manage the downside."'];blindspot='Analysis can tip into paralysis. There are moments where speed is the only right answer — and waiting for the perfect data costs more than the decision itself.';}
+  else if(bartScore<28){label='The Bold One';traits=['Uncertainty doesn\'t scare you — honestly, it probably interests you a bit.','You\'re willing to lose some to win big. That\'s a smaller club than people think.','You make decisions faster than most people around you, and that\'s not accidental.'];if(learningNote)traits.push(learningNote);if(volNote)traits.push(volNote);environments=['Fast-moving environments where hesitation is the real risk, not the action.','Places that reward initiative over permission-seeking.','Roles with high variance — where conviction, not caution, is the actual edge.'];blindspot='The same tolerance for loss that makes you effective can lead you to underestimate real downside. Not every burst balloon grows back.';}
+  else{label='The High-Roller';traits=['You actively seek the edge — and you don\'t particularly lose sleep when it goes wrong.','The size of the potential reward genuinely changes your calculus. That\'s appetite, not just reasoning.','You probably find cautious, methodical people frustrating to work alongside.'];if(learningNote)traits.push(learningNote);if(volNote)traits.push(volNote);environments=['Environments with real stakes and real consequences — low stakes genuinely bore you.','Places where decisiveness is the currency and second-guessing is a liability.','Roles where the asymmetric upside justifies looking foolish sometimes.'];blindspot='Very high risk appetite can feel like confidence from the inside and look like recklessness from the outside. Make sure you\'re actually doing the math sometimes — not just trusting the feeling.';}
+  return{label,traits,environments,blindspot};
+}
+function endGame(){
+  const bartScore=calcBART(trials);const pops=trials.filter(t=>t.exploded).length;
+  const nonPopped=trials.filter(t=>!t.exploded);const mid=Math.floor(nonPopped.length/2);
+  const firstHalf=nonPopped.slice(0,mid);const secondHalf=nonPopped.slice(mid);
+  const firstAvg=firstHalf.length?firstHalf.reduce((s,t)=>s+t.pumps,0)/firstHalf.length:bartScore;
+  const secondAvg=secondHalf.length?secondHalf.reduce((s,t)=>s+t.pumps,0)/secondHalf.length:bartScore;
+  const learningIndex=firstAvg>0?secondAvg/firstAvg:1;
+  const pumpsArr=nonPopped.map(t=>t.pumps);const mean=pumpsArr.length?pumpsArr.reduce((s,p)=>s+p,0)/pumpsArr.length:0;
+  const volatility=pumpsArr.length?Math.sqrt(pumpsArr.reduce((s,p)=>s+(p-mean)**2,0)/pumpsArr.length):0;
+  const prof=getProfile(bartScore,learningIndex,volatility);
+  const trendLabel=learningIndex>1.1?'↑ Escalating':learningIndex<0.9?'↓ Calibrating':'→ Steady';
+  const result={game:'BART',bartScore,label:prof.label,learningIndex,volatility,totalBanked:banked,pops,date:new Date().toISOString()};
+  const emailKey=safeKey('rl_ue_',user.email);const latest=lsGet(emailKey);
+  const ud=latest?JSON.parse(latest):{...user,scores:[]};
+  ud.scores=(ud.scores||[]).filter(s=>s.game!=='BART');ud.scores.push(result);
+  lsSet(emailKey,JSON.stringify(ud));user=ud;
+  document.getElementById('r-score').textContent=bartScore.toFixed(1);
+  document.getElementById('r-label').textContent=prof.label;
+  document.getElementById('r-banked').textContent='₹'+banked;
+  document.getElementById('r-pops').textContent=pops;
+  document.getElementById('r-trend').textContent=trendLabel;
+  renderInsights('r-traits','r-envs','r-blindspot',prof.traits,prof.environments,prof.blindspot);
+  renderSynthesis('r-synthesis-wrap','r-synthesis',ud.scores);
+  showScreen('results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 2: BHAROSA (PD)
+// ═══════════════════════════════════════════════════════════
+const PD_ROUNDS=10;const PD_PAYOFF={CC:[3,3],CD:[0,5],DC:[5,0],DD:[1,1]};
+let pdRound=0,pdPlayerMoves=[],pdAIMoves=[],pdPlayerPts=0,pdAIPts=0,pdWaiting=false;
+function startPD(){pdRound=0;pdPlayerMoves=[];pdAIMoves=[];pdPlayerPts=0;pdAIPts=0;pdWaiting=false;showScreen('pd-game');pdSetupRound();}
+function pdSetupRound(){document.getElementById('pd-round-num').textContent=pdRound+1;document.getElementById('pd-prog').style.width=(pdRound/PD_ROUNDS*100)+'%';document.getElementById('pd-your-score').textContent=pdPlayerPts;document.getElementById('pd-ai-score').textContent=pdAIPts;document.getElementById('pd-choice-state').style.display='block';document.getElementById('pd-reveal-state').style.display='none';pdWaiting=false;pdRenderHistory();}
+function pdAIMove(){if(pdRound===0)return'C';if(Math.random()<0.1)return Math.random()<0.5?'C':'D';return pdPlayerMoves[pdRound-1];}
+function pdChoice(playerMove){
+  if(pdWaiting)return;pdWaiting=true;
+  const aiMove=pdAIMove();pdPlayerMoves.push(playerMove);pdAIMoves.push(aiMove);
+  const key=playerMove+aiMove;const[pp,ap]=PD_PAYOFF[key];pdPlayerPts+=pp;pdAIPts+=ap;pdRound++;
+  document.getElementById('pd-round-num').textContent=pdRound;document.getElementById('pd-prog').style.width=(pdRound/PD_ROUNDS*100)+'%';document.getElementById('pd-your-score').textContent=pdPlayerPts;document.getElementById('pd-ai-score').textContent=pdAIPts;
+  document.getElementById('pd-choice-state').style.display='none';document.getElementById('pd-reveal-state').style.display='block';
+  document.getElementById('pd-reveal-you').textContent=playerMove==='C'?'🤝':'🔪';document.getElementById('pd-reveal-ai').textContent=aiMove==='C'?'🤝':'🔪';
+  document.getElementById('pd-reveal-you-label').textContent=playerMove==='C'?'Cooperated':'Defected';document.getElementById('pd-reveal-ai-label').textContent=aiMove==='C'?'Cooperated':'Defected';
+  const msgs={CC:`Both cooperated — <strong>+3 points each.</strong> Trust pays off. 🤝`,CD:`AI defected while you cooperated — <strong>you get +0, AI gets +5.</strong> Watch your back. 😤`,DC:`You defected while AI cooperated — <strong>you get +5, AI gets +0.</strong>`,DD:`Both defected — <strong>+1 point each.</strong> Mutual distrust costs everyone. 😐`};
+  document.getElementById('pd-round-outcome').innerHTML=msgs[key];
+  const nextBtn=document.getElementById('pd-next-btn');
+  if(pdRound>=PD_ROUNDS){nextBtn.textContent='See results →';nextBtn.onclick=pdEndGame;}else{nextBtn.textContent='Next round →';nextBtn.onclick=pdNextRound;}
+  pdRenderHistory();
+}
+function pdNextRound(){pdSetupRound();}
+function pdRenderHistory(){
+  const el=document.getElementById('pd-history');
+  if(pdPlayerMoves.length===0){el.innerHTML='<p style="font-size:12px;color:var(--text-hint);text-align:center;padding:8px 0;">Your choices will appear here</p>';return;}
+  const rows=[...pdPlayerMoves].reverse().slice(0,5).map((pm,ri)=>{const i=pdPlayerMoves.length-1-ri;const am=pdAIMoves[i];const[pp]=PD_PAYOFF[pm+am];const ptsColor=pp>=3?'var(--teal)':pp===0?'var(--red)':'var(--text-muted)';return`<div style="display:flex;align-items:center;font-size:12px;padding:5px 9px;background:var(--surface);border-radius:6px;margin-bottom:3px;"><span style="color:var(--text-hint);width:26px;flex-shrink:0;font-size:11px;">R${i+1}</span><span style="flex:1;">You ${pm==='C'?'🤝':'🔪'}</span><span style="flex:1;">AI ${am==='C'?'🤝':'🔪'}</span><span style="font-weight:500;color:${ptsColor};font-size:12px;">+${pp} pts</span></div>`;});
+  el.innerHTML=rows.join('');
+}
+function pdGetProfile(cooperations,openingMove,reciprocityScore,endgameD){
+  const rate=cooperations/PD_ROUNDS;const score=Math.round(rate*100);let label,traits,environments,blindspot;
+  const openNote=openingMove==='C'?'You opened by cooperating — you extend trust before it\'s been earned. That takes something.':'You opened by defecting — you don\'t give away leverage just to seem friendly.';
+  const recipNote=reciprocityScore>65?'You closely mirror what you receive — rational, but also means the other person has more influence over your moves than they might realize.':reciprocityScore<35?'You don\'t simply mirror the other player — you run an independent strategy regardless of what they do.':null;
+  const endNote=endgameD>=2?'You defected toward the end — classic endgame logic. When you sensed it was finishing, the cost of burning trust dropped. Noted.':null;
+  if(rate>=0.8){label='The Collaborator';traits=['You lead with trust — even before you\'ve verified it\'s safe to do so.',openNote,'You genuinely believe that if both sides try, both sides win.'];if(recipNote)traits.push(recipNote);environments=['Teams where trust is the actual infrastructure.','Long-game environments where relationships compound and reputation travels far.','Roles where building genuine alignment is part of the job description.'];blindspot=endNote||'Pure cooperators sometimes get burned by people who read kindness as leverage.';}
+  else if(rate>=0.5){label='The Strategist';traits=['You pay attention to what the other player is doing before committing.','You cooperate when it makes sense, not out of habit.',openNote];if(recipNote)traits.push(recipNote);if(endNote)traits.push(endNote);environments=['Complex environments with real stakeholder dynamics.','Negotiations, partnerships, dealmaking.','Roles where the incentive structure keeps shifting.'];blindspot='Strategic detachment can read as coldness. Pure warmth opens doors that strategy doesn\'t.';}
+  else if(rate>=0.3){label='The Opportunist';traits=['You follow your own logic in group situations — not easily herd-pressured.','You don\'t believe nice automatically finishes first.',openNote];if(endNote)traits.push(endNote);environments=['Competitive environments with clear, external metrics.','Individual contributor roles where performance isn\'t diluted by team dynamics.','Places where playing your own game is respected.'];blindspot='In long relationships, consistent opportunism becomes a reputation.';}
+  else{label='The Independent';traits=['You play your own game — not the social game, not the team game. Yours.','You don\'t wait for permission, consensus, or validation to move.',openNote];if(endNote)traits.push(endNote);environments=['Zero-sum environments where individual performance is what\'s on the scorecard.','Founder, solo practitioner, or high-autonomy individual contributor roles.','Places with clear external metrics.'];blindspot='Coalition-building, reading group dynamics, getting genuine buy-in — all of this feels optional right now. It isn\'t.';}
+  return{score,label,traits,environments,blindspot};
+}
+function pdEndGame(){
+  const cooperations=pdPlayerMoves.filter(m=>m==='C').length;const defections=pdPlayerMoves.filter(m=>m==='D').length;const openingMove=pdPlayerMoves[0]||'C';
+  let recipMatch=0,recipTotal=0;for(let i=1;i<pdPlayerMoves.length;i++){recipTotal++;if(pdPlayerMoves[i]===pdAIMoves[i-1])recipMatch++;}
+  const reciprocityScore=recipTotal>0?Math.round(recipMatch/recipTotal*100):50;const endgameD=pdPlayerMoves.slice(-3).filter(m=>m==='D').length;
+  const prof=pdGetProfile(cooperations,openingMove,reciprocityScore,endgameD);
+  const result={game:'PD',cooperationScore:prof.score,label:prof.label,cooperations,defections,openingMove,reciprocityScore,endgameD,playerScore:pdPlayerPts,aiScore:pdAIPts,date:new Date().toISOString()};
+  const emailKey=safeKey('rl_ue_',user.email);const latest=lsGet(emailKey);const ud=latest?JSON.parse(latest):{...user,scores:[]};
+  ud.scores=(ud.scores||[]).filter(s=>s.game!=='PD');ud.scores.push(result);lsSet(emailKey,JSON.stringify(ud));user=ud;
+  document.getElementById('pd-r-score').textContent=prof.score;document.getElementById('pd-r-label').textContent=prof.label;
+  document.getElementById('pd-r-coop').textContent=cooperations+'/10';document.getElementById('pd-r-defect').textContent=defections+'/10';
+  document.getElementById('pd-r-open').textContent=openingMove==='C'?'🤝 Trust':'🔪 Guard';
+  renderInsights('pd-r-traits','pd-r-envs','pd-r-blindspot',prof.traits,prof.environments,prof.blindspot);
+  renderSynthesis('pd-r-synthesis-wrap','pd-r-synthesis',ud.scores);showScreen('pd-results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 3: BURJ (TOH)
+// ═══════════════════════════════════════════════════════════
+const TOH_DISCS=4,TOH_OPTIMAL=15,TOH_TIME=180;
+const TOH_COLORS=['#F5C870','#E8A840','#BA7517','#7C3F0A'];
+const TOH_WIDTHS=[32,50,68,86];
+let tohPegs=[],tohMoves=0,tohUndos=0,tohHistory=[],tohSelected=null;
+let tohTimeLeft=TOH_TIME,tohTimerInterval=null,tohComplete=false,tohDragFrom=null;
+function startTOH(){
+  tohPegs=[[4,3,2,1],[],[]];tohMoves=0;tohUndos=0;tohHistory=[];tohSelected=null;tohComplete=false;tohDragFrom=null;tohTimeLeft=TOH_TIME;
+  if(tohTimerInterval){clearInterval(tohTimerInterval);tohTimerInterval=null;}
+  showScreen('toh-game');
+  document.getElementById('toh-moves').textContent='0';document.getElementById('toh-undos').textContent='0';
+  const timerEl=document.getElementById('toh-timer');timerEl.textContent='3:00';timerEl.classList.remove('toh-timer-warn');
+  tohRender();
+  setTimeout(()=>{tohTimerInterval=setInterval(()=>{tohTimeLeft--;const el=document.getElementById('toh-timer');if(el){const m=Math.floor(tohTimeLeft/60),s=tohTimeLeft%60;el.textContent=m+':'+(s<10?'0':'')+s;if(tohTimeLeft<=30)el.classList.add('toh-timer-warn');}if(tohTimeLeft<=0){clearInterval(tohTimerInterval);tohTimerInterval=null;tohEndGame(false);}},1000);},400);
+}
+function tohRender(){
+  const board=document.getElementById('toh-board');if(!board)return;
+  const DISC_H=22,DISC_GAP=3;
+  board.innerHTML=tohPegs.map((peg,pi)=>{
+    const isSelected=tohSelected===pi;
+    const discHTML=peg.map((disc,di)=>{const isTop=di===peg.length-1;const bottom=di*(DISC_H+DISC_GAP);const widthPc=TOH_WIDTHS[disc-1];const color=TOH_COLORS[disc-1];return`<div class="toh-disc${isTop?' top-disc':''}" style="bottom:${bottom}px;width:${widthPc}%;height:${DISC_H}px;background:${color};"${isTop?` draggable="true" ondragstart="event.stopPropagation();tohDragStart(${pi})"`:''} ></div>`;}).join('');
+    const pegLabel=pi===0?'Peg 1 · start':pi===2?'Peg 3 · goal':'Peg 2';
+    return`<div class="toh-peg-col${isSelected?' selected':''}" onclick="tohPegClick(${pi})" ondragover="event.preventDefault()" ondrop="event.preventDefault();tohDrop(${pi})"><div class="toh-disc-area"><div class="toh-rod"></div>${discHTML}</div><div class="toh-base"></div><div class="toh-peg-label">${pegLabel}</div></div>`;
+  }).join('');
+}
+function tohPegClick(pi){if(tohComplete)return;if(tohSelected===null){if(tohPegs[pi].length===0)return;tohSelected=pi;tohRender();}else if(tohSelected===pi){tohSelected=null;tohRender();}else{tohTryMove(tohSelected,pi);tohSelected=null;}}
+function tohDragStart(pi){tohDragFrom=pi;}
+function tohDrop(pi){if(tohDragFrom!==null&&tohDragFrom!==pi){tohTryMove(tohDragFrom,pi);}tohDragFrom=null;}
+function tohTryMove(from,to){
+  if(tohPegs[from].length===0)return;
+  const movingDisc=tohPegs[from][tohPegs[from].length-1];const topOfTarget=tohPegs[to].length>0?tohPegs[to][tohPegs[to].length-1]:null;
+  if(topOfTarget!==null&&topOfTarget<movingDisc){const board=document.getElementById('toh-board');if(board){const cols=board.querySelectorAll('.toh-peg-col');if(cols[to]){cols[to].classList.remove('toh-shake');void cols[to].offsetWidth;cols[to].classList.add('toh-shake');setTimeout(()=>cols[to].classList.remove('toh-shake'),400);}}return;}
+  tohHistory.push(JSON.parse(JSON.stringify(tohPegs)));tohPegs[from].pop();tohPegs[to].push(movingDisc);tohMoves++;document.getElementById('toh-moves').textContent=tohMoves;
+  if(tohPegs[2].length===TOH_DISCS){tohComplete=true;if(tohTimerInterval){clearInterval(tohTimerInterval);tohTimerInterval=null;}tohRender();const board=document.getElementById('toh-board');if(board)board.classList.add('toh-win');setTimeout(()=>tohEndGame(true),700);return;}
+  tohRender();
+}
+function tohUndo(){if(tohHistory.length===0||tohComplete)return;tohPegs=tohHistory.pop();tohUndos++;tohMoves++;document.getElementById('toh-moves').textContent=tohMoves;document.getElementById('toh-undos').textContent=tohUndos;tohSelected=null;tohRender();}
+function tohCalcScore(moves,timeLeft,completed){if(!completed){const progress=tohPegs[2].length;return Math.max(5,Math.round((progress/TOH_DISCS)*35));}const efficiency=Math.min(100,Math.round((TOH_OPTIMAL/moves)*100));const timeUsed=TOH_TIME-timeLeft;let timeBonus=0;if(timeUsed<45)timeBonus=10;else if(timeUsed<90)timeBonus=5;else if(timeUsed<150)timeBonus=2;return Math.min(100,efficiency+timeBonus);}
+function tohGetProfile(score,completed,undos,moves,timeUsed){
+  const undoRatio=moves>0?Math.round(undos/moves*100):0;let label,traits,environments,blindspot;
+  const undoNote=undoRatio>20?'You course-corrected a lot — that\'s self-awareness in motion, not weakness.':undos===0?'Zero undos — either you had it mapped from the start, or you committed completely regardless of outcome.':null;
+  const timeNote=moves>0&&(timeUsed/moves)<3?'Fast mover — you trusted your instinct under pressure.':moves>0&&(timeUsed/moves)>9?'Deliberate pace — each move was a considered decision, not a reaction.':null;
+  if(!completed){label='The Solver';traits=['You kept working right up to the clock — real persistence under pressure.','The timer got in the way more than the problem did. You were on the right track.','You might be someone who needs a bit more runway than the clock allows.'];if(undoNote)traits.push(undoNote);environments=['Environments where depth matters more than speed.','Roles that measure quality of output, not pace.','Places with longer feedback loops.'];blindspot='Time pressure is a real variable in most jobs. The skill worth building isn\'t working faster — it\'s making "good enough" decisions under constraint.';}
+  else if(score>=85){label='The Architect';traits=['You model the problem in your head before you touch it. Most people literally cannot do this.','Efficiency isn\'t just a preference — wasting moves probably felt genuinely uncomfortable.','You think in sequences, simulate outcomes, and commit to a path before acting.'];if(undoNote)traits.push(undoNote);if(timeNote)traits.push(timeNote);environments=['Complex environments where the gap between a good answer and the right answer actually matters.','Roles that reward foresight and structured execution.','Places where precision compounds — where getting the architecture right saves everything downstream.'];blindspot='The flip side of planning well is sometimes not starting fast enough. Not every problem deserves the full architecture treatment.';}
+  else if(score>=65){label='The Planner';traits=['You think a step or two ahead — consistently, not just when it\'s convenient.',`You finished in ${moves} moves${undos>0?` with ${undos} course-correction${undos>1?'s':''}`:''}  — that balance of structure and adaptability is real.`,'You\'re probably good at estimating how long things take.'];if(undoNote)traits.push(undoNote);environments=['Execution-heavy environments where structured thinking pays off.','Projects with multiple interdependent parts.','Roles where being adaptive matters more than being right the first time.'];blindspot='Strong planners can over-engineer simple problems. Sometimes the quick hack works just as well.';}
+  else if(score>=40){label='The Adapter';traits=['You work through problems by adjusting, not by solving them on paper first.','You\'re comfortable starting without the full picture.','Your instinct to try something and see outpaces your instinct to pre-plan.'];if(undoNote)traits.push(undoNote);if(timeNote)traits.push(timeNote);environments=['Dynamic environments where things change faster than plans can.','Roles where initiative and iteration matter more than precision.','Places that value trying over certainty.'];blindspot='In highly structured problems — fixed budgets, hard deadlines, compliance — the approach-and-adjust style can cost you extra moves.';}
+  else{label='The Explorer';traits=['You learn by doing — the puzzle taught you more than any strategy guide would have.','Wrong moves aren\'t setbacks for you — they\'re information.','You probably trust your instincts more than most people you know.'];if(undoNote)traits.push(undoNote);environments=['Creative and exploratory environments.','Roles that value trying over certainty and iteration over perfection.','Fields where the conventional approach doesn\'t work.'];blindspot='In problems with hard constraints — fixed budgets, real deadlines, compliance — the exploratory style can cost you.';}
+  return{label,traits,environments,blindspot,undoRatio};
+}
+function tohEndGame(completed){
+  const planningScore=tohCalcScore(tohMoves,tohTimeLeft,completed);const timeUsed=TOH_TIME-tohTimeLeft;
+  const prof=tohGetProfile(planningScore,completed,tohUndos,tohMoves,timeUsed);
+  const result={game:'TOH',planningScore,label:prof.label,moves:tohMoves,undos:tohUndos,timeUsed,completed,date:new Date().toISOString()};
+  const emailKey=safeKey('rl_ue_',user.email);const latest=lsGet(emailKey);const ud=latest?JSON.parse(latest):{...user,scores:[]};
+  ud.scores=(ud.scores||[]).filter(s=>s.game!=='TOH');ud.scores.push(result);lsSet(emailKey,JSON.stringify(ud));user=ud;
+  document.getElementById('toh-r-score').textContent=planningScore;document.getElementById('toh-r-label').textContent=prof.label;
+  document.getElementById('toh-r-moves').textContent=tohMoves;document.getElementById('toh-r-undos').textContent=tohUndos;
+  const mins=Math.floor(timeUsed/60),secs=timeUsed%60;
+  document.getElementById('toh-r-time').textContent=completed?(mins>0?mins+'m ':'')+secs+'s':'Timeout';
+  const completedEl=document.getElementById('toh-r-completed');completedEl.textContent=completed?'✓ Puzzle solved!':'⏰ Time ran out';completedEl.style.color=completed?'var(--teal)':'var(--red)';
+  renderInsights('toh-r-traits','toh-r-envs','toh-r-blindspot',prof.traits,prof.environments,prof.blindspot);
+  renderSynthesis('toh-r-synthesis-wrap','toh-r-synthesis',ud.scores);showScreen('toh-results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 4: CHEHRA (FER)
+// ═══════════════════════════════════════════════════════════
+let ferQuestions=[],ferIdx=0,ferCorrect=0,ferMissed={},ferAnswered=false;
+let ferPosCorrect=0,ferPosTotal=0,ferNegCorrect=0,ferNegTotal=0,ferAmbCorrect=0,ferAmbTotal=0;
+const FER_POS=new Set(['Happy','Surprised']);const FER_NEG=new Set(['Sad','Angry','Fearful','Disgusted']);const FER_AMB=new Set(['Contempt','Neutral']);
+function ferFaceSVG(cfg){
+  const sk='#F0C8A0',skD='#D4A87A',ec='#1E1E1E',bk='#3D2B1A';const{eyes,brows,mouth,extras=[]}=cfg;const ep=[{cx:40,cy:60},{cx:80,cy:60}];
+  function drawEye(cx,cy){if(eyes==='normal')return`<ellipse cx="${cx}" cy="${cy}" rx="7" ry="8.5" fill="${ec}"/><ellipse cx="${cx+2}" cy="${cy-3}" rx="2" ry="2" fill="white" opacity="0.85"/>`;if(eyes==='wide')return`<ellipse cx="${cx}" cy="${cy}" rx="9" ry="11" fill="${ec}"/><ellipse cx="${cx+2}" cy="${cy-4}" rx="2.5" ry="2.5" fill="white" opacity="0.85"/>`;if(eyes==='narrow')return`<ellipse cx="${cx}" cy="${cy}" rx="8.5" ry="5" fill="${ec}"/><ellipse cx="${cx+2}" cy="${cy-1}" rx="2" ry="1.5" fill="white" opacity="0.8"/>`;if(eyes==='droopy')return`<ellipse cx="${cx}" cy="${cy+2}" rx="7" ry="8" fill="${ec}"/><path d="M${cx-7},${cy-5} Q${cx},${cy-11} ${cx+7},${cy-5}" fill="${sk}"/><ellipse cx="${cx+2}" cy="${cy}" rx="2" ry="2" fill="white" opacity="0.7"/>`;if(eyes==='closed')return`<path d="M${cx-7},${cy} Q${cx},${cy-10} ${cx+7},${cy}" fill="none" stroke="${ec}" stroke-width="2.5" stroke-linecap="round"/>`;return'';}
+  const eyesSVG=ep.map(e=>drawEye(e.cx,e.cy)).join('');
+  let browsSVG='';
+  if(brows==='neutral')browsSVG=ep.map(e=>`<path d="M${e.cx-9},${e.cy-18} Q${e.cx},${e.cy-20} ${e.cx+9},${e.cy-18}" stroke="${bk}" stroke-width="3" fill="none" stroke-linecap="round"/>`).join('');
+  else if(brows==='raised')browsSVG=ep.map(e=>`<path d="M${e.cx-9},${e.cy-22} Q${e.cx},${e.cy-27} ${e.cx+9},${e.cy-22}" stroke="${bk}" stroke-width="3" fill="none" stroke-linecap="round"/>`).join('');
+  else if(brows==='furrowed')browsSVG=`<path d="M31,38 Q40,33 49,37" stroke="${bk}" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M71,37 Q80,33 89,38" stroke="${bk}" stroke-width="3.5" fill="none" stroke-linecap="round"/>`;
+  else if(brows==='inner-raised')browsSVG=`<path d="M31,43 Q40,36 49,43" stroke="${bk}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M71,43 Q80,36 89,43" stroke="${bk}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  else if(brows==='asym')browsSVG=`<path d="M31,42 Q40,40 49,43" stroke="${bk}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M71,38 Q80,35 89,38" stroke="${bk}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  let mouthSVG='';
+  if(mouth==='big-smile')mouthSVG=`<path d="M44,90 Q60,110 76,90" fill="${ec}"/><path d="M44,90 Q60,102 76,90" fill="white"/>`;
+  else if(mouth==='smile')mouthSVG=`<path d="M46,91 Q60,106 74,91" stroke="${ec}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  else if(mouth==='frown')mouthSVG=`<path d="M46,97 Q60,84 74,97" stroke="${ec}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  else if(mouth==='neutral')mouthSVG=`<line x1="47" y1="93" x2="73" y2="93" stroke="${ec}" stroke-width="3" stroke-linecap="round"/>`;
+  else if(mouth==='open-frown')mouthSVG=`<path d="M46,97 Q60,86 74,97" fill="${ec}"/><path d="M46,97 Q60,92 74,97" fill="#8B2020"/>`;
+  else if(mouth==='o-shape')mouthSVG=`<ellipse cx="60" cy="95" rx="10" ry="12" fill="${ec}"/><ellipse cx="60" cy="95" rx="7" ry="9" fill="#8B2020"/>`;
+  else if(mouth==='smirk-r')mouthSVG=`<path d="M48,95 Q61,97 73,87" stroke="${ec}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  else if(mouth==='smirk-l')mouthSVG=`<path d="M47,87 Q59,97 72,95" stroke="${ec}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  else if(mouth==='disgust')mouthSVG=`<path d="M46,90 Q53,99 60,93 Q67,87 74,96" stroke="${ec}" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  let extraSVG='';
+  if(extras.includes('blush'))extraSVG+=`<ellipse cx="27" cy="74" rx="12" ry="7" fill="#F08080" opacity="0.4"/><ellipse cx="93" cy="74" rx="12" ry="7" fill="#F08080" opacity="0.4"/>`;
+  if(extras.includes('tears'))extraSVG+=`<path d="M33,68 Q31,76 34,84" stroke="#6EB5FF" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M87,68 Q89,76 86,84" stroke="#6EB5FF" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  if(extras.includes('sweat'))extraSVG+=`<path d="M93,38 Q97,28 93,20" stroke="#7BC8F0" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+  if(extras.includes('wrinkle'))extraSVG+=`<path d="M54,77 Q60,72 66,77" stroke="${skD}" stroke-width="2" fill="none"/>`;
+  return`<svg width="160" height="160" viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg"><circle cx="60" cy="65" r="52" fill="${sk}"/><ellipse cx="9" cy="65" rx="5" ry="8" fill="${skD}"/><ellipse cx="111" cy="65" rx="5" ry="8" fill="${skD}"/><ellipse cx="60" cy="76" rx="5" ry="3" fill="${skD}" opacity="0.35"/>${eyesSVG}${browsSVG}${mouthSVG}${extraSVG}</svg>`;
+}
+const FER_BANK=[
+  {answer:'Happy',opts:['Happy','Angry','Neutral','Surprised'],face:{eyes:'closed',brows:'neutral',mouth:'big-smile',extras:['blush']}},
+  {answer:'Sad',opts:['Sad','Angry','Fearful','Neutral'],face:{eyes:'droopy',brows:'inner-raised',mouth:'frown',extras:['tears']}},
+  {answer:'Angry',opts:['Angry','Disgusted','Sad','Fearful'],face:{eyes:'narrow',brows:'furrowed',mouth:'frown',extras:[]}},
+  {answer:'Surprised',opts:['Surprised','Fearful','Happy','Angry'],face:{eyes:'wide',brows:'raised',mouth:'o-shape',extras:[]}},
+  {answer:'Fearful',opts:['Fearful','Surprised','Sad','Neutral'],face:{eyes:'wide',brows:'inner-raised',mouth:'open-frown',extras:['sweat']}},
+  {answer:'Disgusted',opts:['Disgusted','Angry','Contempt','Sad'],face:{eyes:'narrow',brows:'furrowed',mouth:'disgust',extras:['wrinkle']}},
+  {answer:'Contempt',opts:['Contempt','Happy','Angry','Neutral'],face:{eyes:'normal',brows:'asym',mouth:'smirk-r',extras:[]}},
+  {answer:'Neutral',opts:['Neutral','Sad','Contempt','Happy'],face:{eyes:'normal',brows:'neutral',mouth:'neutral',extras:[]}},
+  {answer:'Happy',opts:['Happy','Contempt','Neutral','Surprised'],face:{eyes:'closed',brows:'raised',mouth:'smile',extras:['blush']}},
+  {answer:'Angry',opts:['Angry','Disgusted','Contempt','Fearful'],face:{eyes:'narrow',brows:'furrowed',mouth:'frown',extras:[]}},
+  {answer:'Sad',opts:['Sad','Fearful','Neutral','Disgusted'],face:{eyes:'droopy',brows:'inner-raised',mouth:'frown',extras:[]}},
+  {answer:'Surprised',opts:['Surprised','Happy','Fearful','Neutral'],face:{eyes:'wide',brows:'raised',mouth:'o-shape',extras:[]}},
+  {answer:'Contempt',opts:['Contempt','Happy','Disgusted','Neutral'],face:{eyes:'normal',brows:'asym',mouth:'smirk-l',extras:[]}},
+  {answer:'Fearful',opts:['Fearful','Surprised','Angry','Sad'],face:{eyes:'wide',brows:'raised',mouth:'open-frown',extras:['sweat']}},
+  {answer:'Disgusted',opts:['Disgusted','Angry','Sad','Contempt'],face:{eyes:'narrow',brows:'furrowed',mouth:'disgust',extras:[]}},
+  {answer:'Neutral',opts:['Neutral','Happy','Contempt','Sad'],face:{eyes:'normal',brows:'neutral',mouth:'neutral',extras:[]}},
+];
+function shuffleArr(a){const arr=[...a];for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
+function startFER(){ferQuestions=shuffleArr(FER_BANK);ferIdx=0;ferCorrect=0;ferMissed={};ferAnswered=false;ferPosCorrect=0;ferPosTotal=0;ferNegCorrect=0;ferNegTotal=0;ferAmbCorrect=0;ferAmbTotal=0;showScreen('fer-game');ferRenderQuestion();}
+function ferRenderQuestion(){
+  ferAnswered=false;const q=ferQuestions[ferIdx];
+  document.getElementById('fer-num').textContent=ferIdx+1;document.getElementById('fer-prog').style.width=((ferIdx+1)/16*100)+'%';document.getElementById('fer-feedback-pill').style.display='none';
+  document.getElementById('fer-face-display').innerHTML=ferFaceSVG(q.face);document.getElementById('fer-face-display').classList.remove('fer-pop');
+  const shuffledOpts=shuffleArr(q.opts);document.getElementById('fer-opts').innerHTML=shuffledOpts.map(opt=>`<button class="fer-opt" onclick="ferAnswer('${opt}')">${opt}</button>`).join('');
+}
+function ferAnswer(chosen){
+  if(ferAnswered)return;ferAnswered=true;const q=ferQuestions[ferIdx];const correct=q.answer;const isRight=chosen===correct;
+  if(isRight)ferCorrect++;else ferMissed[correct]=(ferMissed[correct]||0)+1;
+  if(FER_POS.has(correct)){ferPosTotal++;if(isRight)ferPosCorrect++;}else if(FER_NEG.has(correct)){ferNegTotal++;if(isRight)ferNegCorrect++;}else{ferAmbTotal++;if(isRight)ferAmbCorrect++;}
+  const btns=document.getElementById('fer-opts').querySelectorAll('.fer-opt');btns.forEach(btn=>{btn.disabled=true;if(btn.textContent===correct)btn.classList.add('correct');else if(btn.textContent===chosen&&!isRight)btn.classList.add('wrong');});
+  const pill=document.getElementById('fer-feedback-pill');pill.textContent=isRight?'✓ Correct':'✗ '+correct;pill.style.color=isRight?'var(--teal)':'var(--red)';pill.style.display='inline';
+  const faceWrap=document.getElementById('fer-face-display');void faceWrap.offsetWidth;faceWrap.classList.add('fer-pop');
+  setTimeout(()=>{ferIdx++;if(ferIdx>=16)ferEndGame();else ferRenderQuestion();},1100);
+}
+function ferGetProfile(score,missed,posAcc,negAcc,ambAcc){
+  const topMissed=Object.entries(missed).sort((a,b)=>b[1]-a[1]).slice(0,2).map(e=>e[0]);const weakNeg=negAcc<65;const weakAmb=ambAcc<50;const strongPos=posAcc>=85;let label,traits,environments,blindspot;
+  if(score>=88){label='The Empath';traits=['You read faces the way most people read words — fast, automatic, rarely wrong.','You probably notice when someone\'s smile doesn\'t reach their eyes. Others don\'t catch that.',strongPos?'Positive emotions are essentially instant for you — joy and surprise register before you even process what\'s happening.':null,weakAmb?'The ambiguous ones — contempt, neutral — trip you up sometimes. That\'s actually fine; they\'re the hardest for everyone.':'Ambiguous expressions don\'t fool you either. That\'s rare.'].filter(Boolean);environments=['High-contact roles where reading the room is literally part of the job — therapy, leadership, negotiation.','Environments where trust is built through emotional attunement, not authority.','Teams that need someone who notices what isn\'t being said in meetings.'];blindspot='Very high empathy can make you absorb other people\'s emotional states without noticing. Worth building the ability to observe emotions without taking them on.';}
+  else if(score>=69){label='The Attuned';traits=['You read most people accurately and rarely make big misreads.',topMissed.length?`${topMissed.join(' and ')} catch you occasionally.`:'Your weak spots are narrow — mostly the ambiguous expressions.',weakNeg?'Negative emotions are slightly less automatic for you.':'You\'re particularly good at catching negative emotions.'];environments=['Any environment that runs on relationships — management, client work, teaching.','Roles where understanding what someone actually feels gives you an edge.','Teams where you can be the person who translates what\'s going on below the surface.'];blindspot=weakAmb?'Contempt and subtle disdain are your current blind spot — the expressions that polite people mask.':'You\'re solid here. The main risk is over-relying on your read without checking it.';}
+  else if(score>=50){label='The Observer';traits=['You catch the obvious emotions reliably. The subtle ones need more attention.',topMissed.length?`You found ${topMissed.join(' and ')} harder — and those are genuinely the ones that matter most in complex group situations.`:'Your accuracy is solid on the clear signals, less so when expressions are mixed.','You likely rely more on what people say than on how they look when they say it.'];environments=['Structured environments where communication is explicit and formal.','Roles where you work with strong systems or ideas rather than primarily through people.','Teams where your analytical skills are paired with someone who\'s naturally high-EQ.'];blindspot='In most workplaces, the real conversation happens in expressions and tone, not words. Developing this deliberately — it\'s a learnable skill — will open up dynamics that currently feel opaque.';}
+  else{label='The Analyst';traits=['You process the world through logic and systems, not social signals. That\'s a specific kind of intelligence.',topMissed.length?`Expressions like ${topMissed.join(' and ')} — the ones without obvious physical markers — are hard for everyone who leads with reasoning.`:null,'Emotional subtlety isn\'t your primary channel.'].filter(Boolean);environments=['Environments where precision and analytical depth are the primary value.','Roles with structured deliverables, clear metrics, and explicit communication norms.','Teams where the division of labor puts emotional intelligence on someone else\'s plate.'];blindspot='You\'re probably underestimating how much workplace success depends on reading people correctly. Even explicit frameworks work.';}
+  return{label,traits,environments,blindspot};
+}
+function ferEndGame(){
+  const ferScore=Math.round(ferCorrect/16*100);const wrong=16-ferCorrect;
+  const posAcc=ferPosTotal>0?Math.round(ferPosCorrect/ferPosTotal*100):0;const negAcc=ferNegTotal>0?Math.round(ferNegCorrect/ferNegTotal*100):0;const ambAcc=ferAmbTotal>0?Math.round(ferAmbCorrect/ferAmbTotal*100):0;
+  const prof=ferGetProfile(ferScore,ferMissed,posAcc,negAcc,ambAcc);
+  const result={game:'FER',ferScore,label:prof.label,correct:ferCorrect,wrong,missed:ferMissed,posAcc,negAcc,ambAcc,date:new Date().toISOString()};
+  const emailKey=safeKey('rl_ue_',user.email);const latest=lsGet(emailKey);const ud=latest?JSON.parse(latest):{...user,scores:[]};
+  ud.scores=(ud.scores||[]).filter(s=>s.game!=='FER');ud.scores.push(result);lsSet(emailKey,JSON.stringify(ud));user=ud;
+  document.getElementById('fer-r-score').textContent=ferScore;document.getElementById('fer-r-label').textContent=prof.label;
+  document.getElementById('fer-r-correct').textContent=ferCorrect;document.getElementById('fer-r-wrong').textContent=wrong;document.getElementById('fer-r-accuracy').textContent=ferScore+'%';
+  renderInsights('fer-r-traits','fer-r-envs','fer-r-blindspot',prof.traits,prof.environments,prof.blindspot);
+  renderSynthesis('fer-r-synthesis-wrap','fer-r-synthesis',ud.scores);showScreen('fer-results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 5: RUK (GNG)
+// ═══════════════════════════════════════════════════════════
+const GNG_TRIALS=40,GNG_GO_RATIO=0.75,GNG_STIM_MS=300,GNG_ISI_MIN=900,GNG_ISI_MAX=1600;
+let gngTrialList=[],gngTrialIdx=0,gngResults=[],gngStimOnset=0,gngWaiting=false,gngActive=false;
+let gngCurrentType=null,gngStimTimer=null,gngNextTimer=null,gngRespondedThisTrial=false;
+
+function gngBuildTrialList(){
+  const goCount=Math.round(GNG_TRIALS*GNG_GO_RATIO),nogoCount=GNG_TRIALS-goCount;
+  const list=[...Array(goCount).fill({type:'go'}),...Array(nogoCount).fill({type:'nogo'})];
+  for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]];}
+  while(list[0].type==='nogo'&&list[1].type==='nogo'){const swapIdx=list.findIndex((t,i)=>i>1&&t.type==='go');if(swapIdx===-1)break;[list[0],list[swapIdx]]=[list[swapIdx],list[0]];}
+  return list;
+}
+function gngCircleSVG(size){return`<svg width="${size}" height="${size}" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#0F6E56" opacity="0.18" stroke="#0F6E56" stroke-width="3"/><circle cx="50" cy="50" r="32" fill="#0F6E56" opacity="0.7"/><circle cx="37" cy="37" r="9" fill="white" opacity="0.25"/></svg>`;}
+function gngSquareSVG(size){return`<svg width="${size}" height="${size}" viewBox="0 0 100 100"><rect x="8" y="8" width="84" height="84" rx="10" fill="#A32D2D" opacity="0.15" stroke="#A32D2D" stroke-width="3"/><rect x="18" y="18" width="64" height="64" rx="7" fill="#A32D2D" opacity="0.65"/><rect x="23" y="23" width="20" height="12" rx="4" fill="white" opacity="0.2"/></svg>`;}
+function gngRenderDots(){
+  const el=document.getElementById('gng-dots');if(!el)return;
+  el.innerHTML=gngResults.map(r=>{let cls=r.response==='hit'?'hit':r.response==='miss'?'miss':r.response==='fa'?'fa':'cr';return`<div class="gng-dot ${cls}"></div>`;}).join('')+(gngTrialIdx<GNG_TRIALS?[...Array(GNG_TRIALS-gngTrialIdx)].map(()=>`<div class="gng-dot"></div>`).join(''):'');
+}
+function startGNG(){
+  gngTrialList=gngBuildTrialList();gngTrialIdx=0;gngResults=[];gngActive=true;gngWaiting=false;gngStimTimer=null;gngNextTimer=null;
+  showScreen('gng-game');
+  document.getElementById('gng-hits').textContent='0';document.getElementById('gng-errors').textContent='0';document.getElementById('gng-trial-num').textContent='1';document.getElementById('gng-tap-btn').disabled=false;
+  gngRenderDots();setTimeout(gngRunTrial,600);
+}
+function gngRunTrial(){
+  if(!gngActive||gngTrialIdx>=GNG_TRIALS){gngEndGame();return;}
+  const trial=gngTrialList[gngTrialIdx];gngCurrentType=trial.type;gngRespondedThisTrial=false;gngWaiting=false;
+  document.getElementById('gng-trial-num').textContent=gngTrialIdx+1;
+  document.getElementById('gng-feedback').textContent='';document.getElementById('gng-feedback').style.opacity='0';
+  const wrap=document.getElementById('gng-shape-wrap');
+  if(wrap)wrap.innerHTML=trial.type==='go'?gngCircleSVG(130):gngSquareSVG(130);
+  gngStimOnset=performance.now();
+  gngStimTimer=setTimeout(()=>{
+    if(wrap)wrap.innerHTML='';
+    if(gngCurrentType==='go'&&!gngRespondedThisTrial)gngRecordResponse('miss',null);
+    const isi=GNG_ISI_MIN+Math.random()*(GNG_ISI_MAX-GNG_ISI_MIN);
+    gngNextTimer=setTimeout(()=>{gngTrialIdx++;gngRunTrial();},isi);
+  },GNG_STIM_MS);
+}
+function gngTap(){
+  if(!gngActive||gngRespondedThisTrial)return;
+  const rt=performance.now()-gngStimOnset;
+  if(gngCurrentType==='go'){gngRespondedThisTrial=true;gngRecordResponse('hit',rt);}
+  else if(gngCurrentType==='nogo'){gngRespondedThisTrial=true;gngRecordResponse('fa',rt);}
+}
+function gngRecordResponse(type,rt){
+  gngResults.push({type:gngCurrentType,response:type,rt});
+  const hits=gngResults.filter(r=>r.response==='hit').length;const errors=gngResults.filter(r=>r.response==='fa'||r.response==='miss').length;
+  document.getElementById('gng-hits').textContent=hits;document.getElementById('gng-errors').textContent=errors;
+  const btn=document.getElementById('gng-tap-btn');const feedbackEl=document.getElementById('gng-feedback');
+  if(type==='hit'){btn.classList.remove('gng-flash-wrong');void btn.offsetWidth;btn.classList.add('gng-flash-correct');setTimeout(()=>btn.classList.remove('gng-flash-correct'),350);if(feedbackEl){feedbackEl.textContent='✓';feedbackEl.style.color='var(--teal)';feedbackEl.style.opacity='1';}}
+  else if(type==='fa'){btn.classList.remove('gng-flash-correct');void btn.offsetWidth;btn.classList.add('gng-flash-wrong');setTimeout(()=>btn.classList.remove('gng-flash-wrong'),350);if(feedbackEl){feedbackEl.textContent='✗ No!';feedbackEl.style.color='var(--red)';feedbackEl.style.opacity='1';}}
+  else if(type==='miss'){if(feedbackEl){feedbackEl.textContent='— missed';feedbackEl.style.color='var(--text-hint)';feedbackEl.style.opacity='1';}}
+  gngRenderDots();
+}
+function gngCalcScore(results){
+  const goTrials=results.filter(r=>r.type==='go');const nogoTrials=results.filter(r=>r.type==='nogo');
+  const hits=results.filter(r=>r.response==='hit');const misses=results.filter(r=>r.response==='miss');const fas=results.filter(r=>r.response==='fa');
+  const hitRate=goTrials.length?hits.length/goTrials.length:0;const faRate=nogoTrials.length?fas.length/nogoTrials.length:0;const missRate=goTrials.length?misses.length/goTrials.length:0;
+  const clampedHR=Math.max(0.01,Math.min(0.99,hitRate));const clampedFAR=Math.max(0.01,Math.min(0.99,faRate));
+  const zHR=normInv(clampedHR);const zFAR=normInv(clampedFAR);const dPrime=zHR-zFAR;
+  const rawScore=Math.round(((dPrime+1)/5)*100);const gngScore=Math.max(0,Math.min(100,rawScore));
+  const first20=results.slice(0,20);const last20=results.slice(20);
+  const firstHits=first20.filter(r=>r.type==='go'&&r.response==='hit').length;const lastHits=last20.filter(r=>r.type==='go'&&r.response==='hit').length;
+  const firstGoCount=first20.filter(r=>r.type==='go').length;const lastGoCount=last20.filter(r=>r.type==='go').length;
+  const firstHR=firstGoCount?firstHits/firstGoCount:0;const lastHR=lastGoCount?lastHits/lastGoCount:0;const fatigueDelta=lastHR-firstHR;
+  const hitRTs=hits.map(r=>r.rt).filter(rt=>rt!==null&&rt>0&&rt<3000);const avgRT=hitRTs.length?Math.round(hitRTs.reduce((s,v)=>s+v,0)/hitRTs.length):null;
+  return{gngScore,hitRate,faRate,missRate,dPrime,fatigueDelta,avgRT,hits:hits.length,misses:misses.length,fas:fas.length};
+}
+function normInv(p){
+  const a=[0,-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00];
+  const b=[0,-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01];
+  const c=[0,-7.784894002430293e-03,-3.223964580411365e-01,-2.400758277161838e+00,-2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00];
+  const d=[0,7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];
+  const pLow=0.02425,pHigh=1-pLow;let q,r;
+  if(p<pLow){q=Math.sqrt(-2*Math.log(p));return(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1);}
+  if(p<=pHigh){q=p-0.5;r=q*q;return(((((a[1]*r+a[2])*r+a[3])*r+a[4])*r+a[5])*r+a[6])*q/(((((b[1]*r+b[2])*r+b[3])*r+b[4])*r+b[5])*r+1);}
+  q=Math.sqrt(-2*Math.log(1-p));return-(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1);
+}
+function gngGetProfile(score,faRate,missRate,fatigueDelta,avgRT){
+  const highControl=faRate<=0.15,poorControl=faRate>=0.4,fatigues=fatigueDelta<=-0.2,fast=avgRT!==null&&avgRT<320,deliberate=avgRT!==null&&avgRT>480;
+  let label,traits,environments,blindspot;
+  if(score>=78){
+    label='The Focused One';
+    traits=['You hold back when you need to. That\'s harder than it sounds — the impulse to respond is strong, and you override it cleanly.',highControl?'Very low false alarm rate. You\'re not trigger-happy. That patience shows up in how you work.':'Strong overall control — you catch yourself before making unnecessary moves.',fast?'Fast and accurate at the same time — that combination is genuinely unusual.':'Steady and controlled. You don\'t rush, and you don\'t miss much.',!fatigues?'Your attention didn\'t drop off over the course of the game. Most people\'s does.':null].filter(Boolean);
+    environments=['High-stakes environments where staying composed under pressure is literally part of the job — trading, surgery, air traffic control, crisis management.','Roles requiring sustained attention without stimulation — auditing, QA, security monitoring.','Any situation where acting too fast costs more than waiting.'];
+    blindspot=fatigues?'Your attention does fade under extended monotony — not a problem in bursts, but a real factor in long, repetitive stretches.':'High control can tip into over-caution in truly ambiguous situations. Sometimes acting on incomplete information is the right call.';
+  }else if(score>=55){
+    label='The Steady One';
+    traits=['You\'re above average on impulse control — you hold back more often than not when the situation calls for it.',poorControl?'A few false alarms crept in — moments where the urge to respond overtook the check.':'Your false alarm rate is manageable — most of the errors were misses, not jumps.',fatigues?'Your accuracy dropped in the second half — attention faded a bit as the game went on.':'Consistent across the whole game — no obvious attention fadeout.',deliberate?'You take a moment before committing. That works well in most situations.':null].filter(Boolean);
+    environments=['Roles with a mix of routine and exception.','Teams that need someone reliable under moderate pressure.','Work that rewards accuracy more than speed.'];
+    blindspot=fatigues?'Sustained monotonous attention isn\'t your strongest mode — focus drifts after a while.':poorControl?'The false alarms suggest you sometimes move before fully processing.':'Solid middle ground, but this profile doesn\'t stand out yet.';
+  }else if(score>=35){
+    label='The Reactor';
+    traits=['You respond quickly — that\'s a strength in environments where speed is rewarded.',poorControl?'But you also respond when you shouldn\'t. The false alarms are the signal.':'Your miss rate suggests you sometimes hold back too long — hesitation eating into accuracy.',fatigues?'Attention faded noticeably in the second half. The beginning was sharper than the end.':null,fast?'Fast reactions — the speed is real, but the accuracy hasn\'t caught up yet.':null].filter(Boolean);
+    environments=['Fast-paced environments where decisiveness matters more than perfect accuracy.','Roles with external accountability structures that catch and correct over-reactions.','Situations with short feedback loops where you can learn and adjust quickly.'];
+    blindspot='The impulse to act is strong. In high-speed environments, that\'s an asset. In high-stakes ones — especially where acting wrong is worse than waiting — it becomes a liability.';
+  }else{
+    label='The Impulsive';
+    traits=['You act fast — very fast. The gap between stimulus and response is almost automatic.','Your false alarm rate is high, which means the brake system isn\'t engaging reliably when it should.',fatigues?'Attention also dropped off in the second half — the combination of impulsivity and fatigue is a meaningful pattern.':null,'This isn\'t a character flaw — it\'s a wiring preference. But it shapes where you work best.'].filter(Boolean);
+    environments=['Roles where speed is the primary advantage and errors are quickly correctable.','Environments with strong external checks that catch what you miss.','Work where volume and energy matter more than precision.'];
+    blindspot='High impulsivity in low-stakes games tends to show up as costly errors in high-stakes real situations — especially when you\'re tired, under pressure, or emotionally activated.';
+  }
+  return{label,traits,environments,blindspot};
+}
+function gngEndGame(){
+  gngActive=false;clearTimeout(gngStimTimer);clearTimeout(gngNextTimer);document.getElementById('gng-tap-btn').disabled=true;
+  const stats=gngCalcScore(gngResults);const prof=gngGetProfile(stats.gngScore,stats.faRate,stats.missRate,stats.fatigueDelta,stats.avgRT);
+  const fatigueLabel=stats.fatigueDelta<=-0.2?'↓ Fades':stats.fatigueDelta>=0.1?'↑ Warms up':'→ Steady';
+  const result={game:'GNG',gngScore:stats.gngScore,label:prof.label,hits:stats.hits,misses:stats.misses,falseAlarms:stats.fas,hitRate:Math.round(stats.hitRate*100),faRate:Math.round(stats.faRate*100),avgRT:stats.avgRT,fatigueDelta:Math.round(stats.fatigueDelta*100),dPrime:Math.round(stats.dPrime*100)/100,date:new Date().toISOString()};
+  const emailKey=safeKey('rl_ue_',user.email);const latest=lsGet(emailKey);const ud=latest?JSON.parse(latest):{...user,scores:[]};
+  ud.scores=(ud.scores||[]).filter(s=>s.game!=='GNG');ud.scores.push(result);lsSet(emailKey,JSON.stringify(ud));user=ud;
+  document.getElementById('gng-r-score').textContent=stats.gngScore;document.getElementById('gng-r-label').textContent=prof.label;
+  document.getElementById('gng-r-hits').textContent=stats.hits+'/'+gngResults.filter(r=>r.type==='go').length;
+  document.getElementById('gng-r-fa').textContent=stats.fas;document.getElementById('gng-r-rt').textContent=stats.avgRT!==null?stats.avgRT:'—';
+  document.getElementById('gng-r-misses').textContent=stats.misses;document.getElementById('gng-r-fatigue').textContent=fatigueLabel;document.getElementById('gng-r-acc').textContent=stats.gngScore+'%';
+  const dotsEl=document.getElementById('gng-r-dots');if(dotsEl)dotsEl.innerHTML=gngResults.map(r=>{const cls=r.response==='hit'?'hit':r.response==='miss'?'miss':r.response==='fa'?'fa':'cr';return`<div class="gng-dot ${cls}"></div>`;}).join('');
+  renderInsights('gng-r-traits','gng-r-envs','gng-r-blindspot',prof.traits,prof.environments,prof.blindspot);
+  renderSynthesis('gng-r-synthesis-wrap','gng-r-synthesis',ud.scores);showScreen('gng-results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// SHARED RENDERERS
+// ═══════════════════════════════════════════════════════════
+function renderInsights(traitsId,envsId,blindId,traits,environments,blindspot){
+  document.getElementById(traitsId).innerHTML=traits.map(t=>`<div class="insight-item"><span class="insight-dot">·</span><span>${t}</span></div>`).join('');
+  document.getElementById(envsId).innerHTML=environments.map(e=>`<div class="insight-item"><span class="insight-dot">·</span><span>${e}</span></div>`).join('');
+  document.getElementById(blindId).textContent=blindspot;
+}
+function renderSynthesis(wrapId,textId,scores){
+  if(scores.length<2)return;
+  const bart=scores.find(s=>s.game==='BART');const pd=scores.find(s=>s.game==='PD');const toh=scores.find(s=>s.game==='TOH');const fer=scores.find(s=>s.game==='FER');const gng=scores.find(s=>s.game==='GNG');
+  const lines=[];
+  if(bart&&pd){const highRisk=bart.bartScore>=16;const highCoop=pd.cooperationScore>=50;if(highRisk&&highCoop)lines.push('You take risks and extend trust — that combination usually shows up as someone who jumps into new things and brings people along. Founder energy, in the best sense.');if(highRisk&&!highCoop)lines.push('You take risks but play your cards close — independent, self-directed, not waiting for group consensus. Effective alone; the friction shows in team-dependent situations.');if(!highRisk&&highCoop)lines.push('You\'re cautious but collaborative — someone who thinks carefully before acting, and wants alignment before committing. Likely a stabilizing force in fast-moving teams.');if(!highRisk&&!highCoop)lines.push('You\'re measured about both risk and trust — deliberate, independent, difficult to rush. That consistency is a real strength in high-stakes, slow-feedback environments.');}
+  if(bart&&toh){const highRisk=bart.bartScore>=16;const highPlan=toh.planningScore>=65;if(highRisk&&highPlan)lines.push('Risk-tolerant and structured — you can commit boldly when you\'ve thought it through. That\'s a rare combination.');if(highRisk&&!highPlan)lines.push('You move fast and adjust later — the planning score confirms this isn\'t just risk tolerance, it\'s a genuine instinct to act before fully mapping the territory.');if(!highRisk&&highPlan)lines.push('Careful and structured — you want to know where you\'re going before you move.');}
+  if(toh&&fer){const highPlan=toh.planningScore>=65;const highEQ=fer.ferScore>=69;if(highPlan&&highEQ)lines.push('Structured thinker and emotionally attuned — that combination is rare and genuinely powerful in leadership roles.');if(!highPlan&&highEQ)lines.push('Your emotional radar is stronger than your sequential planning instinct — you understand people better than processes.');if(highPlan&&!highEQ)lines.push('Strong planner, more analytical on the people side — environments where the primary deliverable is intellectual or technical will suit you.');}
+  if(gng&&bart){const goodControl=gng.gngScore>=55;const highRisk=bart.bartScore>=16;if(goodControl&&highRisk)lines.push('You take risks deliberately but can slam the brakes when you need to — bold appetite, clean inhibition. That\'s what separates calculated risk-takers from reckless ones.');if(!goodControl&&highRisk)lines.push('High risk appetite and a tendency to act before fully processing. In environments that reward speed, that\'s an edge. In ones that punish errors, it\'s the thing to watch.');if(goodControl&&!highRisk)lines.push('You\'re both cautious and controlled — you protect against downside at the decision level and at the impulse level.');if(!goodControl&&!highRisk)lines.push('You avoid risk but also act impulsively in reactive situations. Those two things pull in opposite directions and can create inconsistency.');}
+  if(gng&&pd){const goodControl=gng.gngScore>=55;const highCoop=pd.cooperationScore>=50;if(goodControl&&highCoop)lines.push('You cooperate by default and can hold back when needed — trustworthy and not reactive. That\'s a clean combination for team environments.');if(!goodControl&&!highCoop)lines.push('Impulsive and guarded — you act fast and trust slowly. Works in competitive, individual-performance environments, less so in ones built on coordination.');}
+  if(!lines.length)return;
+  document.getElementById(wrapId).style.display='block';
+  document.getElementById(textId).textContent=lines[0];
+}
+
+// ═══════════════════════════════════════════════════════════
+// CONTEXT CAPTURE
+// ═══════════════════════════════════════════════════════════
+let ctxDraft={};
+function showContextScreen(){
+  ctxDraft={};
+  const sel=document.getElementById('ctx-dob-year');
+  if(sel.options.length<=1){const cur=new Date().getFullYear();for(let y=cur-14;y>=1955;y--){const o=document.createElement('option');o.value=y;o.textContent=y;sel.appendChild(o);}}
+  showScreen('context');
+}
+function ctxSelect(field,val,ids){
+  ctxDraft[field]=val;ids.forEach(id=>document.getElementById(id).classList.remove('selected'));
+  ids.forEach(id=>{const btn=document.getElementById(id);if(btn.getAttribute('onclick').includes("'"+val+"'"))btn.classList.add('selected');});
+}
+function ctxSetVal(field,val){ctxDraft[field]=val;}
+function saveContext(){
+  clrErr('ctx-err');
+  if(!ctxDraft.gender){showErr('ctx-err','Pick a gender option (or skip).');return;}
+  if(!ctxDraft.dobYear){showErr('ctx-err','Select your birth year.');return;}
+  if(!ctxDraft.work){showErr('ctx-err','Tell us where you are right now.');return;}
+  if(!ctxDraft.aspiration){showErr('ctx-err','Pick what you\'re aiming for.');return;}
+  const emailKey=safeKey('rl_ue_',user.email);const ud=JSON.parse(lsGet(emailKey));
+  ud.context={...ctxDraft,savedAt:new Date().toISOString()};lsSet(emailKey,JSON.stringify(ud));user=ud;enterDashboard();
+}
+
+// ═══════════════════════════════════════════════════════════
+// B5 SELF-PERCEPTION
+// ═══════════════════════════════════════════════════════════
+const B5_QUESTIONS={
+  BART:{pill:'After Dum',q:'Honestly — how do you see yourself when it comes to taking risks?',opts:[{label:'I take risks. Sometimes more than I probably should.',val:'high'},{label:'Depends on the situation. I can go either way.',val:'mid'},{label:'I tend to play it safe. I like knowing what I\'m walking into.',val:'low'}],dim:'risk'},
+  PD:{pill:'After Bharosa',q:'When you meet someone new — trust first, or wait and see?',opts:[{label:'Trust first. I\'ll adjust if they give me a reason to.',val:'high'},{label:'Neutral. I watch how they behave before I decide.',val:'mid'},{label:'Wait and see. Trust is earned, not given.',val:'low'}],dim:'trust'},
+  TOH:{pill:'After Burj',q:'Plan ahead and stick to it — or figure it out as you go?',opts:[{label:'I always have a plan. Winging it makes me uncomfortable.',val:'high'},{label:'A rough plan, then I adapt as things unfold.',val:'mid'},{label:'I work best when I can just react. Plans feel like cages.',val:'low'}],dim:'plan'},
+  FER:{pill:'After Chehra',q:'Do you pick up on how people are feeling — or do you mostly stay in your own head?',opts:[{label:'I notice things about people that others seem to miss.',val:'high'},{label:'Sometimes. Depends on how much attention I\'m paying.',val:'mid'},{label:'I\'m usually focused on the task. I miss social signals.',val:'low'}],dim:'eq'},
+  GNG:{pill:'After Ruk',q:'In real life — do you act first and think after, or think before you move?',opts:[{label:'I act on instinct. Thinking too long makes me miss the moment.',val:'high'},{label:'Depends on the stakes. Low stakes I move fast, high stakes I pause.',val:'mid'},{label:'I think it through first. Acting without thinking makes me anxious.',val:'low'}],dim:'impulse'}
+};
+let b5CurrentGame=null;
+function showB5(gameCode){
+  const q=B5_QUESTIONS[gameCode];if(!q){enterDashboard();return;}
+  b5CurrentGame=gameCode;
+  document.getElementById('b5-pill').textContent=q.pill;document.getElementById('b5-question').textContent=q.q;
+  document.getElementById('b5-options').innerHTML=q.opts.map(o=>`<button class="b5-opt" onclick="saveB5('${o.val}')">${o.label}</button>`).join('');
+  showScreen('b5');
+}
+function saveB5(val){
+  if(!b5CurrentGame){enterDashboard();return;}
+  const emailKey=safeKey('rl_ue_',user.email);const ud=JSON.parse(lsGet(emailKey));
+  if(!ud.b5self)ud.b5self={};ud.b5self[b5CurrentGame]={dim:B5_QUESTIONS[b5CurrentGame].dim,val};
+  lsSet(emailKey,JSON.stringify(ud));user=ud;b5CurrentGame=null;enterDashboard();
+}
+
+// ═══════════════════════════════════════════════════════════
+// EXPORT PROFILE
+// ═══════════════════════════════════════════════════════════
+function exportProfile(){
+  if(!user)return;
+  const payload={alias:user.name.split(' ')[0],context:user.context||{},scores:user.scores||[],b5self:user.b5self||{},exportedAt:new Date().toISOString(),v:1};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='raah-profile-'+payload.alias.toLowerCase()+'.json';a.click();URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════════════════════
+// TEAM DYNAMICS
+// ═══════════════════════════════════════════════════════════
+let teamProfiles=[];
+function handleTeamDrop(e){e.preventDefault();document.getElementById('team-dropzone').classList.remove('dragover');handleTeamFiles(e.dataTransfer.files);}
+function handleTeamFiles(files){
+  const toRead=Array.from(files).filter(f=>f.name.endsWith('.json'));if(!toRead.length)return;let loaded=0;
+  toRead.forEach(file=>{const reader=new FileReader();reader.onload=e=>{try{const p=JSON.parse(e.target.result);if(p.scores!==undefined&&p.alias){if(!teamProfiles.find(x=>x.alias===p.alias))teamProfiles.push(p);}}catch(err){}loaded++;if(loaded===toRead.length)renderTeamFileList();};reader.readAsText(file);});
+}
+function renderTeamFileList(){
+  const list=document.getElementById('team-file-list');const mgrSel=document.getElementById('team-manager-sel');const mgrRow=document.getElementById('team-manager-row');const btn=document.getElementById('team-analyse-btn');
+  list.innerHTML=teamProfiles.map((p,i)=>`<div class="team-file-item"><span style="font-size:20px;">🧑</span><span style="flex:1;font-weight:500;font-size:14px;">${p.alias}</span><span style="font-size:12px;color:var(--text-muted);">${(p.scores||[]).length} games</span><button onclick="removeTeamProfile(${i})" style="border:none;background:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:0 4px;">×</button></div>`).join('');
+  if(teamProfiles.length>=2){mgrRow.style.display='block';mgrSel.innerHTML='<option value="">No manager — peer group</option>'+teamProfiles.map(p=>`<option value="${p.alias}">${p.alias}</option>`).join('');btn.disabled=false;}else{mgrRow.style.display='none';btn.disabled=true;}
+}
+function removeTeamProfile(i){teamProfiles.splice(i,1);renderTeamFileList();}
+function analyseTeam(){
+  if(teamProfiles.length<2)return;const managerAlias=document.getElementById('team-manager-sel').value;
+  function avg(arr){return arr.length?arr.reduce((s,v)=>s+v,0)/arr.length:null;}
+  function getScore(p,game,field){const s=(p.scores||[]).find(x=>x.game===game);return s?s[field]:null;}
+  const riskScores=teamProfiles.map(p=>getScore(p,'BART','bartScore')).filter(v=>v!==null);const coopScores=teamProfiles.map(p=>getScore(p,'PD','cooperationScore')).filter(v=>v!==null);const planScores=teamProfiles.map(p=>getScore(p,'TOH','planningScore')).filter(v=>v!==null);const eqScores=teamProfiles.map(p=>getScore(p,'FER','ferScore')).filter(v=>v!==null);const gngScores=teamProfiles.map(p=>getScore(p,'GNG','gngScore')).filter(v=>v!==null);
+  const avgRisk=avg(riskScores);const avgCoop=avg(coopScores);const avgPlan=avg(planScores);const avgEQ=avg(eqScores);const avgGNG=avg(gngScores);
+  function spread(arr){if(arr.length<2)return 0;const m=avg(arr);return Math.sqrt(arr.reduce((s,v)=>s+(v-m)**2,0)/arr.length);}
+  const riskSpread=spread(riskScores);const coopSpread=spread(coopScores);
+  const isHighRisk=avgRisk!==null&&avgRisk>=16;const isHighCoop=avgCoop!==null&&avgCoop>=55;const isHighPlan=avgPlan!==null&&avgPlan>=65;const isHighEQ=avgEQ!==null&&avgEQ>=65;const isHighControl=avgGNG!==null&&avgGNG>=55;
+  const diverseRisk=riskSpread>8;const diverseCoop=coopSpread>20;
+  const goodBits=[];
+  if(isHighCoop)goodBits.push('This team has genuine collaborative instinct — people here default to working with each other, not against each other.');if(isHighPlan)goodBits.push('Collective planning strength is real here. When this group commits to something, it actually gets mapped out — not just agreed on.');if(isHighEQ)goodBits.push('Emotional reading is above average across the board. This team picks up on tension, morale shifts, and interpersonal friction before it becomes a problem.');if(isHighRisk&&isHighCoop)goodBits.push('Bold and collaborative at the same time. That combination is rare — teams are usually one or the other. This one can take swings together.');if(isHighControl)goodBits.push('The team shows good collective impulse control — they tend to pause before reacting, which in high-pressure situations is exactly what you want.');if(diverseRisk)goodBits.push('There\'s genuine range in how this group handles risk — some push, some hold. That tension, managed well, produces better decisions than a team that all thinks the same way.');if(!goodBits.length)goodBits.push('The team has played fewer games so far — this picture will sharpen as more data comes in.');
+  const badBits=[];
+  if(!isHighCoop&&avgCoop!==null)badBits.push('Cooperation scores trend low. This team may operate more as a collection of individuals than as a unit.');if(!isHighPlan&&avgPlan!==null)badBits.push('Planning isn\'t a collective strength. This team will find momentum in early stages, then struggle when execution requires sequencing.');if(!isHighEQ&&avgEQ!==null)badBits.push('Emotional awareness is below where it needs to be. Interpersonal signals are likely getting missed.');if(diverseCoop)badBits.push('Big gap in how cooperative different members are — some people are building trust, others are quietly protecting their position.');if(!badBits.length)badBits.push('No glaring collective weaknesses visible from current game data.');
+  const uglyBits=[];
+  if(isHighRisk&&!isHighCoop)uglyBits.push('High risk appetite without collaborative glue is genuinely dangerous. Everyone here is willing to bet big — but they\'re betting on themselves, not on each other.');if(!isHighRisk&&!isHighPlan)uglyBits.push('Cautious and unstructured at the same time. This team will neither move fast nor move deliberately — it will drift.');if(avgGNG!==null&&avgGNG<40&&isHighRisk)uglyBits.push('High risk appetite paired with low impulse control — this group can overcommit and over-react simultaneously. That\'s a volatile combination.');if(!uglyBits.length&&(!isHighCoop||!isHighPlan))uglyBits.push('The real risk here isn\'t a crisis — it\'s drift. Moderate performance that never quite becomes great.');if(!uglyBits.length)uglyBits.push('Nothing catastrophic in the data. The thing to watch is whether "good enough" becomes the ceiling.');
+  document.getElementById('team-good-text').textContent=goodBits[0];document.getElementById('team-bad-text').textContent=badBits[0];document.getElementById('team-ugly-text').textContent=uglyBits[0];
+  const mgrSec=document.getElementById('team-mgr-section');
+  if(managerAlias){
+    const mgr=teamProfiles.find(p=>p.alias===managerAlias);const team=teamProfiles.filter(p=>p.alias!==managerAlias);
+    const mgrRisk=getScore(mgr,'BART','bartScore');const mgrCoop=getScore(mgr,'PD','cooperationScore');const mgrEQ=getScore(mgr,'FER','ferScore');const mgrGNG=getScore(mgr,'GNG','gngScore');
+    const teamAvgRisk=avg(team.map(p=>getScore(p,'BART','bartScore')).filter(v=>v!==null));const teamAvgCoop=avg(team.map(p=>getScore(p,'PD','cooperationScore')).filter(v=>v!==null));
+    const mgrLines=[];
+    if(mgrRisk!==null&&teamAvgRisk!==null){const gap=mgrRisk-teamAvgRisk;if(gap>8)mgrLines.push(`${managerAlias} is significantly more risk-tolerant than the team. Expect the team to feel pushed into moves they haven't fully processed.`);if(gap<-8)mgrLines.push(`${managerAlias} is more cautious than the people they lead. The team has appetite the manager may be holding back.`);if(Math.abs(gap)<=8)mgrLines.push(`${managerAlias}'s risk appetite is well-matched with the team's. Calls on when to push and when to protect will generally land.`);}
+    if(mgrCoop!==null&&teamAvgCoop!==null){const gap=mgrCoop-teamAvgCoop;if(gap<-15)mgrLines.push(`The team is more collaborative than the manager. People are extending trust that isn't being fully returned.`);if(gap>15)mgrLines.push(`${managerAlias} leads with more openness than the team operates with — the manager may feel isolated.`);}
+    if(mgrGNG!==null&&mgrGNG<40)mgrLines.push(`${managerAlias}'s impulse control score is low — under pressure they may react faster than the situation calls for.`);
+    if(mgrEQ!==null&&mgrEQ>=75)mgrLines.push(`${managerAlias} reads people well. That's a genuine asset — they'll catch interpersonal problems early.`);if(mgrEQ!==null&&mgrEQ<50)mgrLines.push(`Emotional signal-reading isn't ${managerAlias}'s strongest channel. Team members will need to be explicit about concerns.`);
+    const mgrContainer=document.getElementById('team-mgr-text');
+    mgrContainer.innerHTML=mgrLines.length?mgrLines.map(l=>`<div class="team-dyn"><p style="font-size:14px;color:var(--text-muted);line-height:1.8;">${l}</p></div>`).join(''):`<div class="team-dyn"><p style="font-size:14px;color:var(--text-muted);">Not enough game data from ${managerAlias} yet.</p></div>`;
+    mgrSec.style.display='block';
+  }else{mgrSec.style.display='none';}
+  document.getElementById('team-upload-area').style.display='none';document.getElementById('team-results').style.display='block';
+}
+function resetTeam(){teamProfiles=[];document.getElementById('team-file-list').innerHTML='';document.getElementById('team-manager-row').style.display='none';document.getElementById('team-analyse-btn').disabled=true;document.getElementById('team-upload-area').style.display='block';document.getElementById('team-results').style.display='none';}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+(function init(){
+  const session=lsGet('rl_session');
+  if(session){const sd=JSON.parse(session);const ur=lsGet(sd.emailKey);user=ur?JSON.parse(ur):{name:sd.name,email:'',scores:[]};if(!user.context){showContextScreen();return;}enterDashboard();return;}
+  showScreen('landing');
+})();
+</script>
+</body>
+</html>
