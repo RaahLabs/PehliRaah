@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Raah Labs — Know Your Path</title>
-  <meta name="description" content="6 science-backed games. 20 minutes. Discover the careers you're built for." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -70,7 +69,7 @@
     .tab-bar button { flex: 1; padding: 10px; background: transparent; border: none; cursor: pointer; font-weight: 500; }
     .tab-bar button.active { background: var(--amber); color: white; }
     .err-box { background: var(--red-light); color: var(--red); padding: 10px; border-radius: var(--radius); margin-bottom: 12px; display: none; font-size: 13px; }
-    .toh-peg { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 8px; border-radius: var(--radius); transition: all 0.1s; background: var(--surface); }
+    .toh-peg { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 8px; border-radius: var(--radius); transition: all 0.1s; background: var(--surface); min-width: 90px; }
     .toh-peg.selected { background: var(--amber-light); }
     .toh-discs { height: 100px; display: flex; flex-direction: column-reverse; align-items: center; gap: 3px; }
     .toh-disc { height: 18px; border-radius: 20px; transition: all 0.1s; }
@@ -107,16 +106,16 @@
     <button class="back-btn" onclick="showScreen('landing')">← Back</button>
     <div class="tab-bar"><button id="tab-su" class="active" onclick="switchTab('signup')">Sign up</button><button id="tab-li" onclick="switchTab('login')">Login</button></div>
     <div id="form-signup">
-      <div class="field"><label>Full name</label><input type="text" id="su-name"></div>
-      <div class="field"><label>Email</label><input type="email" id="su-email"></div>
-      <div class="field"><label>Mobile (10 digits)</label><input type="tel" id="su-mobile" maxlength="10"></div>
-      <div class="field"><label>Password (min 6)</label><input type="password" id="su-pw"></div>
+      <div class="field"><label>Full name</label><input type="text" id="su-name" placeholder="Your name"></div>
+      <div class="field"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com"></div>
+      <div class="field"><label>Mobile (10 digits)</label><input type="tel" id="su-mobile" maxlength="10" placeholder="9876543210"></div>
+      <div class="field"><label>Password (min 6)</label><input type="password" id="su-pw" placeholder="••••••"></div>
       <div class="err-box" id="su-err"></div>
       <button class="btn btn-primary btn-full" onclick="handleSignup()">Create account →</button>
     </div>
     <div id="form-login" style="display:none;">
-      <div class="field"><label>Email or mobile</label><input type="text" id="li-id"></div>
-      <div class="field"><label>Password</label><input type="password" id="li-pw"></div>
+      <div class="field"><label>Email or mobile</label><input type="text" id="li-id" placeholder="you@email.com or 9876543210"></div>
+      <div class="field"><label>Password</label><input type="password" id="li-pw" placeholder="••••••"></div>
       <div class="err-box" id="li-err"></div>
       <button class="btn btn-primary btn-full" onclick="handleLogin()">Login →</button>
     </div>
@@ -181,56 +180,114 @@ function switchTab(tab) { document.getElementById('form-signup').style.display =
 function logout() { lsDel('rl_session'); user = null; showScreen('landing'); updateNav(); }
 function resetAllData() { if(confirm('Delete ALL your data? This cannot be undone.')) { Object.keys(localStorage).forEach(k => { if(k.startsWith('rl_')) localStorage.removeItem(k); }); user = null; showScreen('landing'); updateNav(); } }
 
-function handleSignup() { let name=document.getElementById('su-name').value, email=document.getElementById('su-email').value, mobile=document.getElementById('su-mobile').value, pw=document.getElementById('su-pw').value; if(!name||!email||!mobile||mobile.length!==10||!pw||pw.length<6) { document.getElementById('su-err').style.display='block'; document.getElementById('su-err').innerText='Please fill all fields correctly'; return; } let ek=safeKey('rl_ue_',email), mk=safeKey('rl_um_',mobile); if(lsGet(ek)) { document.getElementById('su-err').style.display='block'; document.getElementById('su-err').innerText='Email already registered'; return; } let u={name,email,mobile,password:pw,scores:[],context:{}}; lsSet(ek,JSON.stringify(u)); lsSet(mk,JSON.stringify({emailKey:ek})); lsSet('rl_session',JSON.stringify({emailKey:ek,name})); user=u; showContext(); }
-function handleLogin() { let id=document.getElementById('li-id').value, pw=document.getElementById('li-pw').value; if(!id||!pw) { document.getElementById('li-err').style.display='block'; document.getElementById('li-err').innerText='Enter both fields'; return; } let clean=id.replace(/\s/g,''), uData=null; if(/^\d{10}$/.test(clean)) { let mref=lsGet(safeKey('rl_um_',clean)); if(mref) uData=JSON.parse(lsGet(JSON.parse(mref).emailKey)); } else { uData=JSON.parse(lsGet(safeKey('rl_ue_',clean))||'null'); } if(uData && uData.password===pw) { lsSet('rl_session',JSON.stringify({emailKey:safeKey('rl_ue_',uData.email),name:uData.name})); user=uData; if(!user.context || Object.keys(user.context).length===0) showContext(); else showDashboard(); } else { document.getElementById('li-err').style.display='block'; document.getElementById('li-err').innerText='Invalid credentials'; } }
-function showContext() { let y=document.getElementById('ctx-year'); y.innerHTML='<option value="">Select year</option>'; for(let i=2024-14;i>=1955;i--) y.innerHTML+=`<option value="${i}">${i}</option>`; showScreen('context'); }
-function saveContext() { let ctx={gender:document.getElementById('ctx-gender').value, dobYear:document.getElementById('ctx-year').value, work:document.getElementById('ctx-work').value, aspiration:document.getElementById('ctx-aspire').value}; if(!ctx.dobYear) return; let ek=safeKey('rl_ue_',user.email); let ud=JSON.parse(lsGet(ek)); ud.context=ctx; lsSet(ek,JSON.stringify(ud)); user=ud; showDashboard(); }
-function showDashboard() { if(!user) return; document.getElementById('dash-greet').innerHTML='Hey, '+user.name.split(' ')[0]+' 👋'; let s=user.scores||[]; let games=['BART','PD','TOH','STROOP','GNG','ULT']; let completed=games.filter(g=>s.find(x=>x.game===g)).length; document.getElementById('prog-fill').style.width=(completed/6*100)+'%'; document.getElementById('prog-count').innerText=completed+'/6 games'; let hasB=!!s.find(x=>x.game==='BART'); let hasP=!!s.find(x=>x.game==='PD'); let hasT=!!s.find(x=>x.game==='TOH'); let hasS=!!s.find(x=>x.game==='STROOP'); let hasG=!!s.find(x=>x.game==='GNG'); let hasU=!!s.find(x=>x.game==='ULT'); document.getElementById('g1-cta').style.display=!hasB?'block':'none'; document.getElementById('g1-done').style.display=hasB?'block':'none'; document.getElementById('g2-cta').style.display=hasB&&!hasP?'block':'none'; document.getElementById('g2-done').style.display=hasP?'block':'none'; document.getElementById('g3-cta').style.display=hasP&&!hasT?'block':'none'; document.getElementById('g3-done').style.display=hasT?'block':'none'; document.getElementById('g4-cta').style.display=hasT&&!hasS?'block':'none'; document.getElementById('g4-done').style.display=hasS?'block':'none'; document.getElementById('g5-cta').style.display=hasS&&!hasG?'block':'none'; document.getElementById('g5-done').style.display=hasG?'block':'none'; document.getElementById('g6-cta').style.display=hasG&&!hasU?'block':'none'; document.getElementById('g6-done').style.display=hasU?'block':'none'; showScreen('dashboard'); }
+function handleSignup() { 
+  let name=document.getElementById('su-name').value, email=document.getElementById('su-email').value, mobile=document.getElementById('su-mobile').value, pw=document.getElementById('su-pw').value; 
+  if(!name||!email||!mobile||mobile.length!==10||!pw||pw.length<6) { document.getElementById('su-err').style.display='block'; document.getElementById('su-err').innerText='Please fill all fields correctly'; return; } 
+  let ek=safeKey('rl_ue_',email), mk=safeKey('rl_um_',mobile); 
+  if(lsGet(ek)) { document.getElementById('su-err').style.display='block'; document.getElementById('su-err').innerText='Email already registered'; return; } 
+  let u={name,email,mobile,password:pw,scores:[],context:{}}; 
+  lsSet(ek,JSON.stringify(u)); lsSet(mk,JSON.stringify({emailKey:ek})); lsSet('rl_session',JSON.stringify({emailKey:ek,name})); 
+  user=u; showContext(); 
+}
+function handleLogin() { 
+  let id=document.getElementById('li-id').value, pw=document.getElementById('li-pw').value; 
+  if(!id||!pw) { document.getElementById('li-err').style.display='block'; document.getElementById('li-err').innerText='Enter both fields'; return; } 
+  let clean=id.replace(/\s/g,''), uData=null; 
+  if(/^\d{10}$/.test(clean)) { let mref=lsGet(safeKey('rl_um_',clean)); if(mref) uData=JSON.parse(lsGet(JSON.parse(mref).emailKey)); } 
+  else { uData=JSON.parse(lsGet(safeKey('rl_ue_',clean))||'null'); } 
+  if(uData && uData.password===pw) { 
+    lsSet('rl_session',JSON.stringify({emailKey:safeKey('rl_ue_',uData.email),name:uData.name})); 
+    user=uData; 
+    if(!user.context || Object.keys(user.context).length===0) showContext(); 
+    else showDashboard(); 
+  } else { document.getElementById('li-err').style.display='block'; document.getElementById('li-err').innerText='Invalid credentials'; } 
+}
+function showContext() { 
+  let y=document.getElementById('ctx-year'); y.innerHTML='<option value="">Select year</option>'; 
+  for(let i=2024-14;i>=1955;i--) y.innerHTML+=`<option value="${i}">${i}</option>`; 
+  showScreen('context'); 
+}
+function saveContext() { 
+  let ctx={gender:document.getElementById('ctx-gender').value, dobYear:document.getElementById('ctx-year').value, work:document.getElementById('ctx-work').value, aspiration:document.getElementById('ctx-aspire').value}; 
+  if(!ctx.dobYear) return; 
+  let ek=safeKey('rl_ue_',user.email); let ud=JSON.parse(lsGet(ek)); ud.context=ctx; lsSet(ek,JSON.stringify(ud)); user=ud; showDashboard(); 
+}
+function showDashboard() { 
+  if(!user) return; 
+  document.getElementById('dash-greet').innerHTML='Hey, '+user.name.split(' ')[0]+' 👋'; 
+  let s=user.scores||[]; 
+  let games=['BART','PD','TOH','STROOP','GNG','ULT']; 
+  let completed=games.filter(g=>s.find(x=>x.game===g)).length; 
+  document.getElementById('prog-fill').style.width=(completed/6*100)+'%'; 
+  document.getElementById('prog-count').innerText=completed+'/6 games'; 
+  let hasB=!!s.find(x=>x.game==='BART'); let hasP=!!s.find(x=>x.game==='PD'); let hasT=!!s.find(x=>x.game==='TOH'); 
+  let hasS=!!s.find(x=>x.game==='STROOP'); let hasG=!!s.find(x=>x.game==='GNG'); let hasU=!!s.find(x=>x.game==='ULT'); 
+  document.getElementById('g1-cta').style.display=!hasB?'block':'none'; document.getElementById('g1-done').style.display=hasB?'block':'none'; 
+  document.getElementById('g2-cta').style.display=hasB&&!hasP?'block':'none'; document.getElementById('g2-done').style.display=hasP?'block':'none'; 
+  document.getElementById('g3-cta').style.display=hasP&&!hasT?'block':'none'; document.getElementById('g3-done').style.display=hasT?'block':'none'; 
+  document.getElementById('g4-cta').style.display=hasT&&!hasS?'block':'none'; document.getElementById('g4-done').style.display=hasS?'block':'none'; 
+  document.getElementById('g5-cta').style.display=hasS&&!hasG?'block':'none'; document.getElementById('g5-done').style.display=hasG?'block':'none'; 
+  document.getElementById('g6-cta').style.display=hasG&&!hasU?'block':'none'; document.getElementById('g6-done').style.display=hasU?'block':'none'; 
+  showScreen('dashboard'); 
+}
 function exportProfile() { let blob=new Blob([JSON.stringify({name:user.name,context:user.context,scores:user.scores})],{type:'application/json'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='raah-profile.json'; a.click(); }
-function saveGameResult(gameCode, score, label, insight) { let ek=safeKey('rl_ue_',user.email); let ud=JSON.parse(lsGet(ek)); ud.scores=(ud.scores||[]).filter(s=>s.game!==gameCode); ud.scores.push({game:gameCode,score,label,insight,date:new Date().toISOString()}); lsSet(ek,JSON.stringify(ud)); user=ud; showDashboard(); }
+function saveGameResult(gameCode, score, label, insight) { 
+  let ek=safeKey('rl_ue_',user.email); let ud=JSON.parse(lsGet(ek)); 
+  ud.scores=(ud.scores||[]).filter(s=>s.game!==gameCode); 
+  ud.scores.push({game:gameCode,score,label,insight,date:new Date().toISOString()}); 
+  lsSet(ek,JSON.stringify(ud)); user=ud; 
+  showDashboard(); 
+}
 
 // ==================== GAME 1: BART (Balloon) ====================
-function startGame(game) { currentGame=game; if(game==='BART') startBART(); else if(game==='PD') startPD(); else if(game==='TOH') startTOH(); else if(game==='STROOP') startStroop(); else if(game==='GNG') startGNG(); else if(game==='ULT') startULT(); }
+function startGame(game) { 
+  if(game==='BART') startBART(); 
+  else if(game==='PD') startPD(); 
+  else if(game==='TOH') startTOH(); 
+  else if(game==='STROOP') startStroop(); 
+  else if(game==='GNG') startGNG(); 
+  else if(game==='ULT') startULT(); 
+}
 function startBART() { window.balloonRound=0; window.balloonBank=0; window.balloonTrials=[]; nextBalloon(); }
 function nextBalloon() { if(window.balloonRound>=30) return endBART(); let colors=['blue','yellow','red']; let maxPumps={blue:64,yellow:32,red:16}; let color=colors[Math.floor(Math.random()*3)]; window.currentBalloon={pumps:0, popped:false, color:color, threshold:Math.floor(Math.random()*maxPumps[color])+1}; renderBART(); }
-function renderBART() { document.getElementById('game-content').innerHTML=`<button class="back-btn" onclick="showDashboard()">← Dashboard</button><div class="pill">Game 1/6 · Dum</div><div style="font-size:28px;margin:10px 0;">🎈 Balloon ${window.balloonRound+1}/30</div><div class="surface" style="text-align:center;padding:30px;"><div id="balloonImg" style="font-size:80px;transition:0.1s;">🎈</div><div>Pumps: ${window.currentBalloon.pumps}</div><div>Current value: ₹${window.currentBalloon.pumps*5}</div><div>Banked: ₹${window.balloonBank}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" id="pumpBtn" onclick="pumpBalloon()">💨 Pump (₹5)</button><button class="btn btn-primary" id="collectBtn" onclick="collectBalloon()">💰 Collect ₹${window.currentBalloon.pumps*5}</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.balloonRound/30)*100}%"></div></div>`; }
+function renderBART() { document.getElementById('game-content').innerHTML=`<button class="back-btn" onclick="showDashboard()">← Dashboard</button><div class="pill">Game 1/6 · Dum</div><div style="font-size:28px;margin:10px 0;">🎈 Balloon ${window.balloonRound+1}/30</div><div class="surface" style="text-align:center;padding:30px;"><div id="balloonImg" style="font-size:80px;transition:0.1s;">🎈</div><div>Pumps: ${window.currentBalloon.pumps}</div><div>Current value: ₹${window.currentBalloon.pumps*5}</div><div>Banked: ₹${window.balloonBank}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" onclick="pumpBalloon()">💨 Pump (₹5)</button><button class="btn btn-primary" onclick="collectBalloon()">💰 Collect ₹${window.currentBalloon.pumps*5}</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.balloonRound/30)*100}%"></div></div>`; }
 function pumpBalloon() { if(window.currentBalloon.popped) return; window.currentBalloon.pumps++; let scale=1+window.currentBalloon.pumps/30; let img=document.getElementById('balloonImg'); if(img) img.style.transform=`scale(${Math.min(scale,2.5)})`; if(window.currentBalloon.pumps>=window.currentBalloon.threshold) { window.currentBalloon.popped=true; if(img) img.innerHTML='💥'; setTimeout(()=>{ window.balloonTrials.push({color:window.currentBalloon.color,pumps:window.currentBalloon.pumps,exploded:true}); window.balloonRound++; if(window.balloonRound<30) nextBalloon(); else endBART(); },600); } else { renderBART(); } }
 function collectBalloon() { if(window.currentBalloon.popped) return; let earned=window.currentBalloon.pumps*5; window.balloonBank+=earned; window.balloonTrials.push({color:window.currentBalloon.color,pumps:window.currentBalloon.pumps,exploded:false}); window.balloonRound++; if(window.balloonRound<30) nextBalloon(); else endBART(); }
-function endBART() { let safePumps=window.balloonTrials.filter(t=>!t.exploded).map(t=>t.pumps); let avgPump=safePumps.length?safePumps.reduce((a,b)=>a+b,0)/safePumps.length:0; let score=Math.min(100,Math.round((avgPump/20)*100)); let label=score>=70?'The Risk-Taker':score>=40?'The Balanced':'The Cautious'; let insight=`You pumped an average of ${avgPump.toFixed(1)} times. ${score>70?'You chase rewards confidently.':score>40?'You balance risk and reward.':'You prefer to lock in gains early.'}`; showGameResults('Dum',score,label,insight,()=>saveGameResult('BART',score,label,insight)); }
+function endBART() { let safePumps=window.balloonTrials.filter(t=>!t.exploded).map(t=>t.pumps); let avgPump=safePumps.length?safePumps.reduce((a,b)=>a+b,0)/safePumps.length:0; let score=Math.min(100,Math.round((avgPump/20)*100)); let label=score>=70?'The Risk-Taker':score>=40?'The Balanced':'The Cautious'; let insight=`You pumped an average of ${avgPump.toFixed(1)} times. ${score>70?'You chase rewards confidently.':score>40?'You balance risk and reward.':'You prefer to lock in gains early.'}`; showGameResults('Dum',score,label,insight,function(){ saveGameResult('BART',score,label,insight); }); }
 
 // ==================== GAME 2: Prisoner's Dilemma ====================
 function startPD() { window.pdRound=0; window.pdScore=0; window.pdMoves=[]; nextPD(); }
 function nextPD() { if(window.pdRound>=10) return endPD(); renderPD(); }
 function renderPD() { document.getElementById('game-content').innerHTML=`<button class="back-btn" onclick="showDashboard()">← Dashboard</button><div class="pill">Game 2/6 · Bharosa</div><div style="font-size:28px;margin:10px 0;">🤝 Prisoner's Dilemma</div><div class="surface" style="margin:20px 0;text-align:center;"><div style="font-size:40px;">Round ${window.pdRound+1}/10</div><div>Your score: ${window.pdScore}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" onclick="pdMove('C')">🤝 Cooperate (Trust partner)</button><button class="btn btn-primary" onclick="pdMove('D')">🔪 Defect (Save yourself)</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.pdRound/10)*100}%"></div></div>`; }
 function pdMove(myMove) { let aiMove = (window.pdRound===0)?'C':(Math.random()<0.3?'D':window.pdMoves[window.pdMoves.length-1].my); let payoff={CC:[3,3],CD:[0,5],DC:[5,0],DD:[1,1]}; let gain=payoff[myMove+aiMove][0]; window.pdScore+=gain; window.pdMoves.push({my:myMove,ai:aiMove,gain}); window.pdRound++; if(window.pdRound<10) nextPD(); else endPD(); }
-function endPD() { let coopCount=window.pdMoves.filter(m=>m.my==='C').length; let score=Math.round((coopCount/10)*100); let label=score>=70?'The Trusting':score>=40?'The Strategic':'The Independent'; let insight=`You cooperated ${coopCount}/10 times. ${score>70?'You lead with trust.':score>40?'You adapt based on the situation.':'You protect yourself first.'}`; showGameResults('Bharosa',score,label,insight,()=>saveGameResult('PD',score,label,insight)); }
+function endPD() { let coopCount=window.pdMoves.filter(m=>m.my==='C').length; let score=Math.round((coopCount/10)*100); let label=score>=70?'The Trusting':score>=40?'The Strategic':'The Independent'; let insight=`You cooperated ${coopCount}/10 times. ${score>70?'You lead with trust.':score>40?'You adapt based on the situation.':'You protect yourself first.'}`; showGameResults('Bharosa',score,label,insight,function(){ saveGameResult('PD',score,label,insight); }); }
 
 // ==================== GAME 3: Tower of Hanoi ====================
 function startTOH() { window.tohPegs=[[4,3,2,1],[],[]]; window.tohMoves=0; window.tohSelected=null; renderTOH(); }
 function renderTOH() { let pegsHtml=window.tohPegs.map((peg,idx)=>`<div class="toh-peg ${window.tohSelected===idx?'selected':''}" onclick="tohSelect(${idx})"><div class="toh-discs">${peg.slice().reverse().map(d=>`<div class="toh-disc" style="width:${30+d*10}px;background:${['#BA7517','#D98A2C','#F0A84A','#FFC470'][d-1]}"></div>`).join('')}</div><div style="width:4px;height:60px;background:#888;margin:4px 0;"></div><div style="width:80px;height:6px;background:#888;border-radius:3px;"></div><div style="font-size:12px;margin-top:6px;">Peg ${idx+1}</div></div>`).join(''); document.getElementById('game-content').innerHTML=`<button class="back-btn" onclick="showDashboard()">← Dashboard</button><div class="pill">Game 3/6 · Burj</div><div style="display:flex;gap:16px;justify-content:space-between;margin:10px 0;"><div>📊 Moves: ${window.tohMoves}</div><div>🎯 Goal: All discs on Peg 3</div></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">${pegsHtml}</div><div style="display:flex;gap:12px;margin-top:16px;"><button class="btn btn-secondary" onclick="startTOH()">🔄 Reset</button><button class="btn btn-primary" onclick="checkTOHWin()">✅ Check Win</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.tohPegs[2].length/4)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;text-align:center;">Click a peg to select it, then click another peg to move the top disc. Bigger disc cannot go on smaller disc.</p>`; }
 function tohSelect(idx) { if(window.tohSelected===null) { if(window.tohPegs[idx].length) window.tohSelected=idx; } else { let from=window.tohSelected, to=idx; if(from!==to) { let fromDisc=window.tohPegs[from][window.tohPegs[from].length-1]; let toDisc=window.tohPegs[to][window.tohPegs[to].length-1]; if(!toDisc||fromDisc<toDisc) { window.tohPegs[to].push(window.tohPegs[from].pop()); window.tohMoves++; } } window.tohSelected=null; } renderTOH(); }
-function checkTOHWin() { if(window.tohPegs[2].length===4) { let score=Math.max(0,100-Math.max(0,window.tohMoves-15)*3); score=Math.min(100,Math.round(score)); let label=score>=80?'The Architect':score>=50?'The Planner':'The Explorer'; let insight=`Solved in ${window.tohMoves} moves. Optimal is 15. ${score>80?'Exceptional planning!':score>50?'Solid strategy.':'Room to improve forward thinking.'}`; showGameResults('Burj',score,label,insight,()=>saveGameResult('TOH',score,label,insight)); } else alert('Not solved yet! Keep moving discs to Peg 3.'); }
+function checkTOHWin() { if(window.tohPegs[2].length===4) { let score=Math.max(0,100-Math.max(0,window.tohMoves-15)*3); score=Math.min(100,Math.round(score)); let label=score>=80?'The Architect':score>=50?'The Planner':'The Explorer'; let insight=`Solved in ${window.tohMoves} moves. Optimal is 15. ${score>80?'Exceptional planning!':score>50?'Solid strategy.':'Room to improve forward thinking.'}`; showGameResults('Burj',score,label,insight,function(){ saveGameResult('TOH',score,label,insight); }); } else alert('Not solved yet! Keep moving discs to Peg 3.'); }
 
 // ==================== GAME 4: Stroop ====================
 function startStroop() { window.stroopIdx=0; window.stroopCorrect=0; window.stroopTrials=[]; for(let i=0;i<20;i++){let words=['RED','GREEN','BLUE','YELLOW']; let inks=['RED','GREEN','BLUE','YELLOW']; window.stroopTrials.push({word:words[Math.floor(Math.random()*4)], ink:inks[Math.floor(Math.random()*4)]}); } nextStroop(); }
 function nextStroop() { if(window.stroopIdx>=20) return endStroop(); let t=window.stroopTrials[window.stroopIdx]; let colorMap={RED:'#E53E3E',GREEN:'#38A169',BLUE:'#3182CE',YELLOW:'#D69E2E'}; document.getElementById('game-content').innerHTML=`<button class="back-btn" onclick="showDashboard()">← Dashboard</button><div class="pill">Game 4/6 · Rukawat (Stroop)</div><div style="text-align:center;margin:30px 0;"><div style="font-size:56px;font-weight:800;color:${colorMap[t.ink]};">${t.word}</div><div style="font-size:14px;color:gray;">Ignore the word. Pick the INK color.</div></div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">${['RED','GREEN','BLUE','YELLOW'].map(c=>`<button class="btn btn-secondary" onclick="stroopAnswer('${c}')">${c}</button>`).join('')}</div><div>Trial ${window.stroopIdx+1}/20</div><div class="progress-track"><div class="progress-fill" style="width:${(window.stroopIdx/20)*100}%"></div></div>`; }
 function stroopAnswer(selected) { let t=window.stroopTrials[window.stroopIdx]; if(selected===t.ink) window.stroopCorrect++; window.stroopIdx++; nextStroop(); }
-function endStroop() { let acc=window.stroopCorrect/20*100; let score=Math.round(acc); let label=score>=85?'The Focused':score>=65?'The Steady':'The Distractible'; let insight=`You ignored the word meaning ${score}% of the time. ${score>80?'Excellent cognitive inhibition!':score>60?'Good, but distractions get you sometimes.':'The meaning of words pulls your attention.'}`; showGameResults('Rukawat',score,label,insight,()=>saveGameResult('STROOP',score,label,insight)); }
+function endStroop() { let acc=window.stroopCorrect/20*100; let score=Math.round(acc); let label=score>=85?'The Focused':score>=65?'The Steady':'The Distractible'; let insight=`You ignored the word meaning ${score}% of the time. ${score>80?'Excellent cognitive inhibition!':score>60?'Good, but distractions get you sometimes.':'The meaning of words pulls your attention.'}`; showGameResults('Rukawat',score,label,insight,function(){ saveGameResult('STROOP',score,label,insight); }); }
 
 // ==================== GAME 5: Go/No-Go ====================
 function startGNG() { window.gngTrials=[]; for(let i=0;i<30;i++) window.gngTrials.push(Math.random()<0.7?'go':'nogo'); window.gngIdx=0; window.gngHits=0; window.gngErrors=0; nextGNG(); }
 function nextGNG() { if(window.gngIdx>=30) return endGNG(); let type=window.gngTrials[window.gngIdx]; document.getElementById('game-content').innerHTML=`<button class="back-btn" onclick="showDashboard()">← Dashboard</button><div class="pill">Game 5/6 · Ruk</div><div style="text-align:center;"><div id="gngShape" style="font-size:100px;margin:30px 0;">${type==='go'?'⚪':'⬛'}</div><button class="btn btn-primary" id="gngBtn" style="margin:0 auto 20px;display:block;padding:16px 40px;font-size:18px;" onclick="gngRespond()">🔘 TAP</button><div>✅ Hits: ${window.gngHits} | ❌ Errors: ${window.gngErrors}</div><div>Trial ${window.gngIdx+1}/30</div><div class="progress-track"><div class="progress-fill" style="width:${(window.gngIdx/30)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">⚪ Circle → TAP &nbsp;&nbsp; ⬛ Square → DO NOTHING</p></div>`; if(window.gngTimer) clearTimeout(window.gngTimer); window.gngTimer=setTimeout(()=>{ if(window.gngIdx<30 && window.gngTrials[window.gngIdx]==='go') { window.gngErrors++; window.gngIdx++; nextGNG(); } },700); }
 function gngRespond() { clearTimeout(window.gngTimer); if(window.gngIdx>=30) return; let type=window.gngTrials[window.gngIdx]; if(type==='go') window.gngHits++; else window.gngErrors++; window.gngIdx++; nextGNG(); }
-function endGNG() { let goCount=window.gngTrials.filter(t=>t==='go').length; let accuracy=goCount?window.gngHits/goCount*100:0; let score=Math.round(accuracy); let label=score>=85?'The Controlled':score>=65?'The Steady':'The Impulsive'; let insight=`You correctly tapped ${window.gngHits}/${goCount} Go trials. ${score>80?'Excellent impulse control!':score>60?'Good, but sometimes react when you shouldn\'t.':'You act before thinking — great for speed, risky for accuracy.'}`; showGameResults('Ruk',score,label,insight,()=>saveGameResult('GNG',score,label,insight)); }
+function endGNG() { let goCount=window.gngTrials.filter(t=>t==='go').length; let accuracy=goCount?window.gngHits/goCount*100:0; let score=Math.round(accuracy); let label=score>=85?'The Controlled':score>=65?'The Steady':'The Impulsive'; let insight=`You correctly tapped ${window.gngHits}/${goCount} Go trials. ${score>80?'Excellent impulse control!':score>60?'Good, but sometimes react when you shouldn\'t.':'You act before thinking — great for speed, risky for accuracy.'}`; showGameResults('Ruk',score,label,insight,function(){ saveGameResult('GNG',score,label,insight); }); }
 
 // ==================== GAME 6: Ultimatum ====================
 function startULT() { window.ultOffers=[18,42,10,35,50,25,15,40,5,30]; window.ultIdx=0; window.ultTotal=0; window.ultResults=[]; nextULT(); }
 function nextULT() { if(window.ultIdx>=10) return endULT(); let offer=window.ultOffers[window.ultIdx]; document.getElementById('game-content').innerHTML=`<button class="back-btn" onclick="showDashboard()">← Dashboard</button><div class="pill">Game 6/6 · Saudaa</div><div style="text-align:center;margin:30px 0;"><div style="font-size:56px;font-weight:700;color:var(--amber);">₹${offer}</div><p>AI offers you ₹${offer} out of ₹100</p><div style="display:flex;gap:12px;justify-content:center;margin-top:20px;"><button class="btn btn-primary" onclick="ultAccept(true)">✅ Accept</button><button class="btn btn-danger" onclick="ultAccept(false)">❌ Reject</button></div><div>💰 Total earned: ₹${window.ultTotal}</div><div>Round ${window.ultIdx+1}/10</div><div class="progress-track"><div class="progress-fill" style="width:${(window.ultIdx/10)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Reject = both get nothing. Accept = you get the offer, AI keeps the rest.</p></div>`; }
 function ultAccept(accept) { let offer=window.ultOffers[window.ultIdx]; if(accept) window.ultTotal+=offer; window.ultResults.push({offer,accept}); window.ultIdx++; nextULT(); }
-function endULT() { let accepted=window.ultResults.filter(r=>r.accept).length; let minAcc=window.ultResults.filter(r=>r.accept).length?Math.min(...window.ultResults.filter(r=>r.accept).map(r=>r.offer)):0; let score=minAcc>=35?85:minAcc>=20?65:minAcc>=10?45:25; let label=score>=75?'The Fair':score>=50?'The Strategic':'The Opportunist'; let insight=`You accepted ${accepted}/10 offers. Lowest accepted: ₹${minAcc}. ${score>70?'You reject unfair deals even at personal cost.':score>50?'You have clear boundaries but stay pragmatic.':'You take what you can get — pure pragmatism.'}`; showGameResults('Saudaa',score,label,insight,()=>saveGameResult('ULT',score,label,insight)); }
+function endULT() { let accepted=window.ultResults.filter(r=>r.accept).length; let minAcc=window.ultResults.filter(r=>r.accept).length?Math.min(...window.ultResults.filter(r=>r.accept).map(r=>r.offer)):0; let score=minAcc>=35?85:minAcc>=20?65:minAcc>=10?45:25; let label=score>=75?'The Fair':score>=50?'The Strategic':'The Opportunist'; let insight=`You accepted ${accepted}/10 offers. Lowest accepted: ₹${minAcc}. ${score>70?'You reject unfair deals even at personal cost.':score>50?'You have clear boundaries but stay pragmatic.':'You take what you can get — pure pragmatism.'}`; showGameResults('Saudaa',score,label,insight,function(){ saveGameResult('ULT',score,label,insight); }); }
 
 // ==================== RESULTS DISPLAY ====================
-function showGameResults(title, score, label, insight, onContinue) {
+function showGameResults(title, score, label, insight, onContinueFn) {
   let icon={Dum:'🎈',Bharosa:'🤝',Burj:'🗼',Rukawat:'🎨',Ruk:'⚡',Saudaa:'💰'}[title]||'🎮';
   document.getElementById('game-content').innerHTML=`
     <div style="text-align:center;">
@@ -238,13 +295,16 @@ function showGameResults(title, score, label, insight, onContinue) {
       <h2>${title} — complete!</h2>
       <div class="surface" style="margin:20px 0;"><div class="stat-val">${score}</div><div style="font-size:12px;color:gray;">Score</div><div style="font-size:20px;font-weight:600;margin-top:8px;">${label}</div></div>
       <div class="card"><div class="pill" style="margin-bottom:8px;">Insight</div><p>${insight}</p></div>
-      <button class="btn btn-primary btn-full" onclick="(${onContinue.toString()})(); showDashboard();">Continue →</button>
+      <button class="btn btn-primary btn-full" id="continueBtn">Continue →</button>
     </div>`;
   showScreen('game');
+  document.getElementById('continueBtn').onclick = function() { onContinueFn(); showDashboard(); };
 }
 
 // INIT
-let sess = lsGet('rl_session'); if(sess) { let sd = JSON.parse(sess); let ur = lsGet(sd.emailKey); if(ur) { user = JSON.parse(ur); if(!user.context) showContext(); else showDashboard(); } else showScreen('landing'); } else showScreen('landing');
+let sess = lsGet('rl_session'); 
+if(sess) { let sd = JSON.parse(sess); let ur = lsGet(sd.emailKey); if(ur) { user = JSON.parse(ur); if(!user.context) showContext(); else showDashboard(); } else showScreen('landing'); } 
+else showScreen('landing');
 updateNav();
 </script>
 </body>
