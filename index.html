@@ -1,537 +1,461 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Raah Labs — 6 Games</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raah Labs — Know Your Path</title>
+  <meta name="description" content="6 science-backed games. 20 minutes. Discover the careers you're built for." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f5f3ef; color: #1a1a1a; line-height: 1.4; }
-    .container { max-width: 500px; margin: 0 auto; padding: 1rem; }
-    .card { background: white; border-radius: 20px; padding: 1.2rem; margin-bottom: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #e5e3df; }
-    .btn { background: #c47a2e; color: white; border: none; padding: 10px 20px; border-radius: 40px; font-weight: 600; cursor: pointer; font-size: 0.9rem; }
-    .btn-outline { background: transparent; border: 1px solid #c47a2e; color: #c47a2e; }
-    .btn-sm { padding: 6px 14px; font-size: 0.8rem; }
-    .game-card { background: #fef8ed; border-left: 5px solid #c47a2e; cursor: pointer; }
-    .progress-bar { height: 6px; background: #e0dbd1; border-radius: 10px; overflow: hidden; margin: 10px 0; }
-    .progress-fill { height: 100%; background: #c47a2e; width: 0%; }
-    .pill { background: #e9e4da; padding: 4px 12px; border-radius: 30px; font-size: 0.7rem; font-weight: 600; display: inline-block; margin-bottom: 8px; }
-    input, select { width: 100%; padding: 10px; border-radius: 12px; border: 1px solid #ddd; margin: 5px 0 12px; }
-    .flex { display: flex; gap: 10px; flex-wrap: wrap; }
-    .text-center { text-align: center; }
-    .surface { background: #f0ede8; padding: 1rem; border-radius: 16px; margin: 10px 0; }
-    .toh-peg { background: #e9e4da; border-radius: 12px; padding: 8px; min-width: 80px; text-align: center; cursor: pointer; }
-    .toh-peg.selected { background: #f7e5c2; border: 2px solid #c47a2e; }
-    .toh-discs { height: 90px; display: flex; flex-direction: column-reverse; align-items: center; gap: 3px; }
-    .disc { height: 18px; border-radius: 20px; background: #c47a2e; }
-    .balloon { font-size: 70px; transition: 0.1s; }
-    .stroop-word { font-size: 48px; font-weight: bold; text-align: center; margin: 20px 0; }
-    .error { background: #ffe0db; color: #b33; padding: 8px; border-radius: 12px; display: none; margin-bottom: 12px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --amber: #BA7517;
+      --amber-light: #FAEEDA;
+      --amber-dark: #854F0B;
+      --amber-deep: #633806;
+      --teal: #0F6E56;
+      --teal-light: #E1F5EE;
+      --red-light: #FCEBEB;
+      --red: #A32D2D;
+      --bg: #FAFAF8;
+      --surface: #F2F0EA;
+      --card: #FFFFFF;
+      --border: rgba(0,0,0,0.1);
+      --border-strong: rgba(0,0,0,0.18);
+      --text: #1A1A18;
+      --text-muted: #6B6B66;
+      --text-hint: #9A9A94;
+      --radius: 10px;
+      --radius-lg: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #17171A;
+        --surface: #1F1F24;
+        --card: #28282E;
+        --border: rgba(255,255,255,0.1);
+        --border-strong: rgba(255,255,255,0.18);
+        --text: #F0EFE8;
+        --text-muted: #9A9A94;
+        --text-hint: #6B6B66;
+        --amber-light: #2A1E0A;
+        --teal-light: #0A1E18;
+        --red-light: #1E0A0A;
+      }
+    }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .screen { display: none; }
+    .screen.active { display: block; }
+    .container { max-width: 520px; margin: 0 auto; padding: 2rem 1.25rem; }
+    .nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 0.5px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 10; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
+    .logo-badge { width: 32px; height: 32px; background: var(--amber); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 500; }
+    .logo-name { font-size: 16px; font-weight: 500; color: var(--text); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s; padding: 11px 20px; }
+    .btn-primary { background: var(--amber); color: white; }
+    .btn-primary:hover { background: var(--amber-dark); }
+    .btn-secondary { background: transparent; color: var(--text); border: 0.5px solid var(--border-strong); }
+    .btn-secondary:hover { background: var(--surface); }
+    .btn-full { width: 100%; }
+    .btn-sm { padding: 7px 14px; font-size: 13px; }
+    .btn-danger { background: var(--red); color: white; }
+    .btn-danger:hover { background: #7A1F1F; }
+    .card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
+    .surface { background: var(--surface); border-radius: var(--radius); padding: 1rem; }
+    .pill { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: var(--amber-light); color: var(--amber-dark); letter-spacing: 0.02em; }
+    .game-highlight { border: 1.5px solid var(--amber) !important; cursor: pointer; }
+    .done-border { border: 1.5px solid var(--teal) !important; }
+    .progress-track { background: var(--surface); border-radius: 4px; height: 5px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--amber); border-radius: 4px; transition: width 0.4s ease; }
+    .section-label { font-size: 11px; font-weight: 500; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 10px; }
+    .back-btn { background: none; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 0; margin-bottom: 1.25rem; display: inline-flex; align-items: center; gap: 6px; }
+    .back-btn:hover { color: var(--text); }
+    .field { margin-bottom: 14px; }
+    .field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
+    input, select { width: 100%; padding: 10px 12px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px; outline: none; }
+    input:focus, select:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(186,117,23,0.12); }
+    .tab-bar { display: flex; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
+    .tab-bar button { flex: 1; padding: 10px; border: none; background: transparent; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+    .tab-bar button.active { background: var(--amber); color: white; }
+    .err-box { background: var(--red-light); color: var(--red); font-size: 13px; border-radius: var(--radius); padding: 9px 12px; margin-bottom: 12px; display: none; }
+    .phone-row { display: flex; gap: 8px; }
+    .cc-badge { padding: 10px 12px; background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: var(--radius); font-size: 14px; white-space: nowrap; }
+    .stat-grid { display: grid; gap: 10px; }
+    .stat-grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .stat-cell { background: var(--surface); border-radius: var(--radius); padding: 14px; text-align: center; }
+    .stat-val { font-size: 20px; font-weight: 500; }
+    .stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
+    .insight-section { margin-bottom: 1rem; }
+    .insight-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-hint); margin-bottom: 10px; display: block; }
+    .insight-items { display: flex; flex-direction: column; gap: 8px; }
+    .insight-item { font-size: 14px; color: var(--text-muted); line-height: 1.65; display: flex; gap: 10px; align-items: flex-start; }
+    .insight-dot { color: var(--amber); font-weight: 700; flex-shrink: 0; }
+    .blindspot-card { background: var(--red-light); border: 0.5px solid rgba(163,45,45,0.2); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+    .synthesis-card { background: var(--amber-light); border: 0.5px solid rgba(186,117,23,0.3); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
+    .game-name-hindi { font-size: 28px; font-weight: 500; margin: 8px 0 2px; letter-spacing: -0.01em; }
+    .game-name-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; }
+    .game-intro-para { color: var(--text-muted); line-height: 1.8; font-size: 15px; margin-bottom: 1.5rem; }
+    .reset-row { margin-top: 1.5rem; padding-top: 1rem; border-top: 0.5px solid var(--border); display: flex; justify-content: flex-end; }
+    .toh-peg { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; padding: 10px; border-radius: var(--radius); transition: all 0.1s; background: var(--surface); min-width: 80px; }
+    .toh-peg.selected { background: var(--amber-light); border: 1px solid var(--amber); }
+    .toh-discs { height: 100px; display: flex; flex-direction: column-reverse; align-items: center; gap: 3px; }
+    .toh-disc { height: 18px; border-radius: 20px; }
+    .stroop-word { font-size: 48px; font-weight: 700; text-align: center; padding: 20px 0; }
+    .stroop-btn { padding: 12px; font-size: 16px; font-weight: 600; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--card); cursor: pointer; transition: 0.1s; width: 100%; }
+    .stroop-btn:hover { background: var(--surface); border-color: var(--amber); }
   </style>
 </head>
 <body>
 
-<div id="app">
-  <!-- LANDING -->
-  <div id="landing" class="container">
-    <div class="card" style="text-align:center">
-      <h1 style="color:#c47a2e">Raah Labs</h1>
-      <p>6 science-backed games · 20 minutes</p>
-      <button class="btn" onclick="showSignup()">Create account →</button>
-      <button class="btn btn-outline" onclick="showLogin()">Login</button>
-      <div class="progress-bar" style="margin-top:20px"><div class="progress-fill" style="width:0%"></div></div>
-      <button class="btn-outline btn-sm" style="margin-top:15px" onclick="resetAll()">⚠️ Reset all data</button>
+<nav class="nav" id="main-nav">
+  <div class="logo" onclick="goHome()">
+    <div class="logo-badge">R</div>
+    <span class="logo-name">Raah Labs</span>
+  </div>
+  <div id="nav-right">
+    <button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>
+  </div>
+</nav>
+
+<!-- LANDING SCREEN -->
+<div id="screen-landing" class="screen active">
+  <div class="container" style="padding-top:3rem;">
+    <p style="font-size:11px;color:var(--amber);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Know your path</p>
+    <h1 style="font-size:30px;font-weight:500;line-height:1.3;margin-bottom:14px;">Discover the careers<br>you're built for</h1>
+    <p style="color:var(--text-muted);line-height:1.75;max-width:420px;margin-bottom:2rem;">6 science-backed games. 20 minutes. A clear picture of your personality — and where you'll thrive.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2.5rem;">
+      <button class="btn btn-primary" onclick="showAuth('signup')">Create free account →</button>
+      <button class="btn btn-secondary" onclick="showAuth('login')">Login</button>
+    </div>
+    <div class="reset-row"><button class="btn btn-danger btn-sm" onclick="resetAllData()">⚠️ Reset all data</button></div>
+  </div>
+</div>
+
+<!-- AUTH SCREEN -->
+<div id="screen-auth" class="screen">
+  <div class="container" style="max-width:420px;">
+    <button class="back-btn" onclick="showScreen('landing')">← Back</button>
+    <div class="tab-bar">
+      <button id="tab-su" class="active" onclick="switchTab('signup')">Sign up</button>
+      <button id="tab-li" onclick="switchTab('login')">Login</button>
+    </div>
+    <div id="form-signup">
+      <div class="field"><label>Full name</label><input type="text" id="su-name" placeholder="Your name" /></div>
+      <div class="field"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com" /></div>
+      <div class="field">
+        <label>Mobile number</label>
+        <div class="phone-row"><span class="cc-badge">🇮🇳 +91</span><input type="tel" id="su-mobile" placeholder="9876543210" maxlength="10" style="flex:1;" /></div>
+      </div>
+      <div class="field"><label>Password</label><input type="password" id="su-pw" placeholder="Min. 6 characters" /></div>
+      <div class="err-box" id="su-err"></div>
+      <button class="btn btn-primary btn-full" onclick="handleSignup()">Create account →</button>
+    </div>
+    <div id="form-login" style="display:none;">
+      <div class="field"><label>Email or mobile number</label><input type="text" id="li-id" placeholder="you@email.com or 9876543210" /></div>
+      <div class="field"><label>Password</label><input type="password" id="li-pw" placeholder="••••••••" /></div>
+      <div class="err-box" id="li-err"></div>
+      <button class="btn btn-primary btn-full" onclick="handleLogin()">Login →</button>
     </div>
   </div>
+</div>
 
-  <!-- AUTH / CONTEXT / DASHBOARD / GAME will be injected dynamically -->
-  <div id="dynamic"></div>
+<!-- CONTEXT SCREEN -->
+<div id="screen-context" class="screen">
+  <div class="container" style="max-width:480px;">
+    <span class="pill">Almost there</span>
+    <h1 style="font-size:22px;font-weight:500;margin:10px 0 6px;">A few things about you</h1>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.75rem;">Helps us make the results actually about you.</p>
+    <div class="field"><label>Gender</label><select id="ctx-gender"><option>Male</option><option>Female</option><option>Non-binary</option><option>Skip</option></select></div>
+    <div class="field"><label>Birth year</label><select id="ctx-year"></select></div>
+    <div class="field"><label>Where you are right now</label><select id="ctx-work"><option>Startup</option><option>Large company / MNC</option><option>Family business</option><option>Government</option><option>Still studying</option></select></div>
+    <div class="field"><label>What you're aiming for</label><select id="ctx-aspire"><option>Build my own thing</option><option>Lead teams</option><option>Go deep in my field</option><option>Still figuring it out</option></select></div>
+    <div class="err-box" id="ctx-err"></div>
+    <button class="btn btn-primary btn-full" onclick="saveContext()">Let's go →</button>
+  </div>
+</div>
+
+<!-- DASHBOARD SCREEN -->
+<div id="screen-dashboard" class="screen">
+  <div class="container">
+    <p id="dash-greet" style="font-size:20px;font-weight:500;margin-bottom:4px;"></p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.5rem;">Complete all 6 games to unlock your full career profile.</p>
+    <div id="g1-cta" class="card game-highlight fade-in" style="margin-bottom:1rem;" onclick="startGame('BART')"><div style="display:flex;justify-content:space-between;"><div><div class="pill">Game 1 of 6</div><div style="font-size:16px;font-weight:500;">🎈 Dum</div><div style="font-size:13px;color:var(--text-muted);">Risk · Balloon Game</div></div><button class="btn btn-primary btn-sm">Play now</button></div></div>
+    <div id="g1-done" style="display:none;" class="card done-border" style="margin-bottom:1rem;">✓ Dum completed</div>
+    <div id="g2-cta" style="display:none;" class="card game-highlight" onclick="startGame('PD')"><div><div class="pill">Game 2 of 6</div><div style="font-size:16px;font-weight:500;">🤝 Bharosa</div><div style="font-size:13px;">Trust · Prisoner's Dilemma</div></div></div>
+    <div id="g2-done" style="display:none;" class="card done-border">✓ Bharosa completed</div>
+    <div id="g3-cta" style="display:none;" class="card game-highlight" onclick="startGame('TOH')"><div><div class="pill">Game 3 of 6</div><div style="font-size:16px;font-weight:500;">🗼 Burj</div><div style="font-size:13px;">Planning · Tower of Hanoi</div></div></div>
+    <div id="g3-done" style="display:none;" class="card done-border">✓ Burj completed</div>
+    <div id="g4-cta" style="display:none;" class="card game-highlight" onclick="startGame('STROOP')"><div><div class="pill">Game 4 of 6</div><div style="font-size:16px;font-weight:500;">🎨 Rukawat</div><div style="font-size:13px;">Focus · Stroop Test</div></div></div>
+    <div id="g4-done" style="display:none;" class="card done-border">✓ Rukawat completed</div>
+    <div id="g5-cta" style="display:none;" class="card game-highlight" onclick="startGame('GNG')"><div><div class="pill">Game 5 of 6</div><div style="font-size:16px;font-weight:500;">⚡ Ruk</div><div style="font-size:13px;">Impulse · Go/No-Go</div></div></div>
+    <div id="g5-done" style="display:none;" class="card done-border">✓ Ruk completed</div>
+    <div id="g6-cta" style="display:none;" class="card game-highlight" onclick="startGame('ULT')"><div><div class="pill">Game 6 of 6</div><div style="font-size:16px;font-weight:500;">💰 Saudaa</div><div style="font-size:13px;">Fairness · Ultimatum</div></div></div>
+    <div id="g6-done" style="display:none;" class="card done-border">✓ Saudaa completed</div>
+    <div style="margin:1.25rem 0;"><div class="progress-track"><div id="prog-fill" class="progress-fill"></div></div><div style="display:flex;justify-content:space-between;font-size:12px;margin-top:6px;"><span>Progress</span><span id="prog-count">0/6</span></div></div>
+    <button class="btn btn-secondary" onclick="exportProfile()" style="font-size:13px;padding:12px;">📤 Export profile</button>
+    <div class="reset-row"><button class="btn btn-danger btn-sm" onclick="resetAllData()">⚠️ Reset all data</button></div>
+  </div>
+</div>
+
+<!-- GAME INTRO SCREEN (dynamic) -->
+<div id="screen-game-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill" id="intro-game-num"></span>
+    <div class="game-name-hindi" id="intro-title"></div>
+    <div class="game-name-sub" id="intro-sub"></div>
+    <div id="intro-story" class="game-intro-para"></div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;" id="intro-stats"></div>
+    <button class="btn btn-primary btn-full" id="intro-start-btn">Start →</button>
+  </div>
+</div>
+
+<!-- GAME PLAY SCREEN (dynamic) -->
+<div id="screen-game-play" class="screen">
+  <div class="container" id="game-play-area"></div>
+</div>
+
+<!-- RESULTS SCREEN (dynamic) -->
+<div id="screen-game-results" class="screen">
+  <div class="container" id="results-area"></div>
 </div>
 
 <script>
-  // ---------- SIMPLE STORAGE ----------
-  const STORAGE_KEY = 'raah_user';
-  let user = null;
-  
-  function saveUser() { localStorage.setItem(STORAGE_KEY, JSON.stringify(user)); }
-  function loadUser() { 
-    let raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) user = JSON.parse(raw);
-    else user = null;
+// ==================== UTILITIES ====================
+function safeKey(prefix, val) { return prefix + val.toLowerCase().replace(/[^a-z0-9]/g, '_'); }
+function lsGet(k) { try { return localStorage.getItem(k); } catch(e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); return true; } catch(e) { return false; } }
+function lsDel(k) { try { localStorage.removeItem(k); } catch(e) {} }
+
+let user = null;
+let currentGame = null;
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  updateNav();
+}
+function goHome() { user ? showDashboard() : showScreen('landing'); }
+function updateNav() {
+  let nr = document.getElementById('nav-right');
+  let loggedInScreens = ['dashboard','context','game-intro','game-play','game-results'];
+  let current = document.querySelector('.screen.active')?.id;
+  if(user && (loggedInScreens.some(s => current?.includes(s)) || current === 'screen-dashboard')) {
+    nr.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>`;
+  } else {
+    nr.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>`;
   }
-  
-  // ---------- ROUTING ----------
-  function render() {
-    if(!user) renderLanding();
-    else if(!user.context) renderContext();
-    else renderDashboard();
+}
+function showAuth(tab) { showScreen('auth'); switchTab(tab); }
+function switchTab(tab) {
+  document.getElementById('form-signup').style.display = tab === 'signup' ? 'block' : 'none';
+  document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('tab-su').classList.toggle('active', tab === 'signup');
+  document.getElementById('tab-li').classList.toggle('active', tab === 'login');
+}
+function logout() { lsDel('rl_session'); user = null; showScreen('landing'); }
+function resetAllData() {
+  if(confirm('⚠️ Delete ALL your data? This cannot be undone.')) {
+    Object.keys(localStorage).forEach(k => { if(k.startsWith('rl_')) localStorage.removeItem(k); });
+    user = null;
+    showScreen('landing');
   }
-  
-  function renderLanding() {
-    document.getElementById('dynamic').innerHTML = '';
-    document.getElementById('landing').style.display = 'block';
+}
+
+function handleSignup() {
+  let name = document.getElementById('su-name').value.trim();
+  let email = document.getElementById('su-email').value.trim().toLowerCase();
+  let mobile = document.getElementById('su-mobile').value.trim();
+  let pw = document.getElementById('su-pw').value;
+  if(!name || !email || !mobile || mobile.length !== 10 || !pw || pw.length < 6) {
+    document.getElementById('su-err').innerText = 'Please fill all fields correctly';
+    document.getElementById('su-err').style.display = 'block';
+    return;
   }
-  
-  function showSignup() { renderAuth('signup'); }
-  function showLogin() { renderAuth('login'); }
-  
-  function renderAuth(mode) {
-    document.getElementById('landing').style.display = 'none';
-    document.getElementById('dynamic').innerHTML = `
-      <div class="container">
-        <div class="card">
-          <h3>${mode === 'signup' ? 'Sign up' : 'Login'}</h3>
-          <div class="error" id="authError"></div>
-          ${mode === 'signup' ? `<input type="text" id="name" placeholder="Full name"><input type="email" id="email" placeholder="Email"><input type="tel" id="mobile" placeholder="Mobile (10 digits)" maxlength="10">` : ''}
-          <input type="text" id="loginId" placeholder="${mode === 'signup' ? 'Email' : 'Email or mobile'}">
-          <input type="password" id="password" placeholder="Password">
-          <button class="btn" id="authBtn">${mode === 'signup' ? 'Create account' : 'Login'}</button>
-          <button class="btn-outline" onclick="renderLanding()">Back</button>
-        </div>
-      </div>
-    `;
-    document.getElementById('authBtn').onclick = () => {
-      if(mode === 'signup') {
-        let name = document.getElementById('name').value.trim();
-        let email = document.getElementById('email').value.trim();
-        let mobile = document.getElementById('mobile').value.trim();
-        let pw = document.getElementById('password').value;
-        if(!name || !email || !mobile || mobile.length !== 10 || !pw || pw.length < 4) {
-          document.getElementById('authError').innerText = 'Invalid details';
-          document.getElementById('authError').style.display = 'block';
-          return;
-        }
-        user = { name, email, mobile, password: pw, scores: [], context: null };
-        saveUser();
-        renderContext();
-      } else {
-        let id = document.getElementById('loginId').value.trim();
-        let pw = document.getElementById('password').value;
-        if(user && (user.email === id || user.mobile === id) && user.password === pw) {
-          renderContext();
-        } else {
-          document.getElementById('authError').innerText = 'Invalid credentials';
-          document.getElementById('authError').style.display = 'block';
-        }
-      }
-    };
+  let ek = safeKey('rl_ue_', email);
+  let mk = safeKey('rl_um_', mobile);
+  if(lsGet(ek)) { document.getElementById('su-err').innerText = 'Email already registered'; document.getElementById('su-err').style.display = 'block'; return; }
+  let u = { name, email, mobile, password: pw, scores: [], context: null };
+  lsSet(ek, JSON.stringify(u));
+  lsSet(mk, JSON.stringify({ emailKey: ek }));
+  lsSet('rl_session', JSON.stringify({ emailKey: ek, name }));
+  user = u;
+  showContext();
+}
+function handleLogin() {
+  let id = document.getElementById('li-id').value.trim().toLowerCase();
+  let pw = document.getElementById('li-pw').value;
+  if(!id || !pw) { document.getElementById('li-err').innerText = 'Enter both fields'; document.getElementById('li-err').style.display = 'block'; return; }
+  let cleanId = id.replace(/\s/g, '');
+  let uData = null;
+  if(/^\d{10}$/.test(cleanId)) {
+    let mref = lsGet(safeKey('rl_um_', cleanId));
+    if(mref) uData = JSON.parse(lsGet(JSON.parse(mref).emailKey));
+  } else {
+    uData = JSON.parse(lsGet(safeKey('rl_ue_', cleanId)) || 'null');
   }
-  
-  function renderContext() {
-    document.getElementById('landing').style.display = 'none';
-    document.getElementById('dynamic').innerHTML = `
-      <div class="container">
-        <div class="card">
-          <h3>Almost there</h3>
-          <label>Gender</label><select id="gender"><option>Male</option><option>Female</option><option>Non-binary</option><option>Skip</option></select>
-          <label>Birth year</label><select id="year"></select>
-          <label>Work</label><select id="work"><option>Startup</option><option>Large company</option><option>Family biz</option><option>Government</option><option>Studying</option></select>
-          <label>Aspiration</label><select id="aspire"><option>Build my own</option><option>Lead teams</option><option>Go deep</option><option>Figuring out</option></select>
-          <button class="btn" id="saveCtx">Continue →</button>
-        </div>
-      </div>
-    `;
-    let yearSel = document.getElementById('year');
-    for(let y=2024-14; y>=1955; y--) yearSel.innerHTML += `<option value="${y}">${y}</option>`;
-    document.getElementById('saveCtx').onclick = () => {
-      user.context = {
-        gender: document.getElementById('gender').value,
-        year: document.getElementById('year').value,
-        work: document.getElementById('work').value,
-        aspire: document.getElementById('aspire').value
-      };
-      saveUser();
-      renderDashboard();
-    };
+  if(uData && uData.password === pw) {
+    lsSet('rl_session', JSON.stringify({ emailKey: safeKey('rl_ue_', uData.email), name: uData.name }));
+    user = uData;
+    if(!user.context) showContext();
+    else showDashboard();
+  } else {
+    document.getElementById('li-err').innerText = 'Invalid credentials';
+    document.getElementById('li-err').style.display = 'block';
   }
-  
-  function renderDashboard() {
-    document.getElementById('landing').style.display = 'none';
-    let scores = user.scores || [];
-    let games = ['BART','PD','TOH','STROOP','GNG','ULT'];
-    let completed = games.filter(g => scores.find(s=>s.game===g)).length;
-    let hasB = scores.find(s=>s.game==='BART');
-    let hasP = scores.find(s=>s.game==='PD');
-    let hasT = scores.find(s=>s.game==='TOH');
-    let hasS = scores.find(s=>s.game==='STROOP');
-    let hasG = scores.find(s=>s.game==='GNG');
-    let hasU = scores.find(s=>s.game==='ULT');
-    
-    let gamesHtml = `
-      <div class="container">
-        <div class="card"><h2>Hey ${user.name.split(' ')[0]} 👋</h2><p>Complete all 6 games</p>
-        <div class="progress-bar"><div class="progress-fill" style="width:${completed*16.66}%"></div></div>
-        <p>${completed}/6 games</p></div>
-    `;
-    let gameList = [
-      {code:'BART', name:'🎈 Dum', desc:'Risk · Balloon', done:hasB, unlock:true},
-      {code:'PD', name:'🤝 Bharosa', desc:'Trust · Prisoner', done:hasP, unlock:hasB},
-      {code:'TOH', name:'🗼 Burj', desc:'Planning · Hanoi', done:hasT, unlock:hasP},
-      {code:'STROOP', name:'🎨 Rukawat', desc:'Focus · Stroop', done:hasS, unlock:hasT},
-      {code:'GNG', name:'⚡ Ruk', desc:'Impulse · Go/No-Go', done:hasG, unlock:hasS},
-      {code:'ULT', name:'💰 Saudaa', desc:'Fairness · Ultimatum', done:hasU, unlock:hasG}
-    ];
-    for(let g of gameList) {
-      if(g.done) {
-        gamesHtml += `<div class="card" style="border-left-color:#2b7a4b; border-left-width:5px">✓ ${g.name} completed</div>`;
-      } else if(g.unlock) {
-        gamesHtml += `<div class="card game-card" onclick="startGame('${g.code}')"><div><div class="pill">Play</div><div><strong>${g.name}</strong> — ${g.desc}</div></div></div>`;
-      } else {
-        gamesHtml += `<div class="card" style="opacity:0.5">🔒 ${g.name} (complete previous game first)</div>`;
-      }
-    }
-    gamesHtml += `<button class="btn-outline btn-sm" onclick="exportProfile()">📤 Export profile</button>
-                  <button class="btn-outline btn-sm" style="margin-left:10px" onclick="resetAll()">⚠️ Reset all data</button></div>`;
-    document.getElementById('dynamic').innerHTML = gamesHtml;
-  }
-  
-  function exportProfile() {
-    let data = { name: user.name, context: user.context, scores: user.scores };
-    let blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-    let a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'raah_profile.json';
-    a.click();
-  }
-  
-  function resetAll() {
-    if(confirm('Delete all data? Cannot undo.')) {
-      localStorage.removeItem(STORAGE_KEY);
-      user = null;
-      renderLanding();
-    }
-  }
-  
-  // ---------- GAME UTILITIES ----------
-  function showGameScreen(html, onBack) {
-    document.getElementById('dynamic').innerHTML = `<div class="container">${html}</div>`;
-    if(onBack) document.getElementById('gameBackBtn')?.addEventListener('click', onBack);
-  }
-  
-  function saveGameResult(gameCode, score, label, insight) {
-    user.scores = user.scores || [];
-    user.scores = user.scores.filter(s => s.game !== gameCode);
-    user.scores.push({ game: gameCode, score, label, insight, date: new Date().toISOString() });
-    saveUser();
-    renderDashboard();
-  }
-  
-  function showResults(title, score, label, insight, gameCode) {
-    let icon = {BART:'🎈',PD:'🤝',TOH:'🗼',STROOP:'🎨',GNG:'⚡',ULT:'💰'}[gameCode];
-    showGameScreen(`
-      <div class="card text-center">
-        <div style="font-size:64px">${icon}</div>
-        <h2>${title} complete!</h2>
-        <div class="surface"><span style="font-size:36px">${score}</span><br>Score</div>
-        <div class="surface"><strong>${label}</strong></div>
-        <p>${insight}</p>
-        <button class="btn" id="resultsContinue">Continue →</button>
-      </div>
-    `);
-    document.getElementById('resultsContinue').onclick = () => {
-      saveGameResult(gameCode, score, label, insight);
-    };
-  }
-  
-  // ==================== GAME 1: BART ====================
-  window.startGame = function(game) {
-    if(game === 'BART') startBART();
-    else if(game === 'PD') startPD();
-    else if(game === 'TOH') startTOH();
-    else if(game === 'STROOP') startStroop();
-    else if(game === 'GNG') startGNG();
-    else if(game === 'ULT') startULT();
+}
+function showContext() {
+  let y = document.getElementById('ctx-year');
+  y.innerHTML = '<option value="">Select year</option>';
+  for(let i = 2024-14; i >= 1955; i--) y.innerHTML += `<option value="${i}">${i}</option>`;
+  showScreen('context');
+}
+function saveContext() {
+  let ctx = {
+    gender: document.getElementById('ctx-gender').value,
+    year: document.getElementById('ctx-year').value,
+    work: document.getElementById('ctx-work').value,
+    aspire: document.getElementById('ctx-aspire').value
   };
-  
-  function startBART() {
-    window.bartRound = 0;
-    window.bartBank = 0;
-    window.bartTrials = [];
-    nextBalloon();
-    function nextBalloon() {
-      if(window.bartRound >= 30) return endBART();
-      let colors = ['blue','yellow','red'];
-      let maxPump = {blue:64, yellow:32, red:16};
-      let color = colors[Math.floor(Math.random()*3)];
-      window.currentBalloon = { pumps:0, popped:false, color, threshold: Math.floor(Math.random()*maxPump[color])+1 };
-      renderBalloon();
-    }
-    function renderBalloon() {
-      showGameScreen(`
-        <button id="gameBackBtn" class="btn-outline btn-sm">← Dashboard</button>
-        <div class="card text-center">
-          <div class="pill">Game 1/6 · Dum</div>
-          <div class="balloon" id="balloonImg">🎈</div>
-          <div>Pumps: ${window.currentBalloon.pumps}</div>
-          <div>Current: ₹${window.currentBalloon.pumps*5}</div>
-          <div>Banked: ₹${window.bartBank}</div>
-          <div class="flex">
-            <button class="btn" id="pumpBtn">💨 Pump (₹5)</button>
-            <button class="btn btn-outline" id="collectBtn">💰 Collect</button>
-          </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${(window.bartRound/30)*100}%"></div></div>
-          <p>Balloon ${window.bartRound+1}/30</p>
-        </div>
-      `, () => renderDashboard());
-      document.getElementById('pumpBtn').onclick = () => {
-        if(window.currentBalloon.popped) return;
-        window.currentBalloon.pumps++;
-        let img = document.getElementById('balloonImg');
-        if(img) img.style.transform = `scale(${1+window.currentBalloon.pumps/30})`;
-        if(window.currentBalloon.pumps >= window.currentBalloon.threshold) {
-          window.currentBalloon.popped = true;
-          if(img) img.innerHTML = '💥';
-          setTimeout(() => {
-            window.bartTrials.push({pumps:window.currentBalloon.pumps, exploded:true});
-            window.bartRound++;
-            if(window.bartRound<30) nextBalloon();
-            else endBART();
-          }, 500);
-        } else {
-          renderBalloon();
-        }
-      };
-      document.getElementById('collectBtn').onclick = () => {
-        if(window.currentBalloon.popped) return;
-        let earned = window.currentBalloon.pumps * 5;
-        window.bartBank += earned;
-        window.bartTrials.push({pumps:window.currentBalloon.pumps, exploded:false});
-        window.bartRound++;
-        if(window.bartRound<30) nextBalloon();
-        else endBART();
-      };
-    }
-    function endBART() {
-      let safePumps = window.bartTrials.filter(t=>!t.exploded).map(t=>t.pumps);
-      let avg = safePumps.length ? safePumps.reduce((a,b)=>a+b,0)/safePumps.length : 0;
-      let score = Math.min(100, Math.round((avg/20)*100));
-      let label = score>=70?'Risk-Taker':score>=40?'Balanced':'Cautious';
-      let insight = `Average pumps: ${avg.toFixed(1)}. ${score>70?'You chase rewards':score>40?'You balance risk':'You lock gains early'}.`;
-      showResults('Dum', score, label, insight, 'BART');
-    }
+  if(!ctx.year) { document.getElementById('ctx-err').innerText = 'Select birth year'; document.getElementById('ctx-err').style.display = 'block'; return; }
+  let ek = safeKey('rl_ue_', user.email);
+  let ud = JSON.parse(lsGet(ek));
+  ud.context = ctx;
+  lsSet(ek, JSON.stringify(ud));
+  user = ud;
+  showDashboard();
+}
+function showDashboard() {
+  if(!user) return;
+  document.getElementById('dash-greet').innerHTML = 'Hey, ' + user.name.split(' ')[0] + ' 👋';
+  let scores = user.scores || [];
+  let games = ['BART','PD','TOH','STROOP','GNG','ULT'];
+  let completed = games.filter(g => scores.find(s => s.game === g)).length;
+  document.getElementById('prog-fill').style.width = (completed / 6 * 100) + '%';
+  document.getElementById('prog-count').innerHTML = completed + '/6';
+  let hasB = !!scores.find(s => s.game === 'BART');
+  let hasP = !!scores.find(s => s.game === 'PD');
+  let hasT = !!scores.find(s => s.game === 'TOH');
+  let hasS = !!scores.find(s => s.game === 'STROOP');
+  let hasG = !!scores.find(s => s.game === 'GNG');
+  let hasU = !!scores.find(s => s.game === 'ULT');
+  document.getElementById('g1-cta').style.display = !hasB ? 'block' : 'none';
+  document.getElementById('g1-done').style.display = hasB ? 'block' : 'none';
+  document.getElementById('g2-cta').style.display = hasB && !hasP ? 'block' : 'none';
+  document.getElementById('g2-done').style.display = hasP ? 'block' : 'none';
+  document.getElementById('g3-cta').style.display = hasP && !hasT ? 'block' : 'none';
+  document.getElementById('g3-done').style.display = hasT ? 'block' : 'none';
+  document.getElementById('g4-cta').style.display = hasT && !hasS ? 'block' : 'none';
+  document.getElementById('g4-done').style.display = hasS ? 'block' : 'none';
+  document.getElementById('g5-cta').style.display = hasS && !hasG ? 'block' : 'none';
+  document.getElementById('g5-done').style.display = hasG ? 'block' : 'none';
+  document.getElementById('g6-cta').style.display = hasG && !hasU ? 'block' : 'none';
+  document.getElementById('g6-done').style.display = hasU ? 'block' : 'none';
+  showScreen('dashboard');
+}
+function exportProfile() {
+  let data = { name: user.name, context: user.context, scores: user.scores };
+  let blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  let a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'raah-profile.json';
+  a.click();
+}
+function saveGameResult(gameCode, score, label, insight) {
+  let ek = safeKey('rl_ue_', user.email);
+  let ud = JSON.parse(lsGet(ek));
+  ud.scores = (ud.scores || []).filter(s => s.game !== gameCode);
+  ud.scores.push({ game: gameCode, score, label, insight, date: new Date().toISOString() });
+  lsSet(ek, JSON.stringify(ud));
+  user = ud;
+  showDashboard();
+}
+
+// ==================== GAME INTRO SYSTEM ====================
+const GAME_INTROS = {
+  BART: { num: 1, title: '🎈 Dum', sub: 'dum — breath, guts', stats: [{val:'30',lbl:'balloons'},{val:'~5',lbl:'minutes'},{val:'3',lbl:'colors'}],
+    story: `Picture a balloon in front of you. Each pump puts ₹5 in your pocket. But somewhere ahead, without warning, it pops. If it pops, you lose that round's money. Stop too early and you leave cash on the table. Blue balloons are safer, red ones riskier. 30 rounds of that exact tension.` },
+  PD: { num: 2, title: '🤝 Bharosa', sub: 'bharosa — trust', stats: [{val:'10',lbl:'rounds'},{val:'~3',lbl:'minutes'},{val:'4',lbl:'profiles'}],
+    story: `Two friends get caught by the police. Separated in different rooms. Each can either stay silent (cooperate) or confess (defect). If both stay silent, both get 1 year. If one confesses and the other stays silent, the confessor walks free and the other gets 5 years. If both confess, both get 3 years. You play 10 rounds against an AI that learns from you. What would you do for your friend?` },
+  TOH: { num: 3, title: '🗼 Burj', sub: 'burj — tower', stats: [{val:'4',lbl:'discs'},{val:'3:00',lbl:'time limit'},{val:'15',lbl:'optimal moves'}],
+    story: `Three pegs. Four discs stacked on the first one — largest at bottom, smallest on top. You need to move the whole stack to the third peg. One disc at a time. A bigger disc can never sit on a smaller one. Sounds easy until you're five moves deep and realize every path forward requires undoing what you just did. You have three minutes.` },
+  STROOP: { num: 4, title: '🎨 Rukawat', sub: 'rukawat — obstacle', stats: [{val:'20',lbl:'trials'},{val:'~3',lbl:'minutes'},{val:'4',lbl:'colors'}],
+    story: `A color word appears on screen — but the ink color may be different. Your job: ignore the word, press the button that matches the INK color. Example: the word "RED" printed in blue ink — you press BLUE. Your brain will automatically read the word. Can you override that reflex? 20 trials. Speed + accuracy matter.` },
+  GNG: { num: 5, title: '⚡ Ruk', sub: 'ruk — stop', stats: [{val:'30',lbl:'trials'},{val:'~3',lbl:'minutes'},{val:'70%',lbl:'Go trials'}],
+    story: `Shapes will flash on screen — fast. When you see a circle, hit the button. When you see a square, don't touch anything. Your brain will want to tap everything that appears. That's the whole trap. Thirty rounds, each shape visible for less than a second. Quick enough to feel easy. Long enough to get under your skin.` },
+  ULT: { num: 6, title: '💰 Saudaa', sub: 'saudaa — bargain', stats: [{val:'10',lbl:'rounds'},{val:'~3',lbl:'minutes'},{val:'₹100',lbl:'per round'}],
+    story: `Someone offers you a split of ₹100. You can accept — then you both get that split. Or you can reject — then both get nothing. The AI makes 10 different offers. Some are generous, some are insulting. You decide what's fair enough to accept. Would you reject a ₹10 offer just to teach them a lesson?` }
+};
+function startGame(gameCode) {
+  currentGame = gameCode;
+  let g = GAME_INTROS[gameCode];
+  document.getElementById('intro-game-num').innerText = `Game ${g.num} of 6`;
+  document.getElementById('intro-title').innerHTML = g.title;
+  document.getElementById('intro-sub').innerHTML = g.sub;
+  document.getElementById('intro-story').innerHTML = g.story;
+  document.getElementById('intro-stats').innerHTML = g.stats.map(s => `<div class="stat-cell"><div class="stat-val">${s.val}</div><div class="stat-lbl">${s.lbl}</div></div>`).join('');
+  document.getElementById('intro-start-btn').onclick = () => { if(gameCode === 'BART') startBARTGame(); else if(gameCode === 'PD') startPDGame(); else if(gameCode === 'TOH') startTOHGame(); else if(gameCode === 'STROOP') startStroopGame(); else if(gameCode === 'GNG') startGNGGame(); else if(gameCode === 'ULT') startULTGame(); };
+  showScreen('game-intro');
+}
+
+// ==================== GAME 1: BART ====================
+function startBARTGame() {
+  window.bartRound = 0; window.bartBank = 0; window.bartTrials = [];
+  nextBalloon();
+  function nextBalloon() { if(window.bartRound >= 30) return endBART(); let colors = ['blue','yellow','red']; let maxPump = {blue:64, yellow:32, red:16}; let color = colors[Math.floor(Math.random()*3)]; window.currentBalloon = { pumps:0, popped:false, color, threshold: Math.floor(Math.random()*maxPump[color])+1 }; renderBalloon(); }
+  function renderBalloon() {
+    document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 1/6 · Dum</div><div style="font-size:28px;margin:10px 0;">🎈 Balloon ${window.bartRound+1}/30</div><div class="surface" style="text-align:center;padding:30px;"><div id="balloonImg" style="font-size:80px;transition:0.1s;">🎈</div><div>Pumps: ${window.currentBalloon.pumps}</div><div>Current: ₹${window.currentBalloon.pumps*5}</div><div>Banked: ₹${window.bartBank}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" id="pumpBtn">💨 Pump (₹5)</button><button class="btn btn-primary" id="collectBtn">💰 Collect ₹${window.currentBalloon.pumps*5}</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.bartRound/30)*100}%"></div></div>`;
+    document.getElementById('pumpBtn').onclick = () => { if(window.currentBalloon.popped) return; window.currentBalloon.pumps++; let img = document.getElementById('balloonImg'); if(img) img.style.transform = `scale(${1+window.currentBalloon.pumps/30})`; if(window.currentBalloon.pumps >= window.currentBalloon.threshold) { window.currentBalloon.popped = true; if(img) img.innerHTML = '💥'; setTimeout(() => { window.bartTrials.push({pumps:window.currentBalloon.pumps, exploded:true}); window.bartRound++; if(window.bartRound<30) nextBalloon(); else endBART(); }, 600); } else { renderBalloon(); } };
+    document.getElementById('collectBtn').onclick = () => { if(window.currentBalloon.popped) return; let earned = window.currentBalloon.pumps*5; window.bartBank += earned; window.bartTrials.push({pumps:window.currentBalloon.pumps, exploded:false}); window.bartRound++; if(window.bartRound<30) nextBalloon(); else endBART(); };
+    showScreen('game-play');
   }
-  
-  // ==================== GAME 2: Prisoner's Dilemma ====================
-  function startPD() {
-    window.pdRound = 0;
-    window.pdScore = 0;
-    window.pdMoves = [];
-    nextPD();
-    function nextPD() { if(window.pdRound>=10) return endPD(); renderPD(); }
-    function renderPD() {
-      showGameScreen(`
-        <button id="gameBackBtn" class="btn-outline btn-sm">← Dashboard</button>
-        <div class="card text-center">
-          <div class="pill">Game 2/6 · Bharosa</div>
-          <h3>Round ${window.pdRound+1}/10</h3>
-          <div class="surface">Your score: ${window.pdScore}</div>
-          <div class="flex">
-            <button class="btn" id="coopBtn">🤝 Cooperate</button>
-            <button class="btn btn-outline" id="defectBtn">🔪 Defect</button>
-          </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${(window.pdRound/10)*100}%"></div></div>
-        </div>
-      `, () => renderDashboard());
-      document.getElementById('coopBtn').onclick = () => pdMove('C');
-      document.getElementById('defectBtn').onclick = () => pdMove('D');
-    }
-    function pdMove(my) {
-      let ai = (window.pdRound===0) ? 'C' : (Math.random()<0.3 ? 'D' : window.pdMoves[window.pdMoves.length-1].my);
-      let payoff = {CC:[3,3], CD:[0,5], DC:[5,0], DD:[1,1]};
-      let gain = payoff[my+ai][0];
-      window.pdScore += gain;
-      window.pdMoves.push({my,ai});
-      window.pdRound++;
-      nextPD();
-    }
-    function endPD() {
-      let coop = window.pdMoves.filter(m=>m.my==='C').length;
-      let score = Math.round((coop/10)*100);
-      let label = score>=70?'Trusting':score>=40?'Strategic':'Independent';
-      let insight = `Cooperated ${coop}/10 times. ${score>70?'You lead with trust':score>40?'You adapt':'You protect yourself first'}.`;
-      showResults('Bharosa', score, label, insight, 'PD');
-    }
-  }
-  
-  // ==================== GAME 3: Tower of Hanoi ====================
-  function startTOH() {
-    window.tohPegs = [[4,3,2,1],[],[]];
-    window.tohMoves = 0;
-    window.tohSelected = null;
-    renderTOH();
-    function renderTOH() {
-      let pegsHtml = window.tohPegs.map((peg, idx) => `
-        <div class="toh-peg ${window.tohSelected===idx ? 'selected' : ''}" data-peg="${idx}">
-          <div class="toh-discs">${peg.slice().reverse().map(d => `<div class="disc" style="width:${30+d*10}px"></div>`).join('')}</div>
-          <div style="height:50px; width:3px; background:#aaa; margin:5px auto"></div>
-          <div>Peg ${idx+1}</div>
-        </div>
-      `).join('');
-      showGameScreen(`
-        <button id="gameBackBtn" class="btn-outline btn-sm">← Dashboard</button>
-        <div class="card text-center">
-          <div class="pill">Game 3/6 · Burj</div>
-          <div>Moves: ${window.tohMoves}</div>
-          <div class="flex" style="justify-content:center; gap:12px">${pegsHtml}</div>
-          <button class="btn-outline btn-sm" id="resetTower">Reset</button>
-          <button class="btn" id="checkWin">Check Win</button>
-          <div class="progress-bar"><div class="progress-fill" style="width:${(window.tohPegs[2].length/4)*100}%"></div></div>
-          <p style="font-size:12px">Click peg → select, click another peg → move top disc. Big disc cannot go on small disc.</p>
-        </div>
-      `, () => renderDashboard());
-      document.querySelectorAll('.toh-peg').forEach(el => {
-        el.onclick = () => {
-          let pegIdx = parseInt(el.dataset.peg);
-          if(window.tohSelected === null) {
-            if(window.tohPegs[pegIdx].length) window.tohSelected = pegIdx;
-          } else {
-            let from = window.tohSelected, to = pegIdx;
-            if(from !== to) {
-              let fromDisc = window.tohPegs[from][window.tohPegs[from].length-1];
-              let toDisc = window.tohPegs[to][window.tohPegs[to].length-1];
-              if(!toDisc || fromDisc < toDisc) {
-                window.tohPegs[to].push(window.tohPegs[from].pop());
-                window.tohMoves++;
-              }
-            }
-            window.tohSelected = null;
-            renderTOH();
-          }
-        };
-      });
-      document.getElementById('resetTower').onclick = () => startTOH();
-      document.getElementById('checkWin').onclick = () => {
-        if(window.tohPegs[2].length === 4) {
-          let score = Math.min(100, Math.max(0, 100 - (window.tohMoves-15)*3));
-          let label = score>=80?'Architect':score>=50?'Planner':'Explorer';
-          let insight = `Solved in ${window.tohMoves} moves. Optimal 15.`;
-          showResults('Burj', Math.round(score), label, insight, 'TOH');
-        } else alert('Not solved yet! Move all discs to Peg 3.');
-      };
-    }
-  }
-  
-  // ==================== GAME 4: Stroop ====================
-  function startStroop() {
-    let trials = [];
-    for(let i=0;i<20;i++) {
-      let words = ['RED','GREEN','BLUE','YELLOW'];
-      let inks = ['RED','GREEN','BLUE','YELLOW'];
-      trials.push({word:words[Math.floor(Math.random()*4)], ink:inks[Math.floor(Math.random()*4)]});
-    }
-    let idx=0, correct=0;
-    function next() {
-      if(idx>=20) return end();
-      let t = trials[idx];
-      let colorMap = {RED:'#e53e3e', GREEN:'#2f855a', BLUE:'#2b6cb0', YELLOW:'#d69e2e'};
-      showGameScreen(`
-        <button id="gameBackBtn" class="btn-outline btn-sm">← Dashboard</button>
-        <div class="card text-center">
-          <div class="pill">Game 4/6 · Rukawat (Stroop)</div>
-          <div class="stroop-word" style="color:${colorMap[t.ink]}">${t.word}</div>
-          <div class="flex" style="justify-content:center">${['RED','GREEN','BLUE','YELLOW'].map(c=>`<button class="btn-outline" data-color="${c}">${c}</button>`).join('')}</div>
-          <div>Trial ${idx+1}/20</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${(idx/20)*100}%"></div></div>
-          <p>Ignore the word, pick the INK color.</p>
-        </div>
-      `, () => renderDashboard());
-      document.querySelectorAll('[data-color]').forEach(btn => {
-        btn.onclick = () => {
-          if(btn.dataset.color === t.ink) correct++;
-          idx++;
-          next();
-        };
-      });
-    }
-    function end() {
-      let acc = Math.round((correct/20)*100);
-      let label = acc>=85?'Focused':acc>=65?'Steady':'Distractible';
-      let insight = `Accuracy ${acc}%. ${acc>80?'Excellent inhibition':acc>60?'Good but distracted':'Word meaning pulls your attention'}.`;
-      showResults('Rukawat', acc, label, insight, 'STROOP');
-    }
-    next();
-  }
-  
-  // ==================== GAME 5: Go/No-Go ====================
-  function startGNG() {
-    let trials = [];
-    for(let i=0;i<30;i++) trials.push(Math.random()<0.7 ? 'go' : 'nogo');
-    let idx=0, hits=0, errors=0, timer=null;
-    function next() {
-      if(idx>=30) return end();
-      let type = trials[idx];
-      showGameScreen(`
-        <button id="gameBackBtn" class="btn-outline btn-sm">← Dashboard</button>
-        <div class="card text-center">
-          <div class="pill">Game 5/6 · Ruk</div>
-          <div style="font-size:80px; margin:20px">${type==='go'?'⚪':'⬛'}</div>
-          <button class="btn" id="tapBtn">🔘 TAP</button>
-          <div>Hits: ${hits} | Errors: ${errors}</div>
-          <div>Trial ${idx+1}/30</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${(idx/30)*100}%"></div></div>
-          <p>Circle → TAP &nbsp; Square → DO NOTHING</p>
-        </div>
-      `, () => renderDashboard());
-      timer = setTimeout(() => {
-        if(type === 'go') { errors++; idx++; next(); }
-      }, 700);
-      document.getElementById('tapBtn').onclick = () => {
-        clearTimeout(timer);
-        if(type === 'go') hits++;
-        else errors++;
-        idx++;
-        next();
-      };
-    }
-    function end() {
-      let goCount = trials.filter(t=>t==='go').length;
-      let acc = Math.round((hits/goCount)*100);
-      let label = acc>=85?'Controlled':acc>=65?'Steady':'Impulsive';
-      let insight = `Hit ${hits}/${goCount} Go trials. ${acc>80?'Excellent impulse control':acc>60?'Sometimes react when you shouldn\'t':'Act before thinking'}.`;
-      showResults('Ruk', acc, label, insight, 'GNG');
-    }
-    next();
-  }
-  
-  // ==================== GAME 6: Ultimatum ====================
-  function startULT() {
-    let offers = [18,42,10,35,50,25,15,40,5,30];
-    let idx=0, total=0, results=[];
-    function next() {
-      if(idx>=10) return end();
-      let offer = offers[idx];
-      showGameScreen(`
-        <button id="gameBackBtn" class="btn-outline btn-sm">← Dashboard</button>
-        <div class="card text-center">
-          <div class="pill">Game 6/6 · Saudaa</div>
-          <div style="font-size:56px; font-weight:bold; color:#c47a2e">₹${offer}</div>
-          <p>AI offers you ₹${offer} out of ₹100</p>
-          <div class="flex">
-            <button class="btn" id="acceptBtn">✅ Accept</button>
-            <button class="btn-outline" id="rejectBtn">❌ Reject</button>
-          </div>
-          <div>Total earned: ₹${total}</div>
-          <div>Round ${idx+1}/10</div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${(idx/10)*100}%"></div></div>
-        </div>
-      `, () => renderDashboard());
-      document.getElementById('acceptBtn').onclick = () => { total += offer; results.push({offer, accept:true}); idx++; next(); };
-      document.getElementById('rejectBtn').onclick = () => { results.push({offer, accept:false}); idx++; next(); };
-    }
-    function end() {
-      let accepted = results.filter(r=>r.accept).length;
-      let minAcc = results.filter(r=>r.accept).length ? Math.min(...results.filter(r=>r.accept).map(r=>r.offer)) : 0;
-      let score = minAcc>=35?85 : minAcc>=20?65 : minAcc>=10?45 : 25;
-      let label = score>=75?'Fair':score>=50?'Strategic':'Opportunist';
-      let insight = `Accepted ${accepted}/10 offers. Lowest accepted ₹${minAcc}. ${score>70?'Rejects unfair deals':score>50?'Pragmatic boundaries':'Takes whatever offered'}.`;
-      showResults('Saudaa', score, label, insight, 'ULT');
-    }
-    next();
-  }
-  
-  // INIT
-  loadUser();
-  render();
+  function endBART() { let safePumps = window.bartTrials.filter(t=>!t.exploded).map(t=>t.pumps); let avg = safePumps.length ? safePumps.reduce((a,b)=>a+b,0)/safePumps.length : 0; let score = Math.min(100, Math.round((avg/20)*100)); let label = score>=70?'Risk-Taker':score>=40?'Balanced':'Cautious'; let insight = `You pumped an average of ${avg.toFixed(1)} times. ${score>70?'You chase rewards confidently.':score>40?'You balance risk and reward.':'You prefer to lock in gains early.'}`; showResults('Dum', score, label, insight, 'BART'); }
+}
+
+// ==================== GAME 2: Prisoner's Dilemma ====================
+function startPDGame() { window.pdRound = 0; window.pdScore = 0; window.pdMoves = []; nextPD(); function nextPD() { if(window.pdRound>=10) return endPD(); renderPD(); } function renderPD() { document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 2/6 · Bharosa</div><div style="font-size:28px;margin:10px 0;">🤝 Prisoner's Dilemma</div><div class="surface" style="margin:20px 0;text-align:center;"><div style="font-size:40px;">Round ${window.pdRound+1}/10</div><div>Your score: ${window.pdScore}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" id="coopBtn">🤝 Cooperate (Trust partner)</button><button class="btn btn-primary" id="defectBtn">🔪 Defect (Save yourself)</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.pdRound/10)*100}%"></div></div>`; showScreen('game-play'); document.getElementById('coopBtn').onclick = () => pdMove('C'); document.getElementById('defectBtn').onclick = () => pdMove('D'); }
+  function pdMove(my) { let ai = (window.pdRound===0) ? 'C' : (Math.random()<0.3 ? 'D' : window.pdMoves[window.pdMoves.length-1].my); let payoff = {CC:[3,3], CD:[0,5], DC:[5,0], DD:[1,1]}; let gain = payoff[my+ai][0]; window.pdScore += gain; window.pdMoves.push({my,ai}); window.pdRound++; nextPD(); }
+  function endPD() { let coop = window.pdMoves.filter(m=>m.my==='C').length; let score = Math.round((coop/10)*100); let label = score>=70?'Trusting':score>=40?'Strategic':'Independent'; let insight = `You cooperated ${coop}/10 times. ${score>70?'You lead with trust.':score>40?'You adapt based on the situation.':'You protect yourself first.'}`; showResults('Bharosa', score, label, insight, 'PD'); }
+}
+
+// ==================== GAME 3: Tower of Hanoi ====================
+function startTOHGame() { window.tohPegs = [[4,3,2,1],[],[]]; window.tohMoves = 0; window.tohSelected = null; renderTOH(); function renderTOH() { let pegsHtml = window.tohPegs.map((peg, idx) => `<div class="toh-peg ${window.tohSelected===idx ? 'selected' : ''}" data-peg="${idx}"><div class="toh-discs">${peg.slice().reverse().map(d => `<div class="toh-disc" style="width:${30+d*10}px;background:${['#BA7517','#D98A2C','#F0A84A','#FFC470'][d-1]}"></div>`).join('')}</div><div style="width:4px;height:60px;background:#888;"></div><div style="width:80px;height:6px;background:#888;border-radius:3px;"></div><div style="font-size:12px;margin-top:6px;">Peg ${idx+1}</div></div>`).join(''); document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 3/6 · Burj</div><div style="display:flex;gap:16px;justify-content:space-between;margin:10px 0;"><div>Moves: ${window.tohMoves}</div><div>Goal: All discs on Peg 3</div></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">${pegsHtml}</div><div style="display:flex;gap:12px;margin-top:16px;"><button class="btn btn-secondary" id="resetTower">Reset</button><button class="btn btn-primary" id="checkWin">Check Win</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.tohPegs[2].length/4)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Click a peg to select, then click another peg to move. Bigger disc cannot go on smaller disc.</p>`; showScreen('game-play'); document.querySelectorAll('.toh-peg').forEach(el => { el.onclick = () => { let peg = parseInt(el.dataset.peg); if(window.tohSelected === null) { if(window.tohPegs[peg].length) window.tohSelected = peg; } else { let from = window.tohSelected, to = peg; if(from !== to) { let fromDisc = window.tohPegs[from][window.tohPegs[from].length-1]; let toDisc = window.tohPegs[to][window.tohPegs[to].length-1]; if(!toDisc || fromDisc < toDisc) { window.tohPegs[to].push(window.tohPegs[from].pop()); window.tohMoves++; } } window.tohSelected = null; } renderTOH(); }; }); document.getElementById('resetTower').onclick = () => startTOHGame(); document.getElementById('checkWin').onclick = () => { if(window.tohPegs[2].length === 4) { let score = Math.min(100, Math.max(0, 100 - (window.tohMoves-15)*3)); let label = score>=80?'Architect':score>=50?'Planner':'Explorer'; let insight = `Solved in ${window.tohMoves} moves. Optimal is 15. ${score>80?'Exceptional planning!':score>50?'Solid strategy.':'Room to improve forward thinking.'}`; showResults('Burj', Math.round(score), label, insight, 'TOH'); } else alert('Not solved yet! Move all discs to Peg 3.'); }; } }
+
+// ==================== GAME 4: Stroop ====================
+function startStroopGame() { let trials = []; for(let i=0;i<20;i++){ let words = ['RED','GREEN','BLUE','YELLOW']; let inks = ['RED','GREEN','BLUE','YELLOW']; trials.push({word:words[Math.floor(Math.random()*4)], ink:inks[Math.floor(Math.random()*4)]}); } let idx=0, correct=0; function next() { if(idx>=20) return end(); let t = trials[idx]; let colorMap = {RED:'#E53E3E', GREEN:'#38A169', BLUE:'#3182CE', YELLOW:'#D69E2E'}; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 4/6 · Rukawat (Stroop)</div><div class="stroop-word" style="color:${colorMap[t.ink]}">${t.word}</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">${['RED','GREEN','BLUE','YELLOW'].map(c => `<button class="stroop-btn" data-color="${c}">${c}</button>`).join('')}</div><div>Trial ${idx+1}/20</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/20)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Ignore the word. Pick the INK color.</p>`; showScreen('game-play'); document.querySelectorAll('.stroop-btn').forEach(btn => { btn.onclick = () => { if(btn.dataset.color === t.ink) correct++; idx++; next(); }; }); } function end() { let acc = Math.round((correct/20)*100); let label = acc>=85?'Focused':acc>=65?'Steady':'Distractible'; let insight = `You ignored the word meaning ${acc}% of the time. ${acc>80?'Excellent cognitive inhibition!':acc>60?'Good, but distractions get you sometimes.':'The meaning of words pulls your attention.'}`; showResults('Rukawat', acc, label, insight, 'STROOP'); } next(); }
+
+// ==================== GAME 5: Go/No-Go ====================
+function startGNGGame() { let trials = []; for(let i=0;i<30;i++) trials.push(Math.random()<0.7 ? 'go' : 'nogo'); let idx=0, hits=0, errors=0, timer=null; function next() { if(idx>=30) return end(); let type = trials[idx]; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 5/6 · Ruk</div><div style="text-align:center;"><div style="font-size:100px;margin:30px 0;">${type==='go'?'⚪':'⬛'}</div><button class="btn btn-primary" id="tapBtn" style="margin:0 auto 20px;display:block;padding:16px 40px;">TAP</button><div>Hits: ${hits} | Errors: ${errors}</div><div>Trial ${idx+1}/30</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/30)*100}%"></div></div><p style="font-size:12px;color:gray;">⚪ Circle → TAP &nbsp;&nbsp; ⬛ Square → DO NOTHING</p></div>`; showScreen('game-play'); if(timer) clearTimeout(timer); timer = setTimeout(() => { if(type === 'go') { errors++; idx++; next(); } }, 700); document.getElementById('tapBtn').onclick = () => { clearTimeout(timer); if(type === 'go') hits++; else errors++; idx++; next(); }; } function end() { let goCount = trials.filter(t=>t==='go').length; let acc = Math.round((hits/goCount)*100); let label = acc>=85?'Controlled':acc>=65?'Steady':'Impulsive'; let insight = `You correctly tapped ${hits}/${goCount} Go trials. ${acc>80?'Excellent impulse control!':acc>60?'Good, but sometimes react when you shouldn\'t.':'You act before thinking — great for speed, risky for accuracy.'}`; showResults('Ruk', acc, label, insight, 'GNG'); } next(); }
+
+// ==================== GAME 6: Ultimatum ====================
+function startULTGame() { let offers = [18,42,10,35,50,25,15,40,5,30]; let idx=0, total=0, results=[]; function next() { if(idx>=10) return end(); let offer = offers[idx]; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 6/6 · Saudaa</div><div style="text-align:center;margin:30px 0;"><div style="font-size:56px;font-weight:700;color:var(--amber);">₹${offer}</div><p>AI offers you ₹${offer} out of ₹100</p><div style="display:flex;gap:12px;justify-content:center;margin-top:20px;"><button class="btn btn-primary" id="acceptBtn">✅ Accept</button><button class="btn btn-danger" id="rejectBtn">❌ Reject</button></div><div>Total earned: ₹${total}</div><div>Round ${idx+1}/10</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/10)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Reject = both get nothing. Accept = you get the offer.</p></div>`; showScreen('game-play'); document.getElementById('acceptBtn').onclick = () => { total += offer; results.push({offer, accept:true}); idx++; next(); }; document.getElementById('rejectBtn').onclick = () => { results.push({offer, accept:false}); idx++; next(); }; } function end() { let accepted = results.filter(r=>r.accept).length; let minAcc = results.filter(r=>r.accept).length ? Math.min(...results.filter(r=>r.accept).map(r=>r.offer)) : 0; let score = minAcc>=35?85 : minAcc>=20?65 : minAcc>=10?45 : 25; let label = score>=75?'Fair':score>=50?'Strategic':'Opportunist'; let insight = `You accepted ${accepted}/10 offers. Lowest accepted: ₹${minAcc}. ${score>70?'You reject unfair deals even at personal cost.':score>50?'You have clear boundaries but stay pragmatic.':'You take what you can get — pure pragmatism.'}`; showResults('Saudaa', score, label, insight, 'ULT'); } next(); }
+
+// ==================== RESULTS ====================
+function showResults(title, score, label, insight, gameCode) {
+  let icon = {BART:'🎈', PD:'🤝', TOH:'🗼', STROOP:'🎨', GNG:'⚡', ULT:'💰'}[gameCode];
+  document.getElementById('results-area').innerHTML = `<div style="text-align:center;"><div style="font-size:64px;">${icon}</div><h2>${title} — complete!</h2><div class="surface" style="margin:20px 0;"><div class="stat-val">${score}</div><div>Score</div><div style="font-size:18px;font-weight:600;margin-top:8px;">${label}</div></div><div class="card"><div class="pill" style="margin-bottom:8px;">Insight</div><p>${insight}</p></div><button class="btn btn-primary btn-full" id="resultsContinue">Continue →</button></div>`;
+  showScreen('game-results');
+  document.getElementById('resultsContinue').onclick = () => { saveGameResult(gameCode, score, label, insight); };
+}
+
+// INIT
+let session = lsGet('rl_session');
+if(session) {
+  let sd = JSON.parse(session);
+  let ur = lsGet(sd.emailKey);
+  if(ur) { user = JSON.parse(ur); if(!user.context) showContext(); else showDashboard(); }
+  else showScreen('landing');
+} else showScreen('landing');
+updateNav();
 </script>
 </body>
 </html>
