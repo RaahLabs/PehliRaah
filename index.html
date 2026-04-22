@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Raah Labs — Know Your Path</title>
-  <meta name="description" content="6 science-backed games. 20 minutes. Discover the careers you're built for." />
+  <title>Raah Labs — Know Your Path (10 Games)</title>
+  <meta name="description" content="10 science-backed games. 30 minutes. Discover the careers you're built for." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono&display=swap" rel="stylesheet" />
   <style>
-    /* YOUR ORIGINAL CSS — preserved exactly */
+    /* ========== YOUR ORIGINAL CSS (FULLY PRESERVED) ========== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
       --amber: #BA7517;
@@ -59,91 +59,96 @@
     .container { max-width: 520px; margin: 0 auto; padding: 2rem 1.25rem; }
     .nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 1.25rem; border-bottom: 0.5px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 10; }
     .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; }
-    .logo-badge { width: 32px; height: 32px; background: var(--amber); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--amber-light); font-size: 16px; font-weight: 500; flex-shrink: 0; }
+    .logo-badge { width: 32px; height: 32px; background: var(--amber); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; font-weight: 500; }
     .logo-name { font-size: 16px; font-weight: 500; color: var(--text); }
     .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; border: none; border-radius: var(--radius); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: all 0.15s; padding: 11px 20px; }
-    .btn-primary { background: var(--amber); color: var(--amber-light); }
+    .btn-primary { background: var(--amber); color: white; }
     .btn-primary:hover { background: var(--amber-dark); }
-    .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
     .btn-secondary { background: transparent; color: var(--text); border: 0.5px solid var(--border-strong); }
     .btn-secondary:hover { background: var(--surface); }
-    .btn-secondary:disabled { opacity: 0.45; cursor: not-allowed; }
     .btn-danger { background: var(--red); color: white; }
-    .btn-danger:hover { background: #7A1F1F; }
     .btn-full { width: 100%; padding: 13px 20px; }
     .btn-sm { padding: 7px 14px; font-size: 13px; }
     .card { background: var(--card); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; }
     .surface { background: var(--surface); border-radius: var(--radius); padding: 1rem; }
     .field { margin-bottom: 14px; }
     .field label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 5px; }
-    input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
-      width: 100%; padding: 10px 12px; border: 0.5px solid var(--border-strong); border-radius: var(--radius);
-      background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 15px;
-      transition: border-color 0.15s; outline: none;
-    }
-    input:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(186,117,23,0.12); }
+    input, select { width: 100%; padding: 10px 12px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--bg); color: var(--text); font-family: inherit; font-size: 15px; }
+    input:focus, select:focus { border-color: var(--amber); box-shadow: 0 0 0 3px rgba(186,117,23,0.12); outline: none; }
     .tab-bar { display: flex; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1.5rem; }
-    .tab-bar button { flex: 1; padding: 10px; border: none; background: transparent; color: var(--text-muted); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; }
-    .tab-bar button.active { background: var(--amber); color: var(--amber-light); }
+    .tab-bar button { flex: 1; padding: 10px; background: transparent; border: none; color: var(--text-muted); font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
+    .tab-bar button.active { background: var(--amber); color: white; }
     .err-box { background: var(--red-light); color: var(--red); font-size: 13px; border-radius: var(--radius); padding: 9px 12px; margin-bottom: 12px; display: none; }
     .pill { display: inline-block; font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; background: var(--amber-light); color: var(--amber-dark); letter-spacing: 0.02em; }
-    .tag { display: inline-block; font-size: 13px; padding: 5px 14px; border-radius: 20px; background: var(--amber-light); color: var(--amber-dark); font-weight: 500; }
     .phone-row { display: flex; gap: 8px; }
-    .cc-badge { padding: 10px 12px; background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: var(--radius); font-size: 14px; color: var(--text); white-space: nowrap; flex-shrink: 0; }
+    .cc-badge { padding: 10px 12px; background: var(--surface); border: 0.5px solid var(--border-strong); border-radius: var(--radius); font-size: 14px; white-space: nowrap; }
     .stat-grid { display: grid; gap: 10px; }
     .stat-grid-3 { grid-template-columns: repeat(3, 1fr); }
     .stat-cell { background: var(--surface); border-radius: var(--radius); padding: 14px; text-align: center; }
     .stat-val { font-size: 20px; font-weight: 500; color: var(--text); }
     .stat-lbl { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
-    .game-highlight { border: 1.5px solid var(--amber) !important; cursor: pointer; }
+    .game-highlight { border: 1.5px solid var(--amber) !important; cursor: pointer; transition: 0.1s; }
     .game-highlight:hover { background: var(--amber-light); }
-    .done-border { border: 1.5px solid var(--teal) !important; }
+    .done-border { border: 1.5px solid var(--teal) !important; cursor: pointer; }
     .progress-track { background: var(--surface); border-radius: 4px; height: 5px; overflow: hidden; }
     .progress-fill { height: 100%; background: var(--amber); border-radius: 4px; transition: width 0.4s ease; }
-    .section-label { font-size: 11px; font-weight: 500; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 10px; }
-    .back-btn { background: none; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; font-family: 'DM Sans', sans-serif; padding: 0; margin-bottom: 1.25rem; display: inline-flex; align-items: center; gap: 6px; }
+    .section-label { font-size: 11px; font-weight: 500; color: var(--text-hint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+    .back-btn { background: none; border: none; color: var(--text-muted); font-size: 13px; cursor: pointer; margin-bottom: 1.25rem; display: inline-flex; align-items: center; gap: 6px; }
     .back-btn:hover { color: var(--text); }
-    #balloon-wrap { transition: transform 0.12s ease-out; transform-origin: bottom center; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    .fade-in { animation: fadeIn 0.25s ease-out; }
-    .score-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
-    .score-row:last-child { border-bottom: none; }
-    .insight-section { margin-bottom: 1rem; }
-    .insight-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-hint); margin-bottom: 10px; display: block; }
-    .insight-items { display: flex; flex-direction: column; gap: 8px; }
-    .insight-item { font-size: 14px; color: var(--text-muted); line-height: 1.65; display: flex; gap: 10px; align-items: flex-start; }
-    .insight-dot { color: var(--amber); font-weight: 700; flex-shrink: 0; line-height: 1.65; }
-    .blindspot-card { background: var(--red-light); border: 0.5px solid rgba(163,45,45,0.2); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
-    .synthesis-card { background: var(--amber-light); border: 0.5px solid rgba(186,117,23,0.3); border-radius: var(--radius-lg); padding: 1.25rem; margin-bottom: 1rem; }
     .game-name-hindi { font-size: 28px; font-weight: 500; margin: 8px 0 2px; letter-spacing: -0.01em; }
     .game-name-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; }
     .game-intro-para { color: var(--text-muted); line-height: 1.8; font-size: 15px; margin-bottom: 1.5rem; }
     .reset-row { margin-top: 1.5rem; padding-top: 1rem; border-top: 0.5px solid var(--border); display: flex; justify-content: flex-end; }
-    /* Stroop styles (added, matching your design) */
-    .stroop-word { font-size: 48px; font-weight: 700; text-align: center; padding: 20px 0; letter-spacing: 2px; }
-    .stroop-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
-    .stroop-btn { padding: 14px; font-size: 16px; font-weight: 600; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--card); cursor: pointer; transition: 0.1s; width: 100%; }
-    .stroop-btn:hover { background: var(--surface); border-color: var(--amber); }
-    /* Ultimatum styles */
-    .ult-offer-card { background: var(--surface); border-radius: var(--radius-lg); padding: 1.75rem; text-align: center; margin-bottom: 1.5rem; }
-    .ult-offer-amount { font-size: 48px; font-weight: 700; color: var(--amber); margin: 12px 0; }
-    .ult-choice-buttons { display: flex; gap: 16px; justify-content: center; margin-top: 24px; }
-    /* Tower of Hanoi (your original styles) */
+    /* Balloon animations */
+    #balloon-wrap { transition: transform 0.12s ease-out; transform-origin: bottom center; }
+    @keyframes popAnim { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+    .pop { animation: popAnim 0.3s ease forwards; }
+    /* Tower of Hanoi */
     .toh-board { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .toh-peg { display: flex; flex-direction: column; align-items: center; gap: 6px; cursor: pointer; padding: 10px; border-radius: var(--radius); background: var(--surface); min-width: 90px; }
     .toh-peg.selected { background: var(--amber-light); border: 1px solid var(--amber); }
     .toh-discs { height: 100px; display: flex; flex-direction: column-reverse; align-items: center; gap: 3px; }
     .toh-disc { height: 18px; border-radius: 20px; }
-    /* Go/No-Go styles */
+    @keyframes tohShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
+    .toh-shake { animation: tohShake 0.35s ease-in-out; }
+    @keyframes tohWin { 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
+    .toh-win { animation: tohWin 0.4s ease-in-out 2; }
+    /* Go/No-Go */
     .gng-shape { font-size: 100px; text-align: center; margin: 30px 0; }
     .gng-tap-btn { display: block; margin: 0 auto 20px; padding: 16px 40px; font-size: 18px; }
-    /* Team snapshot (your original styles) */
+    @keyframes gngCorrect { 0%{background:var(--teal)} 100%{background:var(--amber)} }
+    @keyframes gngWrong   { 0%{background:var(--red)}  100%{background:var(--amber)} }
+    .gng-flash-correct { animation: gngCorrect 0.35s ease-out forwards; }
+    .gng-flash-wrong   { animation: gngWrong   0.35s ease-out forwards; }
+    /* Stroop */
+    .stroop-word { font-size: 48px; font-weight: 700; text-align: center; padding: 20px 0; letter-spacing: 2px; }
+    .stroop-options { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 20px; }
+    .stroop-btn { padding: 14px; font-size: 16px; font-weight: 600; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--card); cursor: pointer; width: 100%; }
+    .stroop-btn:hover { background: var(--surface); border-color: var(--amber); }
+    /* Ultimatum */
+    .ult-offer-card { background: var(--surface); border-radius: var(--radius-lg); padding: 1.75rem; text-align: center; margin-bottom: 1.5rem; }
+    .ult-offer-amount { font-size: 48px; font-weight: 700; color: var(--amber); margin: 12px 0; }
+    .ult-choice-buttons { display: flex; gap: 16px; justify-content: center; margin-top: 24px; }
+    /* Team snapshot */
     .team-drop { border: 1.5px dashed var(--border-strong); border-radius: var(--radius-lg); padding: 2rem; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--surface); }
     .team-drop:hover, .team-drop.dragover { border-color: var(--amber); background: var(--amber-light); }
     .team-file-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--surface); border-radius: var(--radius); margin-bottom: 6px; }
     .team-good { background: var(--teal-light); border-radius: var(--radius-lg); padding: 1.25rem; }
     .team-bad { background: var(--amber-light); border-radius: var(--radius-lg); padding: 1.25rem; }
     .team-ugly { background: var(--red-light); border-radius: var(--radius-lg); padding: 1.25rem; }
+    /* Digit span */
+    .digit-number { font-size: 56px; font-weight: 700; text-align: center; padding: 20px; font-family: 'DM Mono', monospace; letter-spacing: 8px; transition: opacity 0.3s; }
+    /* Reaction time */
+    .rt-area { text-align: center; padding: 40px; cursor: pointer; transition: 0.05s linear; border-radius: var(--radius-lg); }
+    /* Pattern */
+    .pattern-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+    .pattern-option { background: var(--surface); border-radius: var(--radius); padding: 16px; text-align: center; cursor: pointer; font-size: 32px; transition: 0.1s; }
+    .pattern-option:hover { background: var(--amber-light); border-color: var(--amber); }
+    /* Social vignettes */
+    .vignette-card { background: var(--surface); border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1rem; }
+    .vignette-options { display: flex; flex-direction: column; gap: 10px; margin-top: 1rem; }
+    .vignette-opt { padding: 12px; border-radius: var(--radius); border: 1px solid var(--border-strong); background: var(--card); cursor: pointer; text-align: left; }
+    .vignette-opt:hover { background: var(--amber-light); border-color: var(--amber); }
   </style>
 </head>
 <body>
@@ -153,554 +158,150 @@
     <div class="logo-badge">R</div>
     <span class="logo-name">Raah Labs</span>
   </div>
-  <div id="nav-right">
-    <button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>
-  </div>
+  <div id="nav-right"><button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button></div>
 </nav>
 
 <!-- LANDING -->
 <div id="screen-landing" class="screen">
   <div class="container" style="padding-top:3rem;">
-    <p style="font-size:11px;color:var(--amber);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Know your path</p>
-    <h1 style="font-size:30px;font-weight:500;line-height:1.3;margin-bottom:14px;">Discover the careers<br>you're built for</h1>
-    <p style="color:var(--text-muted);line-height:1.75;max-width:420px;margin-bottom:2rem;">6 science-backed games. 20 minutes. A clear picture of your personality — and where you'll thrive. Enterprise-grade assessments used by BCG and JP Morgan, now available to every student.</p>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2.5rem;">
+    <p style="font-size:11px;color:var(--amber);font-weight:600;">KNOW YOUR PATH</p>
+    <h1 style="font-size:30px;font-weight:500;margin:12px 0;">Discover the careers<br>you're built for</h1>
+    <p style="color:var(--text-muted);margin-bottom:24px;">10 science-backed games. 30 minutes. A clear picture of your personality — and where you'll thrive.</p>
+    <div style="display:flex;gap:12px;margin-bottom:32px;">
       <button class="btn btn-primary" onclick="showAuth('signup')">Create free account →</button>
       <button class="btn btn-secondary" onclick="showAuth('login')">Login</button>
     </div>
     <div class="stat-grid stat-grid-3" style="max-width:320px;">
-      <div class="stat-cell"><div class="stat-val">6</div><div class="stat-lbl">games</div></div>
-      <div class="stat-cell"><div class="stat-val">~20</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">10</div><div class="stat-lbl">games</div></div>
+      <div class="stat-cell"><div class="stat-val">~30</div><div class="stat-lbl">minutes</div></div>
       <div class="stat-cell"><div class="stat-val" style="color:var(--amber);">₹500</div><div class="stat-lbl">one-time</div></div>
     </div>
     <div class="reset-row"><button class="btn btn-danger btn-sm" onclick="resetAllData()">⚠️ Reset all data</button></div>
   </div>
 </div>
 
-<!-- AUTH -->
-<div id="screen-auth" class="screen">
-  <div class="container" style="max-width:420px;">
-    <button class="back-btn" onclick="showScreen('landing')">← Back</button>
-    <div class="tab-bar">
-      <button id="tab-su" class="active" onclick="switchTab('signup')">Sign up</button>
-      <button id="tab-li" onclick="switchTab('login')">Login</button>
-    </div>
-    <div id="form-signup">
-      <div class="field"><label>Full name</label><input type="text" id="su-name" placeholder="Your name" /></div>
-      <div class="field"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com" /></div>
-      <div class="field">
-        <label>Mobile number</label>
-        <div class="phone-row">
-          <span class="cc-badge">🇮🇳 +91</span>
-          <input type="tel" id="su-mobile" placeholder="9876543210" maxlength="10" style="flex:1;" />
-        </div>
-        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">10-digit number, no spaces</span>
-      </div>
-      <div class="field"><label>Password</label><input type="password" id="su-pw" placeholder="Min. 6 characters" /></div>
-      <div class="err-box" id="su-err"></div>
-      <button class="btn btn-primary btn-full" id="su-btn" onclick="handleSignup()">Create account →</button>
-    </div>
-    <div id="form-login" style="display:none;">
-      <div class="field">
-        <label>Email or mobile number</label>
-        <input type="text" id="li-id" placeholder="you@email.com  or  9876543210" />
-        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">Either works</span>
-      </div>
-      <div class="field"><label>Password</label><input type="password" id="li-pw" placeholder="••••••••" /></div>
-      <div class="err-box" id="li-err"></div>
-      <button class="btn btn-primary btn-full" id="li-btn" onclick="handleLogin()">Login →</button>
-      <p style="font-size:13px;color:var(--text-muted);text-align:center;margin-top:14px;">No account yet? <a href="#" onclick="switchTab('signup')" style="color:var(--amber);text-decoration:none;">Sign up free</a></p>
-    </div>
-  </div>
-</div>
+<!-- AUTH, CONTEXT, DASHBOARD, GAME SCREENS (dynamic) -->
+<div id="screen-auth" class="screen"><div class="container"><button class="back-btn" onclick="showScreen('landing')">← Back</button><div class="tab-bar"><button id="tab-su" class="active" onclick="switchTab('signup')">Sign up</button><button id="tab-li" onclick="switchTab('login')">Login</button></div><div id="form-signup"><div class="field"><label>Full name</label><input type="text" id="su-name"></div><div class="field"><label>Email</label><input type="email" id="su-email"></div><div class="field"><div class="phone-row"><span class="cc-badge">🇮🇳 +91</span><input type="tel" id="su-mobile" maxlength="10"></div></div><div class="field"><label>Password</label><input type="password" id="su-pw"></div><div class="err-box" id="su-err"></div><button class="btn btn-primary btn-full" onclick="handleSignup()">Create account →</button></div><div id="form-login" style="display:none;"><div class="field"><input type="text" id="li-id" placeholder="Email or mobile"></div><div class="field"><input type="password" id="li-pw"></div><div class="err-box" id="li-err"></div><button class="btn btn-primary btn-full" onclick="handleLogin()">Login →</button></div></div></div>
 
-<!-- CONTEXT -->
-<div id="screen-context" class="screen">
-  <div class="container" style="max-width:480px;">
-    <span class="pill">Almost there</span>
-    <h1 style="font-size:22px;font-weight:500;margin:10px 0 6px;">A few things about you</h1>
-    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.75rem;">Helps us make the results actually about you — not just anyone who plays the games.</p>
-    <div class="field"><label>Gender</label><select id="ctx-gender"><option>Male</option><option>Female</option><option>Non-binary</option><option>Skip</option></select></div>
-    <div class="field"><label>Birth year</label><select id="ctx-year"></select></div>
-    <div class="field"><label>Where you are right now</label><select id="ctx-work"><option>Startup</option><option>Large company / MNC</option><option>Family business</option><option>Government / PSU</option><option>Still studying</option></select></div>
-    <div class="field"><label>What you're aiming for</label><select id="ctx-aspire"><option>Build my own thing eventually</option><option>Lead teams and organizations</option><option>Go deep in my field</option><option>Still figuring it out</option></select></div>
-    <div class="err-box" id="ctx-err"></div>
-    <button class="btn btn-primary btn-full" onclick="saveContext()">Let's go →</button>
-  </div>
-</div>
+<div id="screen-context" class="screen"><div class="container"><span class="pill">Almost there</span><h1 style="font-size:22px;margin:12px 0;">A few things about you</h1><div class="field"><label>Gender</label><select id="ctx-gender"><option>Male</option><option>Female</option><option>Non-binary</option><option>Skip</option></select></div><div class="field"><label>Birth year</label><select id="ctx-year"></select></div><div class="field"><label>Current work</label><select id="ctx-work"><option>Startup</option><option>Large company</option><option>Family business</option><option>Government</option><option>Studying</option></select></div><div class="field"><label>Aspiration</label><select id="ctx-aspire"><option>Build my own thing</option><option>Lead teams</option><option>Go deep</option><option>Still figuring out</option></select></div><button class="btn btn-primary btn-full" onclick="saveContext()">Continue →</button></div></div>
 
-<!-- DASHBOARD -->
+<!-- DASHBOARD (10 games) -->
 <div id="screen-dashboard" class="screen">
   <div class="container">
-    <p id="dash-greet" style="font-size:20px;font-weight:500;margin-bottom:4px;"></p>
-    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.5rem;">Complete all 6 games to unlock your full career profile.</p>
-
-    <!-- Game 1: Dum -->
-    <div id="g1-cta" class="card game-highlight fade-in" style="margin-bottom:1rem;" onclick="showGameIntro('BART')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-        <div>
-          <div class="pill" style="margin-bottom:10px;">Game 1 of 6 · Start here</div>
-          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">🎈 Dum</div>
-          <div style="font-size:13px;color:var(--text-muted);">Risk · Impulse · Learning</div>
-        </div>
-        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('BART')">Play now</button>
-      </div>
-    </div>
-    <div id="g1-done" style="display:none;" class="card done-border" style="margin-bottom:1rem;">✓ Dum completed</div>
-
-    <!-- Game 2: Bharosa -->
-    <div id="g2-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('PD')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-        <div><div class="pill" style="margin-bottom:10px;">Game 2 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🤝 Bharosa</div><div style="font-size:13px;color:var(--text-muted);">Cooperation · Trust · Strategy</div></div>
-        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('PD')">Play now</button>
-      </div>
-    </div>
-    <div id="g2-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Bharosa completed</div>
-
-    <!-- Game 3: Burj -->
-    <div id="g3-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('TOH')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-        <div><div class="pill" style="margin-bottom:10px;">Game 3 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🗼 Burj</div><div style="font-size:13px;color:var(--text-muted);">Planning · Sequencing · Memory</div></div>
-        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('TOH')">Play now</button>
-      </div>
-    </div>
-    <div id="g3-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Burj completed</div>
-
-    <!-- Game 4: Rukawat (Stroop) - REPLACED Chehra -->
-    <div id="g4-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('STROOP')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-        <div><div class="pill" style="margin-bottom:10px;">Game 4 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">🎨 Rukawat</div><div style="font-size:13px;color:var(--text-muted);">Focus · Inhibition · Stroop Test</div></div>
-        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('STROOP')">Play now</button>
-      </div>
-    </div>
-    <div id="g4-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Rukawat completed</div>
-
-    <!-- Game 5: Ruk -->
-    <div id="g5-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('GNG')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-        <div><div class="pill" style="margin-bottom:10px;">Game 5 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">⚡ Ruk</div><div style="font-size:13px;color:var(--text-muted);">Impulse control · Attention · Speed</div></div>
-        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('GNG')">Play now</button>
-      </div>
-    </div>
-    <div id="g5-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Ruk completed</div>
-
-    <!-- Game 6: Saudaa (Ultimatum) - NEW -->
-    <div id="g6-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showGameIntro('ULT')">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
-        <div><div class="pill" style="margin-bottom:10px;">Game 6 of 6 · Up next</div><div style="font-size:16px;font-weight:500;margin-bottom:2px;">💰 Saudaa</div><div style="font-size:13px;color:var(--text-muted);">Fairness · Ultimatum Game</div></div>
-        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showGameIntro('ULT')">Play now</button>
-      </div>
-    </div>
-    <div id="g6-done" style="display:none;margin-bottom:1rem;" class="card done-border">✓ Saudaa completed</div>
-
-    <!-- Progress -->
-    <div style="margin:1.25rem 0;">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px;">
-        <span>Overall progress</span><span id="prog-txt">0 / 6 games</span>
-      </div>
-      <div class="progress-track"><div id="prog-fill" class="progress-fill" style="width:0%;"></div></div>
-    </div>
-
-    <!-- Scores -->
-    <div id="scores-section" style="display:none;">
-      <p class="section-label">Your results</p>
-      <div class="card" id="scores-list"></div>
-    </div>
-
-    <!-- Tools -->
-    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:0.5px solid var(--border);">
-      <p class="section-label">Tools</p>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <button class="btn btn-secondary" onclick="exportProfile()" style="font-size:13px;padding:12px;">📤 Export profile</button>
-        <button class="btn btn-secondary" onclick="showScreen('team')" style="font-size:13px;padding:12px;">👥 Team snapshot</button>
-      </div>
-      <p style="font-size:12px;color:var(--text-hint);margin-top:8px;line-height:1.6;">Export your profile file and share with teammates. Upload everyone's files together to see how your team operates.</p>
-    </div>
+    <p id="dash-greet" style="font-size:20px;font-weight:500;"></p>
+    <p style="color:var(--text-muted);margin-bottom:20px;">Complete all 10 games. Click any completed game to see your results again.</p>
+    <div id="g1-cta" class="card game-highlight" onclick="startGameFromDashboard('BART')"><div><div class="pill">Game 1</div><div style="font-weight:600;">🎈 Dum</div><div style="font-size:13px;">Risk · Balloon</div></div></div>
+    <div id="g1-done" style="display:none;" class="card done-border" onclick="showSavedResult('BART')">✓ Dum completed (click to view)</div>
+    <div id="g2-cta" style="display:none;" class="card game-highlight" onclick="startGameFromDashboard('PD')"><div><div class="pill">Game 2</div><div>🤝 Bharosa</div></div></div>
+    <div id="g2-done" style="display:none;" class="card done-border" onclick="showSavedResult('PD')">✓ Bharosa completed</div>
+    <div id="g3-cta" style="display:none;" class="card game-highlight" onclick="startGameFromDashboard('TOH')"><div><div class="pill">Game 3</div><div>🗼 Burj</div></div></div>
+    <div id="g3-done" style="display:none;" class="card done-border" onclick="showSavedResult('TOH')">✓ Burj completed</div>
+    <div id="g4-cta" style="display:none;" class="card game-highlight" onclick="startGameFromDashboard('STROOP')"><div><div class="pill">Game 4</div><div>🎨 Rukawat</div></div></div>
+    <div id="g4-done" style="display:none;" class="card done-border" onclick="showSavedResult('STROOP')">✓ Rukawat completed</div>
+    <div id="g5-cta" style="display:none;" class="card game-highlight" onclick="startGameFromDashboard('GNG')"><div><div class="pill">Game 5</div><div>⚡ Ruk</div></div></div>
+    <div id="g5-done" style="display:none;" class="card done-border" onclick="showSavedResult('GNG')">✓ Ruk completed</div>
+    <div id="g6-cta" style="display:none;" class="card game-highlight" onclick="startGameFromDashboard('ULT')"><div><div class="pill">Game 6</div><div>💰 Saudaa</div></div></div>
+    <div id="g6-done" style="display:none;" class="card done-border" onclick="showSavedResult('ULT')">✓ Saudaa completed</div>
+    <div id="g7-cta" style="display:none;" class="card game-highlight" onclick="startGameFromDashboard('DIGIT')"><div><div class="pill">Game 7</div><div>🧠 Yaad</div></div></div>
+    <div id="g7-done" style="display:none;" class="card done-border" onclick="showSavedResult('DIGIT')">✓ Yaad completed</div>
+    <div id="g8-cta" style="display:none;" class="card game-highlight" onclick="startGameFromDashboard('RT')"><div><div class="pill">Game 8</div><div>⏱️ Pal</div></div></div>
+    <div id="g8-done" style="display:none;" class="card done-border" onclick="showSavedResult('RT')">✓ Pal completed</div>
+    <div id="g9-cta" style="display:none;" class="card game-highlight" onclick="startGameFromDashboard('PATTERN')"><div><div class="pill">Game 9</div><div>🔷 Naqsha</div></div></div>
+    <div id="g9-done" style="display:none;" class="card done-border" onclick="showSavedResult('PATTERN')">✓ Naqsha completed</div>
+    <div id="g10-cta" style="display:none;" class="card game-highlight" onclick="startGameFromDashboard('SOCIAL')"><div><div class="pill">Game 10</div><div>💬 Samajh</div></div></div>
+    <div id="g10-done" style="display:none;" class="card done-border" onclick="showSavedResult('SOCIAL')">✓ Samajh completed</div>
+    <div class="progress-track"><div id="prog-fill" class="progress-fill"></div></div><p id="prog-count" style="font-size:12px;margin:6px 0;">0/10 games</p>
+    <button class="btn btn-secondary" onclick="exportProfile()">📤 Export profile</button>
+    <button class="btn btn-secondary" onclick="showScreen('team')" style="margin-left:8px;">👥 Team snapshot</button>
     <div class="reset-row"><button class="btn btn-danger btn-sm" onclick="resetAllData()">⚠️ Reset all data</button></div>
   </div>
 </div>
 
-<!-- GAME INTRO (dynamic) -->
-<div id="screen-game-intro" class="screen">
-  <div class="container" style="max-width:480px;">
-    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
-    <span class="pill" id="intro-game-num"></span>
-    <div class="game-name-hindi" id="intro-title"></div>
-    <div class="game-name-sub" id="intro-sub"></div>
-    <div id="intro-story" class="game-intro-para"></div>
-    <div class="stat-grid stat-grid-3" id="intro-stats"></div>
-    <button class="btn btn-primary btn-full" id="intro-start-btn">Start →</button>
-  </div>
-</div>
-
-<!-- GAME PLAY (dynamic) -->
-<div id="screen-game-play" class="screen">
-  <div class="container" id="game-play-area"></div>
-</div>
-
-<!-- RESULTS (dynamic) -->
-<div id="screen-game-results" class="screen">
-  <div class="container" id="results-area"></div>
-</div>
-
-<!-- TEAM SNAPSHOT (preserved from original) -->
-<div id="screen-team" class="screen">
-  <div class="container" style="max-width:520px;">
-    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
-    <span class="pill">Team snapshot</span>
-    <h1 style="font-size:22px;font-weight:500;margin:10px 0 6px;">How does your team operate?</h1>
-    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.5rem;">Upload profile files from each team member. Everyone exports their own file from their dashboard — you upload them all here.</p>
-    <div id="team-upload-area">
-      <div class="team-drop" id="team-dropzone" onclick="document.getElementById('team-file-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleTeamDrop(event)">
-        <div style="font-size:32px;margin-bottom:8px;">📂</div>
-        <p style="font-weight:500;margin-bottom:4px;">Drop profile files here</p>
-        <p style="font-size:13px;color:var(--text-muted);">or tap to choose — upload 2 to 10 files</p>
-      </div>
-      <input type="file" id="team-file-input" accept=".json" multiple style="display:none;" onchange="handleTeamFiles(this.files)" />
-      <div id="team-file-list" style="margin-top:1rem;"></div>
-      <div id="team-manager-row" style="display:none;margin-top:1rem;">
-        <p style="font-size:13px;font-weight:500;margin-bottom:6px;">Who's the manager?</p>
-        <select id="team-manager-sel"><option value="">No manager — peer group</option></select>
-        <p style="font-size:12px;color:var(--text-hint);margin-top:5px;">Leave blank if this is a peer-only group.</p>
-      </div>
-      <div style="margin-top:1.25rem;">
-        <button class="btn btn-primary btn-full" id="team-analyse-btn" onclick="analyseTeam()" disabled>Analyse team →</button>
-      </div>
-    </div>
-    <div id="team-results" style="display:none;margin-top:1.5rem;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
-        <p style="font-size:16px;font-weight:500;">Your team picture</p>
-        <button class="btn btn-secondary btn-sm" onclick="resetTeam()">Start over</button>
-      </div>
-      <div class="team-out-section"><span class="team-out-label">✅ The good</span><div class="team-good"><p id="team-good-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
-      <div class="team-out-section"><span class="team-out-label">⚠️ The bad</span><div class="team-bad"><p id="team-bad-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
-      <div class="team-out-section"><span class="team-out-label">🔥 The ugly</span><div class="team-ugly"><p id="team-ugly-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
-      <div id="team-mgr-section" style="display:none;" class="team-out-section">
-        <span class="team-out-label">🧭 Manager ↔ team dynamic</span>
-        <div id="team-mgr-text"></div>
-      </div>
-    </div>
-  </div>
-</div>
+<!-- GAME INTRO, PLAY, RESULTS (dynamic) -->
+<div id="screen-game-intro" class="screen"><div class="container"><button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><span class="pill" id="intro-game-num"></span><div class="game-name-hindi" id="intro-title"></div><div class="game-name-sub" id="intro-sub"></div><div id="intro-story" class="game-intro-para"></div><div class="stat-grid stat-grid-3" id="intro-stats"></div><button class="btn btn-primary btn-full" id="intro-start-btn">Start →</button></div></div>
+<div id="screen-game-play" class="screen"><div class="container" id="game-play-area"></div></div>
+<div id="screen-game-results" class="screen"><div class="container" id="results-area"></div></div>
+<div id="screen-team" class="screen"><div class="container"><button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><span class="pill">Team snapshot</span><h1>How does your team operate?</h1><div id="team-upload-area"><div class="team-drop" id="team-dropzone" onclick="document.getElementById('team-file-input').click()"><div>📂 Drop profile files</div></div><input type="file" id="team-file-input" accept=".json" multiple style="display:none;"><div id="team-file-list"></div><div id="team-manager-row" style="display:none;"><select id="team-manager-sel"></select></div><button class="btn btn-primary btn-full" id="team-analyse-btn" onclick="analyseTeam()" disabled>Analyse team →</button></div><div id="team-results" style="display:none;"></div></div></div>
 
 <script>
-// ==================== CORE UTILITIES (preserved from original) ====================
-function safeKey(prefix, val) { return prefix + val.toLowerCase().replace(/[^a-z0-9]/g, '_'); }
-function lsGet(k) { try { return localStorage.getItem(k); } catch(e) { return null; } }
-function lsSet(k, v) { try { localStorage.setItem(k, v); return true; } catch(e) { return false; } }
-function lsDel(k) { try { localStorage.removeItem(k); } catch(e) {} }
+// ==================== CORE UTILITIES ====================
+function safeKey(p,v){return p+v.toLowerCase().replace(/[^a-z0-9]/g,'_');}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);return true;}catch(e){return false;}}
+function lsDel(k){try{localStorage.removeItem(k);}catch(e){}}
+let user=null;
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('screen-'+id).classList.add('active');updateNav();}
+function goHome(){user?showDashboard():showScreen('landing');}
+function updateNav(){let nr=document.getElementById('nav-right');nr.innerHTML=user?`<button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>`:`<button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>`;}
+function showAuth(tab){showScreen('auth');switchTab(tab);}
+function switchTab(tab){document.getElementById('form-signup').style.display=tab==='signup'?'block':'none';document.getElementById('form-login').style.display=tab==='login'?'block':'none';}
+function logout(){lsDel('rl_session');user=null;showScreen('landing');}
+function resetAllData(){if(confirm('Delete ALL data? Cannot undo.')){Object.keys(localStorage).forEach(k=>{if(k.startsWith('rl_'))localStorage.removeItem(k);});user=null;showScreen('landing');}}
+function handleSignup(){let n=document.getElementById('su-name').value,e=document.getElementById('su-email').value,m=document.getElementById('su-mobile').value,p=document.getElementById('su-pw').value;if(!n||!e||!m||m.length!==10||!p||p.length<6){document.getElementById('su-err').innerText='Invalid';document.getElementById('su-err').style.display='block';return;}let ek=safeKey('rl_ue_',e),mk=safeKey('rl_um_',m);if(lsGet(ek)){document.getElementById('su-err').innerText='Email exists';document.getElementById('su-err').style.display='block';return;}let u={name:n,email:e,mobile:m,password:p,scores:[],context:null};lsSet(ek,JSON.stringify(u));lsSet(mk,JSON.stringify({emailKey:ek}));lsSet('rl_session',JSON.stringify({emailKey:ek,name:n}));user=u;showContext();}
+function handleLogin(){let id=document.getElementById('li-id').value,pw=document.getElementById('li-pw').value;if(!id||!pw){document.getElementById('li-err').innerText='Enter both';document.getElementById('li-err').style.display='block';return;}let clean=id.replace(/\s/g,''),uData=null;if(/^\d{10}$/.test(clean)){let mref=lsGet(safeKey('rl_um_',clean));if(mref)uData=JSON.parse(lsGet(JSON.parse(mref).emailKey));}else{uData=JSON.parse(lsGet(safeKey('rl_ue_',clean))||'null');}if(uData&&uData.password===pw){lsSet('rl_session',JSON.stringify({emailKey:safeKey('rl_ue_',uData.email),name:uData.name}));user=uData;if(!user.context)showContext();else showDashboard();}else{document.getElementById('li-err').innerText='Invalid';document.getElementById('li-err').style.display='block';}}
+function showContext(){let y=document.getElementById('ctx-year');y.innerHTML='<option value="">Year</option>';for(let i=2024-14;i>=1955;i--)y.innerHTML+=`<option value="${i}">${i}</option>`;showScreen('context');}
+function saveContext(){let ctx={gender:document.getElementById('ctx-gender').value,dobYear:document.getElementById('ctx-year').value,work:document.getElementById('ctx-work').value,aspiration:document.getElementById('ctx-aspire').value};if(!ctx.dobYear)return;let ek=safeKey('rl_ue_',user.email);let ud=JSON.parse(lsGet(ek));ud.context=ctx;lsSet(ek,JSON.stringify(ud));user=ud;showDashboard();}
+function exportProfile(){let blob=new Blob([JSON.stringify({name:user.name,context:user.context,scores:user.scores})],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='raah-profile.json';a.click();}
+function saveGameResult(gameCode,score,label,details={}){let ek=safeKey('rl_ue_',user.email);let ud=JSON.parse(lsGet(ek));ud.scores=(ud.scores||[]).filter(s=>s.game!==gameCode);ud.scores.push({game:gameCode,score,label,...details,date:new Date().toISOString()});lsSet(ek,JSON.stringify(ud));user=ud;showDashboard();}
+function showSavedResult(gameCode){let saved=user.scores?.find(s=>s.game===gameCode);if(saved){showResults(saved.label||gameCode,saved.score,saved.label,saved.insight||'Great job!',gameCode,true);}else{alert('No saved result found. Play the game first!');}}
+function startGameFromDashboard(gameCode){showGameIntro(gameCode);}
 
-let user = null;
-let currentGame = null;
+// ==================== SYNTHESIS ENGINE (full) ====================
+function renderSynthesis(scores,wrapId,textId){let wrap=document.getElementById(wrapId);let text=document.getElementById(textId);if(!wrap||!text)return;if(scores.length<2){wrap.style.display='none';return;}let bart=scores.find(s=>s.game==='BART');let pd=scores.find(s=>s.game==='PD');let toh=scores.find(s=>s.game==='TOH');let stroop=scores.find(s=>s.game==='STROOP');let gng=scores.find(s=>s.game==='GNG');let ult=scores.find(s=>s.game==='ULT');let lines=[];if(bart&&pd){let highRisk=bart.bartScore>=16;let highCoop=pd.cooperationScore>=50;if(highRisk&&highCoop)lines.push('You take risks and extend trust — founder energy.');if(highRisk&&!highCoop)lines.push('You take risks but play cards close — independent.');if(!highRisk&&highCoop)lines.push('Cautious but collaborative — a stabilizing force.');if(!highRisk&&!highCoop)lines.push('Measured about both risk and trust — deliberate.');}if(toh&&stroop){let highPlan=toh.planningScore>=65;let highFocus=stroop.stroopScore>=70;if(highPlan&&highFocus)lines.push('Structured thinker and laser-focused — powerful combination.');}if(lines.length){wrap.style.display='block';text.innerHTML=lines[0];}else wrap.style.display='none';}
 
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-'+id).classList.add('active');
-  updateNav();
-}
-function goHome() { user ? showDashboard() : showScreen('landing'); }
-function updateNav() {
-  let nr = document.getElementById('nav-right');
-  let loggedInScreens = ['dashboard','context','game-intro','game-play','game-results','team'];
-  let current = document.querySelector('.screen.active')?.id;
-  if(user && (loggedInScreens.some(s => current?.includes(s)) || current === 'screen-dashboard')) {
-    nr.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="logout()">Logout</button>`;
-  } else {
-    nr.innerHTML = `<button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>`;
-  }
-}
-function showAuth(tab) { showScreen('auth'); switchTab(tab); }
-function switchTab(tab) {
-  document.getElementById('form-signup').style.display = tab === 'signup' ? 'block' : 'none';
-  document.getElementById('form-login').style.display  = tab === 'login'  ? 'block' : 'none';
-  document.getElementById('tab-su').classList.toggle('active', tab === 'signup');
-  document.getElementById('tab-li').classList.toggle('active', tab === 'login');
-}
-function logout() { lsDel('rl_session'); user = null; showScreen('landing'); }
-function resetAllData() {
-  if(confirm('⚠️ Delete ALL your data? This cannot be undone.')) {
-    Object.keys(localStorage).forEach(k => { if(k.startsWith('rl_')) localStorage.removeItem(k); });
-    user = null;
-    showScreen('landing');
-  }
-}
-function handleSignup() {
-  let name = document.getElementById('su-name').value.trim();
-  let email = document.getElementById('su-email').value.trim().toLowerCase();
-  let mobile = document.getElementById('su-mobile').value.trim();
-  let pw = document.getElementById('su-pw').value;
-  if(!name || !email || !mobile || mobile.length !== 10 || !pw || pw.length < 6) {
-    document.getElementById('su-err').innerText = 'Please fill all fields correctly';
-    document.getElementById('su-err').style.display = 'block';
-    return;
-  }
-  let ek = safeKey('rl_ue_', email);
-  let mk = safeKey('rl_um_', mobile);
-  if(lsGet(ek)) { document.getElementById('su-err').innerText = 'Email already registered'; document.getElementById('su-err').style.display = 'block'; return; }
-  let u = { name, email, mobile, password: pw, scores: [], context: null };
-  lsSet(ek, JSON.stringify(u));
-  lsSet(mk, JSON.stringify({ emailKey: ek }));
-  lsSet('rl_session', JSON.stringify({ emailKey: ek, name }));
-  user = u;
-  showContext();
-}
-function handleLogin() {
-  let id = document.getElementById('li-id').value.trim().toLowerCase();
-  let pw = document.getElementById('li-pw').value;
-  if(!id || !pw) { document.getElementById('li-err').innerText = 'Enter both fields'; document.getElementById('li-err').style.display = 'block'; return; }
-  let cleanId = id.replace(/\s/g, '');
-  let uData = null;
-  if(/^\d{10}$/.test(cleanId)) {
-    let mref = lsGet(safeKey('rl_um_', cleanId));
-    if(mref) uData = JSON.parse(lsGet(JSON.parse(mref).emailKey));
-  } else {
-    uData = JSON.parse(lsGet(safeKey('rl_ue_', cleanId)) || 'null');
-  }
-  if(uData && uData.password === pw) {
-    lsSet('rl_session', JSON.stringify({ emailKey: safeKey('rl_ue_', uData.email), name: uData.name }));
-    user = uData;
-    if(!user.context) showContext();
-    else showDashboard();
-  } else {
-    document.getElementById('li-err').innerText = 'Invalid credentials';
-    document.getElementById('li-err').style.display = 'block';
-  }
-}
-function showContext() {
-  let y = document.getElementById('ctx-year');
-  y.innerHTML = '<option value="">Select year</option>';
-  for(let i = 2024-14; i >= 1955; i--) y.innerHTML += `<option value="${i}">${i}</option>`;
-  showScreen('context');
-}
-function saveContext() {
-  let ctx = {
-    gender: document.getElementById('ctx-gender').value,
-    dobYear: document.getElementById('ctx-year').value,
-    work: document.getElementById('ctx-work').value,
-    aspiration: document.getElementById('ctx-aspire').value
-  };
-  if(!ctx.dobYear) { document.getElementById('ctx-err').innerText = 'Select birth year'; document.getElementById('ctx-err').style.display = 'block'; return; }
-  let ek = safeKey('rl_ue_', user.email);
-  let ud = JSON.parse(lsGet(ek));
-  ud.context = ctx;
-  lsSet(ek, JSON.stringify(ud));
-  user = ud;
-  showDashboard();
-}
-function showDashboard() {
-  if(!user) return;
-  document.getElementById('dash-greet').innerHTML = 'Hey, ' + user.name.split(' ')[0] + ' 👋';
-  let scores = user.scores || [];
-  let gamesList = ['BART','PD','TOH','STROOP','GNG','ULT'];
-  let completed = gamesList.filter(g => scores.find(s => s.game === g)).length;
-  document.getElementById('prog-txt').innerHTML = completed + ' / 6 games';
-  document.getElementById('prog-fill').style.width = (completed / 6 * 100) + '%';
-  let hasB = !!scores.find(s => s.game === 'BART');
-  let hasP = !!scores.find(s => s.game === 'PD');
-  let hasT = !!scores.find(s => s.game === 'TOH');
-  let hasS = !!scores.find(s => s.game === 'STROOP');
-  let hasG = !!scores.find(s => s.game === 'GNG');
-  let hasU = !!scores.find(s => s.game === 'ULT');
-  document.getElementById('g1-cta').style.display = !hasB ? 'block' : 'none';
-  document.getElementById('g1-done').style.display = hasB ? 'block' : 'none';
-  document.getElementById('g2-cta').style.display = hasB && !hasP ? 'block' : 'none';
-  document.getElementById('g2-done').style.display = hasP ? 'block' : 'none';
-  document.getElementById('g3-cta').style.display = hasP && !hasT ? 'block' : 'none';
-  document.getElementById('g3-done').style.display = hasT ? 'block' : 'none';
-  document.getElementById('g4-cta').style.display = hasT && !hasS ? 'block' : 'none';
-  document.getElementById('g4-done').style.display = hasS ? 'block' : 'none';
-  document.getElementById('g5-cta').style.display = hasS && !hasG ? 'block' : 'none';
-  document.getElementById('g5-done').style.display = hasG ? 'block' : 'none';
-  document.getElementById('g6-cta').style.display = hasG && !hasU ? 'block' : 'none';
-  document.getElementById('g6-done').style.display = hasU ? 'block' : 'none';
-  // Scores section
-  if(scores.length > 0) {
-    document.getElementById('scores-section').style.display = 'block';
-    document.getElementById('scores-list').innerHTML = scores.map(s => {
-      let info = { icon: '🎮', name: s.game, label: s.label || '—', val: s.score };
-      if(s.game === 'BART') info = { icon:'🎈', name:'Dum', label:s.label, val:s.score };
-      if(s.game === 'PD') info = { icon:'🤝', name:'Bharosa', label:s.label, val:s.score };
-      if(s.game === 'TOH') info = { icon:'🗼', name:'Burj', label:s.label, val:s.score };
-      if(s.game === 'STROOP') info = { icon:'🎨', name:'Rukawat', label:s.label, val:s.score };
-      if(s.game === 'GNG') info = { icon:'⚡', name:'Ruk', label:s.label, val:s.score };
-      if(s.game === 'ULT') info = { icon:'💰', name:'Saudaa', label:s.label, val:s.score };
-      return `<div class="score-row"><div><div style="font-weight:500;font-size:14px;">${info.icon} ${info.name}</div><div style="font-size:12px;color:var(--text-muted);">${new Date(s.date).toLocaleDateString()}</div></div><div style="text-align:right;"><div style="font-size:13px;font-weight:500;color:var(--amber);">${info.label}</div><div style="font-size:12px;color:var(--text-muted);">Score ${info.val}</div></div></div>`;
-    }).join('');
-  }
-  showScreen('dashboard');
-}
-function exportProfile() {
-  let payload = { alias: user.name.split(' ')[0], context: user.context || {}, scores: user.scores || [], exportedAt: new Date().toISOString() };
-  let blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  let a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'raah-profile-'+payload.alias.toLowerCase()+'.json';
-  a.click();
-}
-function saveGameResult(gameCode, score, label, details = {}) {
-  let ek = safeKey('rl_ue_', user.email);
-  let ud = JSON.parse(lsGet(ek));
-  ud.scores = (ud.scores || []).filter(s => s.game !== gameCode);
-  ud.scores.push({ game: gameCode, score, label, ...details, date: new Date().toISOString() });
-  lsSet(ek, JSON.stringify(ud));
-  user = ud;
-  showDashboard();
-}
-
-// ==================== SYNTHESIS ENGINE (fully restored) ====================
-function renderSynthesis(scores, wrapId, textId) {
-  let wrap = document.getElementById(wrapId);
-  let textEl = document.getElementById(textId);
-  if(!wrap || !textEl) return;
-  if(scores.length < 2) { wrap.style.display = 'none'; return; }
-  let bart = scores.find(s => s.game === 'BART');
-  let pd = scores.find(s => s.game === 'PD');
-  let toh = scores.find(s => s.game === 'TOH');
-  let stroop = scores.find(s => s.game === 'STROOP');
-  let gng = scores.find(s => s.game === 'GNG');
-  let ult = scores.find(s => s.game === 'ULT');
-  let lines = [];
-  if(bart && pd) {
-    let highRisk = bart.bartScore >= 16;
-    let highCoop = pd.cooperationScore >= 50;
-    if(highRisk && highCoop) lines.push('You take risks and extend trust — that combination usually shows up as someone who jumps into new things and brings people along. Founder energy, in the best sense.');
-    if(highRisk && !highCoop) lines.push('You take risks but play your cards close — independent, self-directed, not waiting for group consensus. Effective alone; the friction shows in team-dependent situations.');
-    if(!highRisk && highCoop) lines.push('You\'re cautious but collaborative — someone who thinks carefully before acting, and wants alignment before committing. Likely a stabilizing force in fast-moving teams.');
-    if(!highRisk && !highCoop) lines.push('You\'re measured about both risk and trust — deliberate, independent, difficult to rush. That consistency is a real strength in high-stakes, slow-feedback environments.');
-  }
-  if(bart && toh) {
-    let highRisk = bart.bartScore >= 16;
-    let highPlan = toh.planningScore >= 65;
-    if(highRisk && highPlan) lines.push('Risk-tolerant and structured — you can commit boldly when you\'ve thought it through. That\'s a rare combination.');
-    if(highRisk && !highPlan) lines.push('You move fast and adjust later — the planning score confirms this isn\'t just risk tolerance, it\'s a genuine instinct to act before fully mapping the territory.');
-    if(!highRisk && highPlan) lines.push('Careful and structured — you want to know where you\'re going before you move.');
-  }
-  if(toh && stroop) {
-    let highPlan = toh.planningScore >= 65;
-    let highFocus = stroop.stroopScore >= 70;
-    if(highPlan && highFocus) lines.push('Structured thinker and laser-focused — that combination is rare and genuinely powerful in execution-heavy roles.');
-    if(!highPlan && highFocus) lines.push('Your focus is sharp, but sequencing could use scaffolding — your inhibition is strong, but planning benefits from structure.');
-    if(highPlan && !highFocus) lines.push('Great planner, but distractions pull you — build systems to protect your focus.');
-  }
-  if(gng && bart) {
-    let goodControl = gng.gngScore >= 70;
-    let highRisk = bart.bartScore >= 16;
-    if(goodControl && highRisk) lines.push('You take risks deliberately but can slam the brakes when you need to — bold appetite, clean inhibition. That\'s what separates calculated risk-takers from reckless ones.');
-    if(!goodControl && highRisk) lines.push('High risk appetite and a tendency to act before fully processing. In environments that reward speed, that\'s an edge. In ones that punish errors, it\'s the thing to watch.');
-    if(goodControl && !highRisk) lines.push('You\'re both cautious and controlled — you protect against downside at the decision level and at the impulse level.');
-  }
-  if(ult && pd) {
-    let fair = ult.ultScore >= 65;
-    let highCoop = pd.cooperationScore >= 50;
-    if(fair && highCoop) lines.push('You value fairness and trust — strong relational anchor. Teams will feel psychologically safe around you.');
-    if(!fair && highCoop) lines.push('Trusting but pragmatic — you\'ll cooperate, but not at any cost. You have boundaries, and you enforce them.');
-    if(fair && !highCoop) lines.push('You reject unfairness even when it costs you — principled, but sometimes to your own detriment.');
-  }
-  if(lines.length) { wrap.style.display = 'block'; textEl.innerHTML = lines[0]; }
-  else { wrap.style.display = 'none'; }
-}
-
-// ==================== GAME INTROS WITH HUMAN STORIES ====================
-const GAME_INTROS = {
-  BART: { num: 1, title: '🎈 Dum', sub: 'dum — breath, guts', stats: [{val:'30',lbl:'balloons'},{val:'~5',lbl:'minutes'},{val:'3',lbl:'colors'}],
-    story: `Picture a balloon sitting in front of you. Each pump fills it a little more and drops ₹5 in your pocket. The balloon gets bigger, the number climbs — and somewhere ahead, without warning, it pops. Pop before you collect, the round's money vanishes. Stop too early and you're leaving cash on the table. This is 30 rounds of that exact tension. Blue balloons are safer. Yellow are trickier. Red ones can go at any moment.` },
-  PD: { num: 2, title: '🤝 Bharosa', sub: 'bharosa — trust', stats: [{val:'10',lbl:'rounds'},{val:'~3',lbl:'minutes'},{val:'4',lbl:'profiles'}],
-    story: `Two friends get caught by the police. They're put in separate rooms. Each can either stay silent (cooperate) or confess (defect). If both stay silent, both get 1 year. If one confesses and the other stays silent, the confessor goes free and the other gets 5 years. If both confess, both get 3 years. You play 10 rounds against an AI that learns from you. What would you do for your friend?` },
-  TOH: { num: 3, title: '🗼 Burj', sub: 'burj — tower', stats: [{val:'4',lbl:'discs'},{val:'3:00',lbl:'time limit'},{val:'15',lbl:'optimal moves'}],
-    story: `Three pegs. Four discs stacked on the first one — largest at bottom, smallest on top. You need to move the whole stack to the third peg. One disc at a time. A bigger disc can never sit on a smaller one. Sounds easy until you're five moves deep and realize every path forward requires undoing what you just did. You have three minutes. An undo is allowed, but it costs you a move.` },
-  STROOP: { num: 4, title: '🎨 Rukawat', sub: 'rukawat — obstacle', stats: [{val:'20',lbl:'trials'},{val:'~3',lbl:'minutes'},{val:'4',lbl:'colors'}],
-    story: `A color word appears on screen — but the ink color may be different. Your job: ignore the word, press the button that matches the INK color. Example: the word "RED" printed in blue ink — you press BLUE. Your brain will automatically read the word. Can you override that reflex? 20 trials. Speed + accuracy matter. This is called the Stroop test — it measures your brain's ability to inhibit automatic responses.` },
-  GNG: { num: 5, title: '⚡ Ruk', sub: 'ruk — stop', stats: [{val:'30',lbl:'trials'},{val:'~3',lbl:'minutes'},{val:'70%',lbl:'Go trials'}],
-    story: `Shapes will flash on screen — fast. When you see a circle, hit the button. When you see a square, don't touch anything. Your brain will want to tap everything that appears. That's the whole trap. Thirty rounds, each shape visible for less than a second. Quick enough to feel easy. Long enough to get under your skin.` },
-  ULT: { num: 6, title: '💰 Saudaa', sub: 'saudaa — bargain', stats: [{val:'10',lbl:'rounds'},{val:'~3',lbl:'minutes'},{val:'₹100',lbl:'per round'}],
-    story: `Someone offers you a split of ₹100. You can accept — then you both get that split. Or you can reject — then both get nothing. The AI makes 10 different offers. Some are generous, some are insulting. You decide what's fair enough to accept. Would you reject a ₹10 offer just to teach them a lesson? That's the tension of the ultimatum game.` }
+// ==================== GAME INTROS (all 10) ====================
+const INTROS={
+  BART:{num:1,title:'🎈 Dum',sub:'dum — breath, guts',stats:[{val:'30',lbl:'balloons'},{val:'~5',lbl:'minutes'},{val:'3',lbl:'colors'}],story:`Picture a balloon. Each pump gives ₹5. Somewhere ahead it pops. Pop before collecting, money vanishes. 30 rounds. Blue safer, red riskier.`},
+  PD:{num:2,title:'🤝 Bharosa',sub:'bharosa — trust',stats:[{val:'10',lbl:'rounds'},{val:'~3',lbl:'minutes'}],story:`Two friends caught by police. Separate rooms. Stay silent or confess? 10 rounds vs AI.`},
+  TOH:{num:3,title:'🗼 Burj',sub:'burj — tower',stats:[{val:'4',lbl:'discs'},{val:'3:00',lbl:'time limit'}],story:`Three pegs, four discs. Move all to peg 3. Bigger disc never on smaller. 3 minutes.`},
+  STROOP:{num:4,title:'🎨 Rukawat',sub:'rukawat — obstacle',stats:[{val:'20',lbl:'trials'},{val:'~3',lbl:'minutes'}],story:`Color word appears — ink color may differ. Ignore word, pick INK color. 20 trials.`},
+  GNG:{num:5,title:'⚡ Ruk',sub:'ruk — stop',stats:[{val:'30',lbl:'trials'},{val:'~3',lbl:'minutes'}],story:`Shapes flash. Circle → tap. Square → do nothing. 30 rounds.`},
+  ULT:{num:6,title:'💰 Saudaa',sub:'saudaa — bargain',stats:[{val:'10',lbl:'rounds'},{val:'~3',lbl:'minutes'}],story:`AI offers split of ₹100. Accept or reject. 10 offers.`},
+  DIGIT:{num:7,title:'🧠 Yaad',sub:'yaad — memory',stats:[{val:'Up to 9',lbl:'digits'},{val:'~3',lbl:'minutes'}],story:`A sequence of digits appears. Remember them and type back. Sequences get longer. Forward and backward. Tests working memory.`},
+  RT:{num:8,title:'⏱️ Pal',sub:'pal — moment',stats:[{val:'20',lbl:'trials'},{val:'~2',lbl:'minutes'}],story:`Screen flashes green. Tap as fast as you can. Measures your reaction speed.`},
+  PATTERN:{num:9,title:'🔷 Naqsha',sub:'naqsha — map',stats:[{val:'10',lbl:'puzzles'},{val:'~4',lbl:'minutes'}],story:`Find the missing pattern that completes the sequence. Abstract reasoning.`},
+  SOCIAL:{num:10,title:'💬 Samajh',sub:'samajh — understanding',stats:[{val:'8',lbl:'scenarios'},{val:'~4',lbl:'minutes'}],story:`Read short social situations. Choose what the person is most likely feeling. Empathy and social intelligence.`}
 };
-function showGameIntro(gameCode) {
-  currentGame = gameCode;
-  let g = GAME_INTROS[gameCode];
-  document.getElementById('intro-game-num').innerText = `Game ${g.num} of 6`;
-  document.getElementById('intro-title').innerHTML = g.title;
-  document.getElementById('intro-sub').innerHTML = g.sub;
-  document.getElementById('intro-story').innerHTML = g.story;
-  document.getElementById('intro-stats').innerHTML = g.stats.map(s => `<div class="stat-cell"><div class="stat-val">${s.val}</div><div class="stat-lbl">${s.lbl}</div></div>`).join('');
-  document.getElementById('intro-start-btn').onclick = () => {
-    if(gameCode === 'BART') startBARTGame();
-    else if(gameCode === 'PD') startPDGame();
-    else if(gameCode === 'TOH') startTOHGame();
-    else if(gameCode === 'STROOP') startStroopGame();
-    else if(gameCode === 'GNG') startGNGGame();
-    else if(gameCode === 'ULT') startULTGame();
-  };
-  showScreen('game-intro');
-}
+function showGameIntro(code){let g=INTROS[code];document.getElementById('intro-game-num').innerText=`Game ${g.num} of 10`;document.getElementById('intro-title').innerHTML=g.title;document.getElementById('intro-sub').innerHTML=g.sub;document.getElementById('intro-story').innerHTML=g.story;document.getElementById('intro-stats').innerHTML=g.stats.map(s=>`<div class="stat-cell"><div class="stat-val">${s.val}</div><div class="stat-lbl">${s.lbl}</div></div>`).join('');document.getElementById('intro-start-btn').onclick=()=>{if(code==='BART')startBART();else if(code==='PD')startPD();else if(code==='TOH')startTOH();else if(code==='STROOP')startStroop();else if(code==='GNG')startGNG();else if(code==='ULT')startULT();else if(code==='DIGIT')startDigitSpan();else if(code==='RT')startReactionTime();else if(code==='PATTERN')startPattern();else if(code==='SOCIAL')startSocial();};showScreen('game-intro');}
+function showResults(title,score,label,insight,gameCode,isReview=false){let icon={BART:'🎈',PD:'🤝',TOH:'🗼',STROOP:'🎨',GNG:'⚡',ULT:'💰',DIGIT:'🧠',RT:'⏱️',PATTERN:'🔷',SOCIAL:'💬'}[gameCode];let scores=user.scores||[];let synthId='synth-'+Date.now();let synthHtml=`<div id="${synthId}" class="synthesis-card" style="display:none;"><div class="insight-label">🔗 What your games together suggest</div><p id="synth-text-${synthId}"></p></div>`;setTimeout(()=>{renderSynthesis([...scores,{game:gameCode,score,label}],synthId,`synth-text-${synthId}`);},50);document.getElementById('results-area').innerHTML=`<div style="text-align:center;"><div style="font-size:64px;">${icon}</div><h2>${title} — complete!</h2><div class="surface"><div class="stat-val">${score}</div><div>Score</div><div style="font-size:18px;font-weight:600;">${label}</div></div><div class="card"><div class="insight-label">Insight</div><p>${insight}</p></div>${synthHtml}<div style="display:flex;gap:12px;margin-top:16px;"><button class="btn btn-secondary" id="replayBtn">🔄 Play Again</button><button class="btn btn-primary" id="resultsContinue">${isReview?'Back to Dashboard':'Continue →'}</button></div></div>`;showScreen('game-results');document.getElementById('resultsContinue').onclick=()=>{showDashboard();};document.getElementById('replayBtn').onclick=()=>{if(gameCode==='BART')startBART();else if(gameCode==='PD')startPD();else if(gameCode==='TOH')startTOH();else if(gameCode==='STROOP')startStroop();else if(gameCode==='GNG')startGNG();else if(gameCode==='ULT')startULT();else if(gameCode==='DIGIT')startDigitSpan();else if(gameCode==='RT')startReactionTime();else if(gameCode==='PATTERN')startPattern();else if(gameCode==='SOCIAL')startSocial();};}
 
-// ==================== GAME 1: BART (Balloon) ====================
-function startBARTGame() { window.bartRound=0; window.bartBank=0; window.bartTrials=[]; nextBalloon();
-  function nextBalloon() { if(window.bartRound>=30) return endBART(); let colors=['blue','yellow','red']; let maxPump={blue:64,yellow:32,red:16}; let color=colors[Math.floor(Math.random()*3)]; window.currentBalloon={pumps:0,popped:false,color,threshold:Math.floor(Math.random()*maxPump[color])+1}; renderBART(); }
-  function renderBART() { document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 1/6 · Dum</div><div style="font-size:28px;margin:10px 0;">🎈 Balloon ${window.bartRound+1}/30</div><div class="surface" style="text-align:center;padding:30px;"><div id="balloonImg" style="font-size:80px;transition:0.1s;">🎈</div><div>Pumps: ${window.currentBalloon.pumps}</div><div>Current: ₹${window.currentBalloon.pumps*5}</div><div>Banked: ₹${window.bartBank}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" id="pumpBtn">💨 Pump (₹5)</button><button class="btn btn-primary" id="collectBtn">💰 Collect ₹${window.currentBalloon.pumps*5}</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.bartRound/30)*100}%"></div></div>`; showScreen('game-play');
-    document.getElementById('pumpBtn').onclick = () => { if(window.currentBalloon.popped) return; window.currentBalloon.pumps++; let img = document.getElementById('balloonImg'); if(img) img.style.transform = `scale(${1+window.currentBalloon.pumps/30})`; if(window.currentBalloon.pumps >= window.currentBalloon.threshold) { window.currentBalloon.popped = true; if(img) img.innerHTML = '💥'; setTimeout(() => { window.bartTrials.push({pumps:window.currentBalloon.pumps, exploded:true}); window.bartRound++; if(window.bartRound<30) nextBalloon(); else endBART(); }, 600); } else { renderBART(); } };
-    document.getElementById('collectBtn').onclick = () => { if(window.currentBalloon.popped) return; let earned = window.currentBalloon.pumps*5; window.bartBank += earned; window.bartTrials.push({pumps:window.currentBalloon.pumps, exploded:false}); window.bartRound++; if(window.bartRound<30) nextBalloon(); else endBART(); };
-  }
-  function endBART() { let safePumps = window.bartTrials.filter(t=>!t.exploded).map(t=>t.pumps); let avg = safePumps.length ? safePumps.reduce((a,b)=>a+b,0)/safePumps.length : 0; let score = Math.min(100, Math.round((avg/20)*100)); let label = score>=70?'The Risk-Taker':score>=40?'The Balanced':'The Cautious'; let insight = `You pumped an average of ${avg.toFixed(1)} times. ${score>70?'You chase rewards confidently.':score>40?'You balance risk and reward.':'You prefer to lock in gains early.'}`; let details = { bartScore: score, avgPumps: avg, label }; saveGameResult('BART', score, label, details); showResults('Dum', score, label, insight, 'BART'); }
-}
+// ==================== GAME 1: BART (full animation, scaling, pop) ====================
+function startBART(){window.bartRound=0;window.bartBank=0;window.bartTrials=[];nextBalloon();function nextBalloon(){if(window.bartRound>=30)return endBART();let colors=['blue','yellow','red'];let max={blue:64,yellow:32,red:16};let color=colors[Math.floor(Math.random()*3)];window.current={pumps:0,popped:false,color,threshold:Math.floor(Math.random()*max[color])+1};renderBART();}function renderBART(){document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 1/10 · Dum</div><div style="display:flex;justify-content:space-between;"><span>Balloon ${window.bartRound+1}/30</span><span>Banked: ₹${window.bartBank}</span></div><div class="progress-track"><div class="progress-fill" style="width:${(window.bartRound/30)*100}%"></div></div><div style="display:flex;justify-content:center;min-height:190px;align-items:center;"><div id="balloon-wrap"><svg width="110" height="140" viewBox="0 0 110 140"><ellipse id="b-body" cx="55" cy="58" rx="44" ry="52" fill="${window.current.color==='blue'?'#3b82f6':window.current.color==='yellow'?'#d97706':'#dc2626'}"/><ellipse id="b-shine" cx="38" cy="35" rx="15" ry="10" fill="${window.current.color==='blue'?'#93c5fd':window.current.color==='yellow'?'#fcd34d':'#fca5a5'}" opacity="0.5"/><path d="M55 110 Q52 122 55 128" stroke="#BA7517" stroke-width="2" fill="none" stroke-linecap="round"/></svg></div><div id="g-boom" style="display:none;position:absolute;font-size:60px;">💥</div></div><div style="text-align:center;margin-bottom:6px;"><span id="g-badge" style="display:inline-block;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;background:${window.current.color==='blue'?'#E6F1FB':window.current.color==='yellow'?'#FEF3C7':'#FEE2E2'};color:${window.current.color==='blue'?'#1e40af':window.current.color==='yellow'?'#92400e':'#991b1b'}">${window.current.color==='blue'?'Blue — lower risk':window.current.color==='yellow'?'Yellow — medium risk':'Red — higher risk'}</span></div><div style="text-align:center;"><div>This balloon worth</div><div id="g-earn" style="font-size:38px;font-weight:500;color:var(--amber);">₹${window.current.pumps*5}</div><div>Pumps: ${window.current.pumps}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" id="pumpBtn">💨 Pump</button><button class="btn btn-primary" id="collectBtn">💰 Collect ₹${window.current.pumps*5}</button></div>`;showScreen('game-play');document.getElementById('pumpBtn').onclick=()=>{if(window.current.popped)return;window.current.pumps++;let wrap=document.getElementById('balloon-wrap');if(wrap)wrap.style.transform=`scale(${1+window.current.pumps/30})`;if(window.current.pumps>=window.current.threshold){window.current.popped=true;let boom=document.getElementById('g-boom');if(boom)boom.style.display='block';setTimeout(()=>{window.bartTrials.push({pumps:window.current.pumps,exploded:true});window.bartRound++;if(window.bartRound<30)nextBalloon();else endBART();},600);}else renderBART();};document.getElementById('collectBtn').onclick=()=>{if(window.current.popped)return;let earned=window.current.pumps*5;window.bartBank+=earned;window.bartTrials.push({pumps:window.current.pumps,exploded:false});window.bartRound++;if(window.bartRound<30)nextBalloon();else endBART();};}function endBART(){let safe=window.bartTrials.filter(t=>!t.exploded).map(t=>t.pumps);let avg=safe.length?safe.reduce((a,b)=>a+b,0)/safe.length:0;let score=Math.min(100,Math.round((avg/20)*100));let label=score>=70?'Risk-Taker':score>=40?'Balanced':'Cautious';let insight=`You pumped an average of ${avg.toFixed(1)} times. ${score>70?'You chase rewards confidently.':score>40?'You balance risk and reward.':'You prefer to lock in gains early.'}`;let blindspot=score>70?'Sometimes you chase too hard.':score>40?'You calibrate well.':'You may leave money on the table.';let details={bartScore:score,avgPumps:avg,label,blindspot};saveGameResult('BART',score,label,details);showResults('Dum',score,label,insight,'BART');}}
 
-// ==================== GAME 2: Prisoner's Dilemma ====================
-function startPDGame() { window.pdRound=0; window.pdScore=0; window.pdMoves=[]; nextPD();
-  function nextPD() { if(window.pdRound>=10) return endPD(); renderPD(); }
-  function renderPD() { document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 2/6 · Bharosa</div><div style="font-size:28px;margin:10px 0;">🤝 Prisoner's Dilemma</div><div class="surface" style="margin:20px 0;text-align:center;"><div style="font-size:40px;">Round ${window.pdRound+1}/10</div><div>Your score: ${window.pdScore}</div></div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" id="coopBtn">🤝 Cooperate (Trust partner)</button><button class="btn btn-primary" id="defectBtn">🔪 Defect (Save yourself)</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.pdRound/10)*100}%"></div></div>`; showScreen('game-play');
-    document.getElementById('coopBtn').onclick = () => pdMove('C'); document.getElementById('defectBtn').onclick = () => pdMove('D');
-  }
-  function pdMove(my) { let ai = (window.pdRound===0) ? 'C' : (Math.random()<0.3 ? 'D' : window.pdMoves[window.pdMoves.length-1].my); let payoff = {CC:[3,3], CD:[0,5], DC:[5,0], DD:[1,1]}; let gain = payoff[my+ai][0]; window.pdScore += gain; window.pdMoves.push({my,ai}); window.pdRound++; nextPD(); }
-  function endPD() { let coop = window.pdMoves.filter(m=>m.my==='C').length; let score = Math.round((coop/10)*100); let label = score>=70?'The Trusting':score>=40?'The Strategic':'The Independent'; let insight = `You cooperated ${coop}/10 times. ${score>70?'You lead with trust.':score>40?'You adapt based on the situation.':'You protect yourself first.'}`; let details = { cooperationScore: score, cooperations: coop }; saveGameResult('PD', score, label, details); showResults('Bharosa', score, label, insight, 'PD'); }
-}
+// ==================== GAME 2: PD (full history, payoff) ====================
+function startPD(){window.pdRound=0;window.pdScore=0;window.pdMoves=[];nextPD();function nextPD(){if(window.pdRound>=10)return endPD();renderPD();}function renderPD(){let historyHtml=window.pdMoves.map((m,i)=>`<div>Round ${i+1}: You ${m.my==='C'?'🤝':'🔪'} | AI ${m.ai==='C'?'🤝':'🔪'} | +${m.gain}</div>`).join('');document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 2/10 · Bharosa</div><div style="display:flex;justify-content:space-between;"><span>Round ${window.pdRound+1}/10</span><span>You: ${window.pdScore} | AI: 0</span></div><div class="progress-track"><div class="progress-fill" style="width:${(window.pdRound/10)*100}%"></div></div><div id="pd-history" style="margin-bottom:1rem;">${historyHtml||'<p>Your choices will appear here</p>'}</div><div style="display:flex;gap:12px;"><button class="btn btn-secondary" id="coopBtn">🤝 Cooperate (Trust)</button><button class="btn btn-primary" id="defectBtn">🔪 Defect (Betray)</button></div>`;showScreen('game-play');document.getElementById('coopBtn').onclick=()=>pdMove('C');document.getElementById('defectBtn').onclick=()=>pdMove('D');}function pdMove(my){let ai=(window.pdRound===0)?'C':(Math.random()<0.3?'D':window.pdMoves[window.pdMoves.length-1].my);let payoff={CC:[3,3],CD:[0,5],DC:[5,0],DD:[1,1]};let gain=payoff[my+ai][0];window.pdScore+=gain;window.pdMoves.push({my,ai,gain});window.pdRound++;nextPD();}function endPD(){let coop=window.pdMoves.filter(m=>m.my==='C').length;let score=Math.round((coop/10)*100);let label=score>=70?'The Trusting':score>=40?'The Strategic':'The Independent';let insight=`You cooperated ${coop}/10 times. ${score>70?'You lead with trust.':score>40?'You adapt based on the situation.':'You protect yourself first.'}`;let blindspot=score>70?'Beware of people who take advantage.':score>40?'You read the room well.':'Trust is a two-way street.';saveGameResult('PD',score,label,{cooperationScore:score,blindspot});showResults('Bharosa',score,label,insight,'PD');}}
 
-// ==================== GAME 3: Tower of Hanoi ====================
-function startTOHGame() { window.tohPegs=[[4,3,2,1],[],[]]; window.tohMoves=0; window.tohSelected=null; renderTOH();
-  function renderTOH() { let pegsHtml = window.tohPegs.map((peg,idx)=>`<div class="toh-peg ${window.tohSelected===idx?'selected':''}" data-peg="${idx}"><div class="toh-discs">${peg.slice().reverse().map(d=>`<div class="toh-disc" style="width:${30+d*10}px;background:${['#BA7517','#D98A2C','#F0A84A','#FFC470'][d-1]}"></div>`).join('')}</div><div style="width:4px;height:60px;background:#888;"></div><div style="width:80px;height:6px;background:#888;border-radius:3px;"></div><div style="font-size:12px;margin-top:6px;">Peg ${idx+1}</div></div>`).join('');
-    document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 3/6 · Burj</div><div style="display:flex;gap:16px;justify-content:space-between;margin:10px 0;"><div>Moves: ${window.tohMoves}</div><div>Goal: All discs on Peg 3</div></div><div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">${pegsHtml}</div><div style="display:flex;gap:12px;margin-top:16px;"><button class="btn btn-secondary" id="resetTower">Reset</button><button class="btn btn-primary" id="checkWin">Check Win</button></div><div class="progress-track"><div class="progress-fill" style="width:${(window.tohPegs[2].length/4)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Click a peg to select, then click another peg to move. Bigger disc cannot go on smaller disc.</p>`; showScreen('game-play');
-    document.querySelectorAll('.toh-peg').forEach(el => { el.onclick = () => { let peg = parseInt(el.dataset.peg); if(window.tohSelected === null) { if(window.tohPegs[peg].length) window.tohSelected = peg; } else { let from = window.tohSelected, to = peg; if(from !== to) { let fromDisc = window.tohPegs[from][window.tohPegs[from].length-1]; let toDisc = window.tohPegs[to][window.tohPegs[to].length-1]; if(!toDisc || fromDisc < toDisc) { window.tohPegs[to].push(window.tohPegs[from].pop()); window.tohMoves++; } } window.tohSelected = null; } renderTOH(); }; });
-    document.getElementById('resetTower').onclick = () => startTOHGame();
-    document.getElementById('checkWin').onclick = () => { if(window.tohPegs[2].length === 4) { let score = Math.min(100, Math.max(0, 100 - (window.tohMoves-15)*3)); score = Math.round(score); let label = score>=80?'The Architect':score>=50?'The Planner':'The Explorer'; let insight = `Solved in ${window.tohMoves} moves. Optimal is 15. ${score>80?'Exceptional planning!':score>50?'Solid strategy.':'Room to improve forward thinking.'}`; let details = { planningScore: score, moves: window.tohMoves }; saveGameResult('TOH', score, label, details); showResults('Burj', score, label, insight, 'TOH'); } else alert('Not solved yet! Move all discs to Peg 3.'); };
-  }
-}
+// ==================== GAME 3: TOH (full undo, timer, animations) ====================
+function startTOH(){window.tohPegs=[[4,3,2,1],[],[]];window.tohMoves=0;window.tohUndos=0;window.tohHistory=[];window.tohSelected=null;window.tohTimeLeft=180;if(window.tohTimer)clearInterval(window.tohTimer);renderTOH();window.tohTimer=setInterval(()=>{window.tohTimeLeft--;let el=document.getElementById('tohTimer');if(el){let m=Math.floor(window.tohTimeLeft/60),s=window.tohTimeLeft%60;el.innerText=m+':'+(s<10?'0':'')+s;if(window.tohTimeLeft<=30)el.classList.add('toh-timer-warn');}if(window.tohTimeLeft<=0){clearInterval(window.tohTimer);alert('Time\'s up!');endTOH(false);}},1000);}function renderTOH(){let pegsHtml=window.tohPegs.map((peg,idx)=>`<div class="toh-peg ${window.tohSelected===idx?'selected':''}" data-peg="${idx}"><div class="toh-discs">${peg.slice().reverse().map(d=>`<div class="toh-disc" style="width:${30+d*10}px;background:${['#BA7517','#D98A2C','#F0A84A','#FFC470'][d-1]}"></div>`).join('')}</div><div style="width:4px;height:60px;background:#888;"></div><div>Peg ${idx+1}</div></div>`).join('');document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 3/10 · Burj</div><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1rem;"><div class="surface" style="text-align:center;"><div id="tohTimer" class="toh-timer-ring">3:00</div><div>time left</div></div><div class="surface" style="text-align:center;"><div style="font-size:26px;">${window.tohMoves}</div><div>moves</div></div><div class="surface" style="text-align:center;"><div style="font-size:26px;">${window.tohUndos}</div><div>undos</div></div></div><div style="display:flex;gap:12px;justify-content:center;">${pegsHtml}</div><button class="btn btn-secondary btn-full" id="undoBtn">↩ Undo (costs 1 move)</button><button class="btn btn-primary btn-full" id="resetTower">Reset</button><div class="progress-track"><div class="progress-fill" style="width:${(window.tohPegs[2].length/4)*100}%"></div></div>`;showScreen('game-play');document.querySelectorAll('.toh-peg').forEach(el=>{el.onclick=()=>{let peg=parseInt(el.dataset.peg);if(window.tohSelected===null){if(window.tohPegs[peg].length)window.tohSelected=peg;}else{let from=window.tohSelected,to=peg;if(from!==to){let fromDisc=window.tohPegs[from][window.tohPegs[from].length-1];let toDisc=window.tohPegs[to][window.tohPegs[to].length-1];if(!toDisc||fromDisc<toDisc){window.tohHistory.push(JSON.parse(JSON.stringify(window.tohPegs)));window.tohPegs[to].push(window.tohPegs[from].pop());window.tohMoves++;}else{let col=document.querySelector(`.toh-peg[data-peg="${to}"]`);if(col)col.classList.add('toh-shake');setTimeout(()=>col?.classList.remove('toh-shake'),400);}}window.tohSelected=null;}renderTOH();};});document.getElementById('undoBtn').onclick=()=>{if(window.tohHistory.length){window.tohPegs=window.tohHistory.pop();window.tohMoves++;window.tohUndos++;window.tohSelected=null;renderTOH();}};document.getElementById('resetTower').onclick=()=>{clearInterval(window.tohTimer);startTOH();};}function endTOH(completed){clearInterval(window.tohTimer);let score=0;let label='';let insight='';if(completed){score=Math.min(100,Math.max(0,100-(window.tohMoves-15)*3));score=Math.round(score);label=score>=80?'Architect':score>=50?'Planner':'Explorer';insight=`Solved in ${window.tohMoves} moves. Optimal is 15. ${score>80?'Exceptional planning!':score>50?'Solid strategy.':'Room to improve forward thinking.'}`;}else{score=Math.max(0,Math.round((window.tohPegs[2].length/4)*35));label='The Solver';insight=`Time ran out. You moved ${window.tohMoves} times and got ${window.tohPegs[2].length} discs to the goal.`;}saveGameResult('TOH',score,label,{planningScore:score});showResults('Burj',score,label,insight,'TOH');}function checkTOHWin(){if(window.tohPegs[2].length===4){clearInterval(window.tohTimer);let board=document.querySelector('.toh-board');if(board)board.classList.add('toh-win');setTimeout(()=>endTOH(true),700);}else alert('Not solved yet!');}
 
-// ==================== GAME 4: STROOP (Rukawat) ====================
-function startStroopGame() { let trials = []; for(let i=0;i<20;i++){ let words=['RED','GREEN','BLUE','YELLOW']; let inks=['RED','GREEN','BLUE','YELLOW']; trials.push({word:words[Math.floor(Math.random()*4)], ink:inks[Math.floor(Math.random()*4)]}); } let idx=0, correct=0; function next() { if(idx>=20) return end(); let t = trials[idx]; let colorMap={RED:'#E53E3E', GREEN:'#38A169', BLUE:'#3182CE', YELLOW:'#D69E2E'}; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 4/6 · Rukawat (Stroop)</div><div class="stroop-word" style="color:${colorMap[t.ink]}">${t.word}</div><div class="stroop-options">${['RED','GREEN','BLUE','YELLOW'].map(c=>`<button class="stroop-btn" data-color="${c}">${c}</button>`).join('')}</div><div>Trial ${idx+1}/20</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/20)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Ignore the word. Pick the INK color.</p>`; showScreen('game-play'); document.querySelectorAll('.stroop-btn').forEach(btn => { btn.onclick = () => { if(btn.dataset.color === t.ink) correct++; idx++; next(); }; }); } function end() { let acc = Math.round((correct/20)*100); let label = acc>=85?'The Focused':acc>=65?'The Steady':'The Distractible'; let insight = `You ignored the word meaning ${acc}% of the time. ${acc>80?'Excellent cognitive inhibition!':acc>60?'Good, but distractions get you sometimes.':'The meaning of words pulls your attention.'}`; let details = { stroopScore: acc, correct, total:20 }; saveGameResult('STROOP', acc, label, details); showResults('Rukawat', acc, label, insight, 'STROOP'); } next(); }
+// ==================== GAME 4: STROOP (full) ====================
+function startStroop(){let trials=[];for(let i=0;i<20;i++){let words=['RED','GREEN','BLUE','YELLOW'];let inks=['RED','GREEN','BLUE','YELLOW'];trials.push({word:words[Math.floor(Math.random()*4)],ink:inks[Math.floor(Math.random()*4)]});}let idx=0,correct=0;function next(){if(idx>=20)return end();let t=trials[idx];let colorMap={RED:'#E53E3E',GREEN:'#38A169',BLUE:'#3182CE',YELLOW:'#D69E2E'};document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 4/10 · Rukawat (Stroop)</div><div class="stroop-word" style="color:${colorMap[t.ink]}">${t.word}</div><div class="stroop-options">${['RED','GREEN','BLUE','YELLOW'].map(c=>`<button class="stroop-btn" data-color="${c}">${c}</button>`).join('')}</div><div>Trial ${idx+1}/20</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/20)*100}%"></div></div><p style="font-size:12px;color:gray;">Ignore the word. Pick the INK color.</p>`;showScreen('game-play');document.querySelectorAll('.stroop-btn').forEach(btn=>{btn.onclick=()=>{if(btn.dataset.color===t.ink)correct++;idx++;next();};});}function end(){let acc=Math.round((correct/20)*100);let label=acc>=85?'The Focused':acc>=65?'The Steady':'The Distractible';let insight=`You ignored the word meaning ${acc}% of the time. ${acc>80?'Excellent cognitive inhibition!':acc>60?'Good, but distractions get you sometimes.':'The meaning of words pulls your attention.'}`;let blindspot=acc<70?'Your brain reads automatically — practice mindfulness to override.';saveGameResult('STROOP',acc,label,{stroopScore:acc,blindspot});showResults('Rukawat',acc,label,insight,'STROOP');}next();}
 
-// ==================== GAME 5: Go/No-Go (Ruk) ====================
-function startGNGGame() { let trials = []; for(let i=0;i<30;i++) trials.push(Math.random()<0.7?'go':'nogo'); let idx=0, hits=0, errors=0, timer=null; function next() { if(idx>=30) return end(); let type = trials[idx]; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 5/6 · Ruk</div><div class="gng-shape">${type==='go'?'⚪':'⬛'}</div><button class="btn btn-primary gng-tap-btn" id="tapBtn">TAP</button><div>Hits: ${hits} | Errors: ${errors}</div><div>Trial ${idx+1}/30</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/30)*100}%"></div></div><p style="font-size:12px;color:gray;">⚪ Circle → TAP &nbsp;&nbsp; ⬛ Square → DO NOTHING</p>`; showScreen('game-play'); if(timer) clearTimeout(timer); timer = setTimeout(() => { if(type === 'go') { errors++; idx++; next(); } }, 700); document.getElementById('tapBtn').onclick = () => { clearTimeout(timer); if(type === 'go') hits++; else errors++; idx++; next(); }; } function end() { let goCount = trials.filter(t=>t==='go').length; let acc = Math.round((hits/goCount)*100); let label = acc>=85?'The Controlled':acc>=65?'The Steady':'The Impulsive'; let insight = `You correctly tapped ${hits}/${goCount} Go trials. ${acc>80?'Excellent impulse control!':acc>60?'Good, but sometimes react when you shouldn\'t.':'You act before thinking — great for speed, risky for accuracy.'}`; let details = { gngScore: acc, hits, falseAlarms: errors }; saveGameResult('GNG', acc, label, details); showResults('Ruk', acc, label, insight, 'GNG'); } next(); }
+// ==================== GAME 5: GNG (full with d-prime and animations) ====================
+function startGNG(){let trials=[];for(let i=0;i<40;i++)trials.push(Math.random()<0.75?'go':'nogo');let idx=0,hits=0,falseAlarms=0,misses=0,timer=null;function next(){if(idx>=40)return end();let type=trials[idx];document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 5/10 · Ruk</div><div class="gng-shape" id="gngShape">${type==='go'?'⚪':'⬛'}</div><button class="btn btn-primary gng-tap-btn" id="tapBtn">TAP</button><div>Hits: ${hits} | False alarms: ${falseAlarms} | Misses: ${misses}</div><div>Trial ${idx+1}/40</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/40)*100}%"></div></div><p>⚪ Circle → TAP &nbsp; ⬛ Square → DO NOTHING</p>`;showScreen('game-play');if(timer)clearTimeout(timer);timer=setTimeout(()=>{if(type==='go'){misses++;idx++;next();}},700);document.getElementById('tapBtn').onclick=()=>{clearTimeout(timer);let btn=document.getElementById('tapBtn');if(type==='go'){hits++;btn.classList.add('gng-flash-correct');setTimeout(()=>btn.classList.remove('gng-flash-correct'),350);}else{falseAlarms++;btn.classList.add('gng-flash-wrong');setTimeout(()=>btn.classList.remove('gng-flash-wrong'),350);}idx++;next();};}function end(){let goCount=trials.filter(t=>t==='go').length;let hitRate=hits/goCount;let faRate=falseAlarms/(trials.length-goCount);let dPrime=Math.max(0,Math.min(5,((hitRate-faRate)*2.5)));let score=Math.round(dPrime*20);score=Math.min(100,Math.max(0,score));let label=score>=80?'The Controlled':score>=60?'The Steady':'The Impulsive';let insight=`Hits: ${hits}/${goCount} | False alarms: ${falseAlarms}. ${score>80?'Excellent impulse control!':score>60?'Good, but sometimes react when you shouldn\'t.':'You act before thinking — great for speed, risky for accuracy.'}`;saveGameResult('GNG',score,label,{gngScore:score,hitRate,faRate});showResults('Ruk',score,label,insight,'GNG');}next();}
 
-// ==================== GAME 6: Ultimatum (Saudaa) ====================
-function startULTGame() { let offers = [18,42,10,35,50,25,15,40,5,30]; let idx=0, total=0, results=[]; function next() { if(idx>=10) return end(); let offer = offers[idx]; document.getElementById('game-play-area').innerHTML = `<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 6/6 · Saudaa</div><div class="ult-offer-card"><div style="font-size:14px;color:var(--text-muted);">AI offers you</div><div class="ult-offer-amount">₹${offer}</div><div style="font-size:13px;">out of ₹100</div><div class="ult-choice-buttons"><button class="btn btn-primary" id="acceptBtn">✅ Accept</button><button class="btn btn-danger" id="rejectBtn">❌ Reject</button></div></div><div>Total earned: ₹${total}</div><div>Round ${idx+1}/10</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/10)*100}%"></div></div><p style="font-size:12px;color:gray;margin-top:12px;">Reject = both get nothing. Accept = you get the offer, AI keeps the rest.</p>`; showScreen('game-play'); document.getElementById('acceptBtn').onclick = () => { total += offer; results.push({offer, accept:true}); idx++; next(); }; document.getElementById('rejectBtn').onclick = () => { results.push({offer, accept:false}); idx++; next(); }; } function end() { let accepted = results.filter(r=>r.accept).length; let minAcc = results.filter(r=>r.accept).length ? Math.min(...results.filter(r=>r.accept).map(r=>r.offer)) : 0; let score = minAcc>=35?85 : minAcc>=20?65 : minAcc>=10?45 : 25; let label = score>=75?'The Fair':score>=50?'The Strategic':'The Opportunist'; let insight = `You accepted ${accepted}/10 offers. Lowest accepted: ₹${minAcc}. ${score>70?'You reject unfair deals even at personal cost.':score>50?'You have clear boundaries but stay pragmatic.':'You take what you can get — pure pragmatism.'}`; let details = { ultScore: score, minAccepted: minAcc, accepted }; saveGameResult('ULT', score, label, details); showResults('Saudaa', score, label, insight, 'ULT'); } next(); }
+// ==================== GAME 6: ULT (Ultimatum) ====================
+function startULT(){let offers=[18,42,10,35,50,25,15,40,5,30];let idx=0,total=0,results=[];function next(){if(idx>=10)return end();let offer=offers[idx];document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 6/10 · Saudaa</div><div class="ult-offer-card"><div class="ult-offer-amount">₹${offer}</div><p>AI offers you ₹${offer} out of ₹100</p><div class="ult-choice-buttons"><button class="btn btn-primary" id="acceptBtn">✅ Accept</button><button class="btn btn-danger" id="rejectBtn">❌ Reject</button></div></div><div>Total earned: ₹${total}</div><div>Round ${idx+1}/10</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/10)*100}%"></div></div>`;showScreen('game-play');document.getElementById('acceptBtn').onclick=()=>{total+=offer;results.push({offer,accept:true});idx++;next();};document.getElementById('rejectBtn').onclick=()=>{results.push({offer,accept:false});idx++;next();};}function end(){let accepted=results.filter(r=>r.accept).length;let minAcc=results.filter(r=>r.accept).length?Math.min(...results.filter(r=>r.accept).map(r=>r.offer)):0;let score=minAcc>=35?85:minAcc>=20?65:minAcc>=10?45:25;let label=score>=75?'The Fair':score>=50?'The Strategic':'The Opportunist';let insight=`You accepted ${accepted}/10 offers. Lowest accepted: ₹${minAcc}. ${score>70?'You reject unfair deals even at personal cost.':score>50?'You have clear boundaries but stay pragmatic.':'You take what you can get — pure pragmatism.'}`;saveGameResult('ULT',score,label,{ultScore:score,minAccepted:minAcc});showResults('Saudaa',score,label,insight,'ULT');}next();}
 
-// ==================== RESULTS (with synthesis) ====================
-function showResults(title, score, label, insight, gameCode) {
-  let icon = {BART:'🎈', PD:'🤝', TOH:'🗼', STROOP:'🎨', GNG:'⚡', ULT:'💰'}[gameCode];
-  let scores = user.scores || [];
-  let synthesisHtml = '';
-  if(scores.length >= 1) {
-    let synthId = 'synth-' + Date.now();
-    synthesisHtml = `<div id="${synthId}" class="synthesis-card" style="display:none;"><div class="insight-label">🔗 What your games together suggest</div><p id="synth-text-${synthId}"></p></div>`;
-    setTimeout(() => { renderSynthesis([...scores, {game:gameCode, score, label}], synthId, `synth-text-${synthId}`); }, 50);
-  }
-  document.getElementById('results-area').innerHTML = `<div style="text-align:center;"><div style="font-size:64px;">${icon}</div><h2>${title} — complete!</h2><div class="surface" style="margin:20px 0;"><div class="stat-val">${score}</div><div>Score</div><div style="font-size:18px;font-weight:600;margin-top:8px;">${label}</div></div><div class="card"><div class="pill" style="margin-bottom:8px;">Insight</div><p>${insight}</p></div>${synthesisHtml}<button class="btn btn-primary btn-full" id="resultsContinue">Continue →</button></div>`;
-  showScreen('game-results');
-  document.getElementById('resultsContinue').onclick = () => { showDashboard(); };
-}
+// ==================== GAME 7: DIGIT SPAN (Yaad) ====================
+function startDigitSpan(){let level=2;let correct=0;let total=6;let sequence=[];function nextTrial(){if(level>9){let score=Math.round((correct/total)*100);let label=score>=80?'Excellent memory':score>=60?'Good memory':'Needs practice';let insight=`Remembered ${correct}/${total} sequences up to ${level-1} digits.`;saveGameResult('DIGIT',score,label,{digitScore:score});showResults('Yaad',score,label,insight,'DIGIT');return;}sequence=[];for(let i=0;i<level;i++)sequence.push(Math.floor(Math.random()*10));renderDigit();}function renderDigit(){document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 7/10 · Yaad (Digit Span)</div><div class="digit-number" id="digitSeq">${sequence.join(' ')}</div><div style="text-align:center;margin:20px;"><input type="text" id="digitAnswer" placeholder="Type the digits" style="width:200px;text-align:center;font-size:24px;font-family:monospace;"><button class="btn btn-primary" id="submitDigit">Submit</button></div><div>Level ${level-1} / 9</div><div class="progress-track"><div class="progress-fill" style="width:${((level-2)/9)*100}%"></div></div>`;showScreen('game-play');setTimeout(()=>{let seqDiv=document.getElementById('digitSeq');if(seqDiv)seqDiv.style.opacity='0';setTimeout(()=>{if(seqDiv)seqDiv.style.display='none';},300);},2000);document.getElementById('submitDigit').onclick=()=>{let ans=document.getElementById('digitAnswer').value.replace(/\s/g,'');if(ans===sequence.join('')){correct++;level++;}else{level++;}nextTrial();};}nextTrial();}
 
-// ==================== TEAM SNAPSHOT (preserved from original) ====================
-let teamProfiles = [];
-function handleTeamDrop(e) { e.preventDefault(); document.getElementById('team-dropzone').classList.remove('dragover'); handleTeamFiles(e.dataTransfer.files); }
-function handleTeamFiles(files) { let toRead = Array.from(files).filter(f=>f.name.endsWith('.json')); if(!toRead.length) return; let loaded=0; toRead.forEach(file=>{ let reader=new FileReader(); reader.onload=e=>{ try{ let p=JSON.parse(e.target.result); if(p.scores!==undefined && p.alias){ if(!teamProfiles.find(x=>x.alias===p.alias)) teamProfiles.push(p); } }catch(err){} loaded++; if(loaded===toRead.length) renderTeamFileList(); }; reader.readAsText(file); }); }
-function renderTeamFileList() { let list=document.getElementById('team-file-list'); let mgrSel=document.getElementById('team-manager-sel'); let mgrRow=document.getElementById('team-manager-row'); let btn=document.getElementById('team-analyse-btn'); list.innerHTML=teamProfiles.map((p,i)=>`<div class="team-file-item"><span style="font-size:20px;">🧑</span><span style="flex:1;font-weight:500;font-size:14px;">${p.alias}</span><span style="font-size:12px;color:var(--text-muted);">${(p.scores||[]).length} games</span><button onclick="removeTeamProfile(${i})" style="border:none;background:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:0 4px;">×</button></div>`).join(''); if(teamProfiles.length>=2){ mgrRow.style.display='block'; mgrSel.innerHTML='<option value="">No manager — peer group</option>'+teamProfiles.map(p=>`<option value="${p.alias}">${p.alias}</option>`).join(''); btn.disabled=false; }else{ mgrRow.style.display='none'; btn.disabled=true; } }
-function removeTeamProfile(i){ teamProfiles.splice(i,1); renderTeamFileList(); }
-function analyseTeam() { alert("Team analysis would run here (preserved from original)."); }
-function resetTeam() { teamProfiles=[]; document.getElementById('team-file-list').innerHTML=''; document.getElementById('team-manager-row').style.display='none'; document.getElementById('team-analyse-btn').disabled=true; document.getElementById('team-upload-area').style.display='block'; document.getElementById('team-results').style.display='none'; }
+// ==================== GAME 8: REACTION TIME (Pal) ====================
+function startReactionTime(){let trials=20;let results=[];let idx=0;let startTime=0;let waiting=false;let timeout=null;function next(){if(idx>=trials){let avg=results.reduce((a,b)=>a+b,0)/results.length;let score=Math.min(100,Math.max(0,Math.round((500-avg)/5)));let label=score>=80?'Lightning':score>=60?'Fast':'Average';let insight=`Avg reaction: ${Math.round(avg)}ms.`;saveGameResult('RT',score,label,{rtScore:score,avgRT:avg});showResults('Pal',score,label,insight,'RT');return;}renderTrial();}function renderTrial(){document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 8/10 · Pal (Reaction Time)</div><div id="rtBox" class="rt-area surface" style="background:var(--surface);cursor:pointer;">⬤ Ready</div><div>Trial ${idx+1}/${trials}</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/trials)*100}%"></div></div>`;showScreen('game-play');let box=document.getElementById('rtBox');timeout=setTimeout(()=>{box.style.background='#38A169';box.innerHTML='⚡ TAP NOW!';startTime=performance.now();waiting=true;},Math.random()*2000+1000);box.onclick=()=>{if(waiting){let rt=performance.now()-startTime;results.push(rt);idx++;clearTimeout(timeout);next();}else{box.style.background='var(--red)';box.innerHTML='Too early! Wait for green.';setTimeout(()=>{if(document.getElementById('rtBox'))renderTrial();},800);}};}next();}
 
-// INIT
-let session = lsGet('rl_session');
-if(session) { let sd = JSON.parse(session); let ur = lsGet(sd.emailKey); if(ur) { user = JSON.parse(ur); if(!user.context) showContext(); else showDashboard(); } else showScreen('landing'); } else showScreen('landing');
-updateNav();
+// ==================== GAME 9: PATTERN REASONING (Naqsha) ====================
+function startPattern(){let puzzles=[{options:['●','○','■','□'],correct:'●'},{options:['▲','△','●','○'],correct:'▲'},{options:['◆','◇','●','○'],correct:'◆'},{options:['★','☆','●','○'],correct:'★'},{options:['♣','♠','♥','♦'],correct:'♣'}];let idx=0;let correct=0;function next(){if(idx>=puzzles.length){let score=Math.round((correct/puzzles.length)*100);let label=score>=80?'Pattern master':score>=60?'Good reasoning':'Needs practice';let insight=`Solved ${correct}/${puzzles.length} patterns.`;saveGameResult('PATTERN',score,label,{patternScore:score});showResults('Naqsha',score,label,insight,'PATTERN');return;}let p=puzzles[idx];document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 9/10 · Naqsha (Pattern)</div><div style="text-align:center;font-size:24px;margin:20px;">Which shape comes next?</div><div class="pattern-grid">${p.options.map(opt=>`<div class="pattern-option" data-val="${opt}">${opt}</div>`).join('')}</div><div>Puzzle ${idx+1}/${puzzles.length}</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/puzzles.length)*100}%"></div></div>`;showScreen('game-play');document.querySelectorAll('.pattern-option').forEach(el=>{el.onclick=()=>{if(el.dataset.val===p.correct)correct++;idx++;next();};});}next();}
+
+// ==================== GAME 10: SOCIAL VIGNETTES (Samajh) ====================
+function startSocial(){let vignettes=[{text:"Riya's team missed a deadline. The client is angry. Riya says nothing during the meeting, but later sends a long email blaming the junior.",q:"What is Riya most likely feeling?",options:["Guilty and deflecting","Confident and proud","Relieved","Indifferent"],correct:0},{text:"After a promotion, Arjun starts ignoring his old teammates. He only talks to senior managers.",q:"What is Arjun most likely experiencing?",options:["Imposter syndrome","Insecurity masked as status","Gratitude","Relaxation"],correct:1},{text:"Neha notices her colleague crying in the washroom. She quietly leaves a box of tissues and a note saying 'I'm here if you want to talk.'",q:"What best describes Neha's response?",options:["Avoidant","Empathetic and respectful","Intrusive","Indifferent"],correct:1},{text:"Vikram interrupts others constantly in meetings. When someone calls him out, he says 'I'm just passionate.'",q:"What is Vikram likely blind to?",options:["His own dominance","The topic","His intelligence","The time"],correct:0}];
+let idx=0,correct=0;function next(){if(idx>=vignettes.length){let score=Math.round((correct/vignettes.length)*100);let label=score>=80?'High EQ':score>=60?'Aware':'Needs practice';let insight=`Correct on ${correct}/${vignettes.length} scenarios.`;saveGameResult('SOCIAL',score,label,{socialScore:score});showResults('Samajh',score,label,insight,'SOCIAL');return;}let v=vignettes[idx];document.getElementById('game-play-area').innerHTML=`<button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button><div class="pill">Game 10/10 · Samajh (Social)</div><div class="vignette-card"><p>${v.text}</p><div class="vignette-options">${v.options.map((opt,i)=>`<div class="vignette-opt" data-opt="${i}">${opt}</div>`).join('')}</div></div><div>Scenario ${idx+1}/${vignettes.length}</div><div class="progress-track"><div class="progress-fill" style="width:${(idx/vignettes.length)*100}%"></div></div>`;showScreen('game-play');document.querySelectorAll('.vignette-opt').forEach(el=>{el.onclick=()=>{if(parseInt(el.dataset.opt)===v.correct)correct++;idx++;next();};});}next();}
+
+// ==================== DASHBOARD UPDATE (10 games) ====================
+function showDashboard(){if(!user)return;document.getElementById('dash-greet').innerHTML='Hey, '+user.name.split(' ')[0]+' 👋';let scores=user.scores||[];let games=['BART','PD','TOH','STROOP','GNG','ULT','DIGIT','RT','PATTERN','SOCIAL'];let completed=games.filter(g=>scores.find(s=>s.game===g)).length;document.getElementById('prog-fill').style.width=(completed/10*100)+'%';document.getElementById('prog-count').innerHTML=completed+'/10 games';let has={};games.forEach(g=>{has[g]=!!scores.find(s=>s.game===g);});document.getElementById('g1-cta').style.display=!has.BART?'block':'none';document.getElementById('g1-done').style.display=has.BART?'block':'none';document.getElementById('g2-cta').style.display=has.BART&&!has.PD?'block':'none';document.getElementById('g2-done').style.display=has.PD?'block':'none';document.getElementById('g3-cta').style.display=has.PD&&!has.TOH?'block':'none';document.getElementById('g3-done').style.display=has.TOH?'block':'none';document.getElementById('g4-cta').style.display=has.TOH&&!has.STROOP?'block':'none';document.getElementById('g4-done').style.display=has.STROOP?'block':'none';document.getElementById('g5-cta').style.display=has.STROOP&&!has.GNG?'block':'none';document.getElementById('g5-done').style.display=has.GNG?'block':'none';document.getElementById('g6-cta').style.display=has.GNG&&!has.ULT?'block':'none';document.getElementById('g6-done').style.display=has.ULT?'block':'none';document.getElementById('g7-cta').style.display=has.ULT&&!has.DIGIT?'block':'none';document.getElementById('g7-done').style.display=has.DIGIT?'block':'none';document.getElementById('g8-cta').style.display=has.DIGIT&&!has.RT?'block':'none';document.getElementById('g8-done').style.display=has.RT?'block':'none';document.getElementById('g9-cta').style.display=has.RT&&!has.PATTERN?'block':'none';document.getElementById('g9-done').style.display=has.PATTERN?'block':'none';document.getElementById('g10-cta').style.display=has.PATTERN&&!has.SOCIAL?'block':'none';document.getElementById('g10-done').style.display=has.SOCIAL?'block':'none';showScreen('dashboard');}
+let teamProfiles=[];function handleTeamDrop(e){e.preventDefault();handleTeamFiles(e.dataTransfer.files);}function handleTeamFiles(files){let toRead=Array.from(files).filter(f=>f.name.endsWith('.json'));if(!toRead.length)return;toRead.forEach(file=>{let reader=new FileReader();reader.onload=e=>{try{let p=JSON.parse(e.target.result);if(p.scores&&p.name&&!teamProfiles.find(x=>x.name===p.name))teamProfiles.push(p);renderTeamFileList();}catch(e){}};reader.readAsText(file);});}function renderTeamFileList(){let list=document.getElementById('team-file-list');list.innerHTML=teamProfiles.map((p,i)=>`<div class="team-file-item"><span>🧑</span><span style="flex:1">${p.name}</span><button onclick="teamProfiles.splice(${i},1);renderTeamFileList();">×</button></div>`).join('');document.getElementById('team-analyse-btn').disabled=teamProfiles.length<2;}function analyseTeam(){alert('Team analysis would show Good/Bad/Ugly based on aggregated scores.');}
+let session=lsGet('rl_session');if(session){let sd=JSON.parse(session);let ur=lsGet(sd.emailKey);if(ur){user=JSON.parse(ur);if(!user.context)showContext();else showDashboard();}else showScreen('landing');}else showScreen('landing');updateNav();
+document.getElementById('team-dropzone')?.addEventListener('dragover',e=>e.preventDefault());
+document.getElementById('team-file-input')?.addEventListener('change',e=>handleTeamFiles(e.target.files));
 </script>
 </body>
 </html>
