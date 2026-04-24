@@ -1,0 +1,1865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Raah Labs — Know Your Path</title>
+  <meta name="description" content="10 science-backed games. 25 minutes. Discover the careers you're built for." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --amber: #BA7517; --amber-light: #FAEEDA; --amber-dark: #854F0B; --amber-deep: #633806;
+      --teal: #0F6E56; --teal-light: #E1F5EE; --red-light: #FCEBEB; --red: #A32D2D;
+      --bg: #FAFAF8; --surface: #F2F0EA; --card: #FFFFFF;
+      --border: rgba(0,0,0,0.1); --border-strong: rgba(0,0,0,0.18);
+      --text: #1A1A18; --text-muted: #6B6B66; --text-hint: #9A9A94;
+      --radius: 10px; --radius-lg: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #17171A; --surface: #1F1F24; --card: #28282E;
+        --border: rgba(255,255,255,0.1); --border-strong: rgba(255,255,255,0.18);
+        --text: #F0EFE8; --text-muted: #9A9A94; --text-hint: #6B6B66;
+        --amber-light: #2A1E0A; --teal-light: #0A1E18; --red-light: #1E0A0A;
+      }
+    }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; font-size:15px; line-height:1.6; }
+    .screen { display:none; }
+    .screen.active { display:block; }
+    .container { max-width:520px; margin:0 auto; padding:2rem 1.25rem; }
+    .nav { display:flex; justify-content:space-between; align-items:center; padding:1rem 1.25rem; border-bottom:0.5px solid var(--border); position:sticky; top:0; background:var(--bg); z-index:10; }
+    .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo-badge { width:32px; height:32px; background:var(--amber); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--amber-light); font-size:16px; font-weight:500; flex-shrink:0; }
+    .logo-name { font-size:16px; font-weight:500; color:var(--text); }
+    .btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; border:none; border-radius:var(--radius); font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; cursor:pointer; transition:all 0.15s; padding:11px 20px; }
+    .btn-primary { background:var(--amber); color:var(--amber-light); }
+    .btn-primary:hover { background:var(--amber-dark); }
+    .btn-primary:disabled { opacity:0.45; cursor:not-allowed; }
+    .btn-secondary { background:transparent; color:var(--text); border:0.5px solid var(--border-strong); }
+    .btn-secondary:hover { background:var(--surface); }
+    .btn-secondary:disabled { opacity:0.45; cursor:not-allowed; }
+    .btn-full { width:100%; padding:13px 20px; }
+    .btn-sm { padding:7px 14px; font-size:13px; }
+    .card { background:var(--card); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:1.25rem; }
+    .surface { background:var(--surface); border-radius:var(--radius); padding:1rem; }
+    .field { margin-bottom:14px; }
+    .field label { display:block; font-size:13px; color:var(--text-muted); margin-bottom:5px; }
+    input[type="text"],input[type="email"],input[type="password"],input[type="tel"] {
+      width:100%; padding:10px 12px; border:0.5px solid var(--border-strong); border-radius:var(--radius);
+      background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px;
+      transition:border-color 0.15s; outline:none;
+    }
+    input:focus { border-color:var(--amber); box-shadow:0 0 0 3px rgba(186,117,23,0.12); }
+    .tab-bar { display:flex; border:0.5px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-bottom:1.5rem; }
+    .tab-bar button { flex:1; padding:10px; border:none; background:transparent; color:var(--text-muted); font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; cursor:pointer; transition:all 0.15s; }
+    .tab-bar button.active { background:var(--amber); color:var(--amber-light); }
+    .err-box { background:var(--red-light); color:var(--red); font-size:13px; border-radius:var(--radius); padding:9px 12px; margin-bottom:12px; display:none; }
+    .pill { display:inline-block; font-size:11px; font-weight:500; padding:3px 10px; border-radius:20px; background:var(--amber-light); color:var(--amber-dark); letter-spacing:0.02em; }
+    .phone-row { display:flex; gap:8px; }
+    .cc-badge { padding:10px 12px; background:var(--surface); border:0.5px solid var(--border-strong); border-radius:var(--radius); font-size:14px; color:var(--text); white-space:nowrap; flex-shrink:0; }
+    .stat-grid { display:grid; gap:10px; }
+    .stat-grid-3 { grid-template-columns:repeat(3,1fr); }
+    .stat-cell { background:var(--surface); border-radius:var(--radius); padding:14px; text-align:center; }
+    .stat-val { font-size:20px; font-weight:500; color:var(--text); }
+    .stat-lbl { font-size:11px; color:var(--text-muted); margin-top:3px; }
+    .game-highlight { border:1.5px solid var(--amber) !important; cursor:pointer; }
+    .game-highlight:hover { background:var(--amber-light); }
+    .done-border { border:1.5px solid var(--teal) !important; }
+    .progress-track { background:var(--surface); border-radius:4px; height:5px; overflow:hidden; }
+    .progress-fill { height:100%; background:var(--amber); border-radius:4px; transition:width 0.4s ease; }
+    .section-label { font-size:11px; font-weight:500; color:var(--text-hint); text-transform:uppercase; letter-spacing:0.06em; margin:0 0 10px; }
+    .back-btn { background:none; border:none; color:var(--text-muted); font-size:13px; cursor:pointer; font-family:'DM Sans',sans-serif; padding:0; margin-bottom:1.25rem; display:inline-flex; align-items:center; gap:6px; }
+    .back-btn:hover { color:var(--text); }
+    #balloon-wrap { transition:transform 0.12s ease-out; transform-origin:bottom center; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .fade-in { animation:fadeIn 0.25s ease-out; }
+    .score-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:0.5px solid var(--border); }
+    .score-row:last-child { border-bottom:none; }
+
+    /* ── ONE-LINER SUMMARY CARD (replaces insight blocks on results screens) ── */
+    .summary-card {
+      background:var(--surface); border-radius:var(--radius-lg);
+      padding:1.25rem 1.5rem; margin-bottom:1.25rem; text-align:center;
+    }
+    .summary-card p { font-size:15px; color:var(--text-muted); line-height:1.75; font-style:italic; }
+
+    /* ── STROOP / RANG ── */
+    .stroop-word-display { display:flex; justify-content:center; align-items:center; min-height:160px; }
+    .stroop-word { font-size:72px; font-weight:700; letter-spacing:-2px; line-height:1; user-select:none; }
+    .stroop-btn-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .stroop-btn {
+      padding:18px 10px; border-radius:var(--radius); border:1.5px solid var(--border-strong);
+      background:var(--card); font-family:'DM Sans',sans-serif; font-size:17px; font-weight:700;
+      cursor:pointer; transition:all 0.12s; width:100%;
+    }
+    .stroop-btn:hover:not(:disabled) { background:var(--surface); transform:scale(1.02); }
+    .stroop-btn:disabled { cursor:not-allowed; opacity:0.7; }
+    .stroop-btn.correct { background:var(--teal-light) !important; border-color:var(--teal) !important; }
+    .stroop-btn.wrong   { background:var(--red-light)  !important; border-color:var(--red)  !important; }
+    @keyframes stroopPop { 0%{transform:scale(1)} 40%{transform:scale(1.06)} 100%{transform:scale(1)} }
+    .stroop-pop { animation:stroopPop 0.25s ease; }
+
+    /* ── TOH ── */
+    .toh-board { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .toh-peg-col { display:flex; flex-direction:column; align-items:center; cursor:pointer; padding:8px 4px 6px; border-radius:var(--radius); border:1.5px solid transparent; transition:background 0.15s,border-color 0.15s; user-select:none; }
+    .toh-peg-col:hover { background:rgba(186,117,23,0.06); }
+    .toh-peg-col.selected { background:var(--amber-light); border-color:var(--amber); }
+    .toh-disc-area { position:relative; width:100%; height:120px; }
+    .toh-rod { position:absolute; left:50%; transform:translateX(-50%); width:7px; height:120px; background:var(--border-strong); border-radius:4px; top:0; z-index:0; }
+    .toh-disc { position:absolute; left:50%; transform:translateX(-50%); border-radius:5px; z-index:1; cursor:grab; transition:box-shadow 0.12s; }
+    .toh-disc.top-disc:hover { box-shadow:0 0 0 2.5px var(--amber); }
+    .toh-disc.top-disc:active { cursor:grabbing; }
+    .toh-base { width:88%; height:7px; background:var(--text-muted); border-radius:4px; opacity:0.45; margin-top:1px; }
+    .toh-peg-label { font-size:11px; color:var(--text-hint); margin-top:7px; text-align:center; }
+    .toh-timer-ring { font-size:26px; font-weight:500; color:var(--amber); line-height:1; }
+    .toh-timer-warn { color:var(--red) !important; }
+    @keyframes tohShake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-7px)} 40%,80%{transform:translateX(7px)} }
+    .toh-shake { animation:tohShake 0.35s ease-in-out; }
+    @keyframes tohWin { 0%{transform:scale(1)} 50%{transform:scale(1.06)} 100%{transform:scale(1)} }
+    .toh-win { animation:tohWin 0.4s ease-in-out 2; }
+
+    /* ── Context / B5 / Team ── */
+    .ctx-opt { width:100%; padding:14px 16px; border-radius:var(--radius); border:1.5px solid var(--border-strong); background:var(--card); color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; cursor:pointer; transition:all 0.15s; text-align:left; margin-bottom:8px; display:flex; align-items:center; gap:12px; }
+    .ctx-opt:hover { border-color:var(--amber); background:var(--amber-light); }
+    .ctx-opt.selected { border-color:var(--amber); background:var(--amber-light); color:var(--amber-dark); }
+    .ctx-opt .ctx-icon { font-size:20px; flex-shrink:0; }
+    .ctx-opt .ctx-text { flex:1; }
+    .ctx-opt .ctx-check { width:18px; height:18px; border-radius:50%; border:1.5px solid var(--border-strong); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:11px; }
+    .ctx-opt.selected .ctx-check { background:var(--amber); border-color:var(--amber); color:white; }
+    .b5-q { font-size:20px; font-weight:500; line-height:1.4; margin:1.5rem 0; }
+    .b5-opt { width:100%; padding:18px 20px; border-radius:var(--radius); border:1.5px solid var(--border-strong); background:var(--card); color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px; cursor:pointer; transition:all 0.15s; text-align:left; margin-bottom:10px; line-height:1.5; }
+    .b5-opt:hover { border-color:var(--amber); background:var(--amber-light); }
+    .team-drop { border:1.5px dashed var(--border-strong); border-radius:var(--radius-lg); padding:2rem; text-align:center; cursor:pointer; transition:all 0.2s; background:var(--surface); }
+    .team-drop:hover,.team-drop.dragover { border-color:var(--amber); background:var(--amber-light); }
+    .team-file-item { display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--surface); border-radius:var(--radius); margin-bottom:6px; }
+    .team-out-section { margin-bottom:1.25rem; }
+    .team-out-label { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.07em; color:var(--text-hint); margin-bottom:8px; display:block; }
+    .team-good { background:var(--teal-light); border:0.5px solid rgba(15,110,86,0.2); border-radius:var(--radius-lg); padding:1.25rem; }
+    .team-bad  { background:var(--amber-light); border:0.5px solid rgba(186,117,23,0.2); border-radius:var(--radius-lg); padding:1.25rem; }
+    .team-ugly { background:var(--red-light); border:0.5px solid rgba(163,45,45,0.2); border-radius:var(--radius-lg); padding:1.25rem; }
+    .team-dyn  { background:var(--surface); border:0.5px solid var(--border); border-radius:var(--radius-lg); padding:1.25rem; margin-bottom:0.75rem; }
+    select { width:100%; padding:10px 12px; border:0.5px solid var(--border-strong); border-radius:var(--radius); background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; font-size:15px; outline:none; }
+    select:focus { border-color:var(--amber); }
+
+    /* ── GNG ── */
+    .gng-arena { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:260px; position:relative; user-select:none; }
+    .gng-shape-wrap { display:flex; align-items:center; justify-content:center; width:160px; height:160px; position:relative; }
+    .gng-tap-btn { width:100%; padding:22px; font-size:18px; font-weight:500; border-radius:var(--radius-lg); border:none; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.1s; background:var(--amber); color:var(--amber-light); -webkit-tap-highlight-color:transparent; }
+    .gng-tap-btn:active { transform:scale(0.97); }
+    .gng-tap-btn:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+    @keyframes gngCorrect { 0%{background:var(--teal)} 100%{background:var(--amber)} }
+    @keyframes gngWrong   { 0%{background:var(--red)}  100%{background:var(--amber)} }
+    .gng-flash-correct { animation:gngCorrect 0.35s ease-out forwards; }
+    .gng-flash-wrong   { animation:gngWrong   0.35s ease-out forwards; }
+    .gng-feedback-strip { text-align:center; font-size:13px; font-weight:500; height:20px; margin:8px 0; transition:opacity 0.2s; }
+    .gng-stat-bar { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:1rem; }
+    .gng-stat-cell { background:var(--surface); border-radius:var(--radius); padding:10px 8px; text-align:center; }
+    .gng-stat-val { font-size:22px; font-weight:500; color:var(--text); line-height:1; }
+    .gng-stat-lbl { font-size:11px; color:var(--text-muted); margin-top:3px; }
+    .gng-trial-dots { display:flex; flex-wrap:wrap; gap:4px; justify-content:center; margin:0.75rem 0; }
+    .gng-dot { width:9px; height:9px; border-radius:50%; background:var(--border-strong); }
+    .gng-dot.hit  { background:var(--teal); }
+    .gng-dot.miss { background:var(--text-hint); }
+    .gng-dot.fa   { background:var(--red); }
+    .gng-dot.cr   { background:var(--surface); border:1.5px solid var(--border-strong); }
+
+    /* ── Game name headers ── */
+    .game-name-hindi { font-size:28px; font-weight:500; margin:8px 0 2px; letter-spacing:-0.01em; }
+    .game-name-sub   { font-size:13px; color:var(--text-muted); margin-bottom:1.25rem; }
+    .game-intro-para { color:var(--text-muted); line-height:1.8; font-size:15px; margin-bottom:1.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="main-nav">
+  <a class="logo" href="#" onclick="goHome()">
+    <div class="logo-badge">R</div>
+    <span class="logo-name">Raah Labs</span>
+  </a>
+  <div id="nav-right">
+    <button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>
+  </div>
+</nav>
+
+<!-- ═══ LANDING ═══ -->
+<div id="screen-landing" class="screen">
+  <div class="container" style="padding-top:3rem;">
+    <p style="font-size:11px;color:var(--amber);font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px;">Know your path</p>
+    <h1 style="font-size:30px;font-weight:500;line-height:1.3;margin-bottom:14px;">Discover the careers<br>you're built for</h1>
+    <p style="color:var(--text-muted);line-height:1.75;max-width:420px;margin-bottom:2rem;">10 science-backed games. 25 minutes. A clear picture of your personality — and where you'll thrive.</p>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:2.5rem;">
+      <button class="btn btn-primary" onclick="showAuth('signup')">Create free account →</button>
+      <button class="btn btn-secondary" onclick="showAuth('login')">Login</button>
+    </div>
+    <div class="stat-grid stat-grid-3" style="max-width:320px;">
+      <div class="stat-cell"><div class="stat-val">10</div><div class="stat-lbl">games</div></div>
+      <div class="stat-cell"><div class="stat-val">~25</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val" style="color:var(--amber);">₹500</div><div class="stat-lbl">one-time</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ AUTH ═══ -->
+<div id="screen-auth" class="screen">
+  <div class="container" style="max-width:420px;">
+    <button class="back-btn" onclick="showScreen('landing')">← Back</button>
+    <div class="tab-bar">
+      <button id="tab-su" class="active" onclick="switchTab('signup')">Sign up</button>
+      <button id="tab-li" onclick="switchTab('login')">Login</button>
+    </div>
+    <div id="form-signup">
+      <div class="field"><label>Full name</label><input type="text" id="su-name" placeholder="Your name" /></div>
+      <div class="field"><label>Email</label><input type="email" id="su-email" placeholder="you@email.com" /></div>
+      <div class="field">
+        <label>Mobile number</label>
+        <div class="phone-row">
+          <span class="cc-badge">🇮🇳 +91</span>
+          <input type="tel" id="su-mobile" placeholder="9876543210" maxlength="10" style="flex:1;" />
+        </div>
+        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">10-digit number, no spaces</span>
+      </div>
+      <div class="field"><label>Password</label><input type="password" id="su-pw" placeholder="Min. 6 characters" /></div>
+      <div class="err-box" id="su-err"></div>
+      <button class="btn btn-primary btn-full" id="su-btn" onclick="handleSignup()">Create account →</button>
+    </div>
+    <div id="form-login" style="display:none;">
+      <div class="field">
+        <label>Email or mobile number</label>
+        <input type="text" id="li-id" placeholder="you@email.com  or  9876543210" />
+        <span style="font-size:11px;color:var(--text-hint);margin-top:4px;display:block;">Either works</span>
+      </div>
+      <div class="field"><label>Password</label><input type="password" id="li-pw" placeholder="••••••••" /></div>
+      <div class="err-box" id="li-err"></div>
+      <button class="btn btn-primary btn-full" id="li-btn" onclick="handleLogin()">Login →</button>
+      <p style="font-size:13px;color:var(--text-muted);text-align:center;margin-top:14px;">No account yet? <a href="#" onclick="switchTab('signup')" style="color:var(--amber);text-decoration:none;">Sign up free</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DASHBOARD ═══ -->
+<div id="screen-dashboard" class="screen">
+  <div class="container">
+    <p id="dash-greet" style="font-size:20px;font-weight:500;margin-bottom:4px;"></p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.5rem;">Complete all 10 games to unlock your full career profile.</p>
+
+    <!-- G1: Dum -->
+    <div id="g1-cta" class="card game-highlight fade-in" style="margin-bottom:1rem;" onclick="showScreen('game-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 1 of 10 · Start here</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">🎈 Dum</div>
+          <div style="font-size:13px;color:var(--text-muted);">Risk · Impulse · Learning</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('game-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g1-done" style="display:none;" class="card done-border" style="margin-bottom:1rem;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🎈</div>
+        <div><div style="font-size:14px;font-weight:500;">Dum — complete ✓</div><div id="g1-preview" style="font-size:13px;color:var(--teal);"></div></div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('game-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- G2: Bharosa -->
+    <div id="g2-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('pd-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 2 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">🤝 Bharosa</div>
+          <div style="font-size:13px;color:var(--text-muted);">Cooperation · Trust · Strategy</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('pd-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g2-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🤝</div>
+        <div><div style="font-size:14px;font-weight:500;">Bharosa — complete ✓</div><div id="g2-preview" style="font-size:13px;color:var(--teal);"></div></div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('pd-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- G3: Burj -->
+    <div id="g3-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('toh-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 3 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">🗼 Burj</div>
+          <div style="font-size:13px;color:var(--text-muted);">Planning · Sequencing · Memory</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('toh-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g3-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🗼</div>
+        <div><div style="font-size:14px;font-weight:500;">Burj — complete ✓</div><div id="g3-preview" style="font-size:13px;color:var(--teal);"></div></div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('toh-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- G4: Rang (Stroop) — screen IDs kept as fer-* for routing compatibility -->
+    <div id="g4-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('fer-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 4 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">🎨 Rang</div>
+          <div style="font-size:13px;color:var(--text-muted);">Attention · Cognitive control · Focus</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('fer-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g4-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">🎨</div>
+        <div><div style="font-size:14px;font-weight:500;">Rang — complete ✓</div><div id="g4-preview" style="font-size:13px;color:var(--teal);"></div></div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('fer-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- G5: Ruk (GNG) -->
+    <div id="g5-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('gng-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 5 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">⚡ Ruk</div>
+          <div style="font-size:13px;color:var(--text-muted);">Impulse control · Attention · Speed</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('gng-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g5-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">⚡</div>
+        <div><div style="font-size:14px;font-weight:500;">Ruk — complete ✓</div><div id="g5-preview" style="font-size:13px;color:var(--teal);"></div></div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('gng-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- G6: Saudaa (ULT) -->
+    <div id="g6-cta" style="display:none;margin-bottom:1rem;" class="card game-highlight fade-in" onclick="showScreen('ult-intro')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+        <div>
+          <div class="pill" style="margin-bottom:10px;">Game 6 of 10 · Up next</div>
+          <div style="font-size:16px;font-weight:500;margin-bottom:2px;">⚖️ Saudaa</div>
+          <div style="font-size:13px;color:var(--text-muted);">Fairness · Negotiation · Principles</div>
+        </div>
+        <button class="btn btn-primary btn-sm" style="flex-shrink:0;" onclick="event.stopPropagation();showScreen('ult-intro')">Play now</button>
+      </div>
+    </div>
+    <div id="g6-done" style="display:none;margin-bottom:1rem;" class="card done-border">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="font-size:22px;">⚖️</div>
+        <div><div style="font-size:14px;font-weight:500;">Saudaa — complete ✓</div><div id="g6-preview" style="font-size:13px;color:var(--teal);"></div></div>
+        <button class="btn btn-secondary btn-sm" style="margin-left:auto;" onclick="showScreen('ult-intro')">Replay</button>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div style="margin:1.25rem 0;">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px;">
+        <span>Overall progress</span><span id="prog-txt">0 / 10 games</span>
+      </div>
+      <div class="progress-track"><div id="prog-fill" class="progress-fill" style="width:0%;"></div></div>
+    </div>
+
+    <!-- Scores -->
+    <div id="scores-section" style="display:none;">
+      <p class="section-label">Your results</p>
+      <div class="card" id="scores-list"></div>
+    </div>
+
+    <!-- Tools -->
+    <div style="margin-top:1.5rem;padding-top:1.25rem;border-top:0.5px solid var(--border);">
+      <p class="section-label">Tools</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <button class="btn btn-secondary" onclick="exportProfile()" style="font-size:13px;padding:12px;">📤 Export profile</button>
+        <button class="btn btn-secondary" onclick="showScreen('team')" style="font-size:13px;padding:12px;">👥 Team snapshot</button>
+      </div>
+      <p style="font-size:12px;color:var(--text-hint);margin-top:8px;line-height:1.6;">Export your profile file and share with teammates. Upload everyone's files together to see how your team operates.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ DUM INTRO ═══ -->
+<div id="screen-game-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 1 of 10</span>
+    <div class="game-name-hindi">🎈 Dum</div>
+    <div class="game-name-sub">dum — breath, guts</div>
+    <div style="display:flex;justify-content:center;margin-bottom:1.5rem;">
+      <svg width="80" height="100" viewBox="0 0 90 110">
+        <ellipse cx="45" cy="46" rx="36" ry="42" fill="#EF9F27"/>
+        <ellipse cx="31" cy="28" rx="13" ry="9" fill="#FAC775" opacity="0.55"/>
+        <path d="M45 88 Q42 98 45 104" stroke="#BA7517" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="game-intro-para">A balloon. Each pump earns you ₹5. Hit <strong style="color:var(--text);">Collect</strong> to bank your money safely. If it pops before you collect — you lose the round's money. 30 balloons. Blue are safer, red can go at any moment.</p>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">30</div><div class="stat-lbl">balloons</div></div>
+      <div class="stat-cell"><div class="stat-val">~5</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">3</div><div class="stat-lbl">colours</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startGame()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══ DUM GAME ═══ -->
+<div id="screen-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--text-muted);">Balloon <span id="g-num">1</span> of 30</span>
+      <span style="font-size:13px;color:var(--text-muted);">Banked: <strong id="g-banked" style="color:var(--text);">₹0</strong></span>
+    </div>
+    <div class="progress-track" style="margin-bottom:1.75rem;"><div id="g-prog" class="progress-fill" style="width:3.33%;"></div></div>
+    <div style="display:flex;justify-content:center;min-height:190px;align-items:center;position:relative;margin-bottom:1rem;">
+      <div id="balloon-wrap">
+        <svg width="110" height="140" viewBox="0 0 110 140">
+          <ellipse id="b-body" cx="55" cy="58" rx="44" ry="52" fill="#EF9F27"/>
+          <ellipse id="b-shine" cx="38" cy="35" rx="15" ry="10" fill="#FAC775" opacity="0.5"/>
+          <path d="M55 110 Q52 122 55 128" stroke="#BA7517" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div id="g-boom" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:60px;line-height:1;">💥</div>
+    </div>
+    <div style="text-align:center;margin-bottom:6px;"><span id="g-badge" style="display:inline-block;font-size:12px;font-weight:500;padding:4px 14px;border-radius:20px;"></span></div>
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">This balloon worth</div>
+      <div id="g-earn" style="font-size:38px;font-weight:500;color:var(--amber);line-height:1.1;">₹0</div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:5px;">Pumps: <span id="g-pumps">0</span></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+      <button id="g-pbtn" class="btn btn-secondary" style="padding:18px;font-size:16px;" onclick="pump()">Pump 🎈</button>
+      <button id="g-cbtn" class="btn btn-primary" style="padding:18px;" onclick="collect()">Collect ₹<span id="g-camt">0</span></button>
+    </div>
+    <p style="font-size:12px;color:var(--text-hint);text-align:center;">Blue = safer · Yellow = medium · Red = volatile</p>
+  </div>
+</div>
+
+<!-- ═══ DUM RESULTS ═══ -->
+<div id="screen-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🎈</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Dum — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 1 · Risk &amp; Impulse</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Risk score</div>
+      <div id="r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">avg pumps on safe balloons</div>
+      <div id="r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.25rem;">
+      <div class="stat-cell"><div id="r-banked" class="stat-val"></div><div class="stat-lbl">Banked</div></div>
+      <div class="stat-cell"><div id="r-pops" class="stat-val"></div><div class="stat-lbl">Pops</div></div>
+      <div class="stat-cell"><div id="r-trend" class="stat-val" style="font-size:15px;"></div><div class="stat-lbl">Trend</div></div>
+    </div>
+    <div class="summary-card"><p id="r-summary"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('BART')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ BHAROSA INTRO ═══ -->
+<div id="screen-pd-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 2 of 10</span>
+    <div class="game-name-hindi">🤝 Bharosa</div>
+    <div class="game-name-sub">bharosa — trust</div>
+    <div style="text-align:center;margin-bottom:1.25rem;">
+      <svg width="96" height="72" viewBox="0 0 96 72">
+        <rect x="4" y="20" width="38" height="32" rx="8" fill="var(--amber)" opacity="0.18"/>
+        <rect x="54" y="20" width="38" height="32" rx="8" fill="var(--amber)" opacity="0.18"/>
+        <text x="23" y="42" text-anchor="middle" font-size="22" font-family="sans-serif">🤝</text>
+        <text x="73" y="42" text-anchor="middle" font-size="22" font-family="sans-serif">🤖</text>
+        <path d="M42 36 Q48 28 54 36" stroke="var(--amber)" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
+      </svg>
+    </div>
+    <p class="game-intro-para">You and an AI. Each round you both secretly pick — work together or go solo. Your choice and theirs are revealed at the same time. The AI watches every move you make and adjusts. Ten rounds. No chat. Just choices.</p>
+    <div class="card" style="margin-bottom:1rem;">
+      <p style="font-size:12px;color:var(--text-muted);font-weight:500;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em;">How points work</p>
+      <div style="display:grid;gap:7px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;"><span>Both cooperate</span><span style="color:var(--teal);font-weight:500;">+3 each 🤝</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;"><span>You defect, AI cooperates</span><span style="color:var(--amber);font-weight:500;">+5 you, +0 AI</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;"><span>You cooperate, AI defects</span><span style="color:var(--red);font-weight:500;">+0 you, +5 AI</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;"><span>Both defect</span><span style="color:var(--text-muted);font-weight:500;">+1 each 😐</span></div>
+      </div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">10</div><div class="stat-lbl">rounds</div></div>
+      <div class="stat-cell"><div class="stat-val">~3</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">4</div><div class="stat-lbl">profiles</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startPD()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══ BHAROSA GAME ═══ -->
+<div id="screen-pd-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--text-muted);">Round <span id="pd-round-num">1</span> of 10</span>
+      <span style="font-size:13px;color:var(--text-muted);">You: <strong id="pd-your-score" style="color:var(--text);">0</strong> · AI: <strong id="pd-ai-score" style="color:var(--text-muted);">0</strong></span>
+    </div>
+    <div class="progress-track" style="margin-bottom:1.5rem;"><div id="pd-prog" class="progress-fill" style="width:0%;"></div></div>
+    <div id="pd-history" style="margin-bottom:1.25rem;"></div>
+    <div id="pd-choice-state">
+      <p style="font-size:15px;font-weight:500;margin-bottom:14px;text-align:center;">What do you do this round?</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+        <button class="btn btn-secondary" style="padding:22px 10px;font-size:15px;flex-direction:column;gap:8px;height:auto;" onclick="pdChoice('C')">
+          <span style="font-size:30px;">🤝</span><span style="font-size:14px;font-weight:500;">Cooperate</span><span style="font-size:11px;color:var(--text-hint);">+3 if mutual</span>
+        </button>
+        <button class="btn btn-primary" style="padding:22px 10px;font-size:15px;flex-direction:column;gap:8px;height:auto;" onclick="pdChoice('D')">
+          <span style="font-size:30px;">🔪</span><span style="font-size:14px;font-weight:500;">Defect</span><span style="font-size:11px;opacity:0.7;">+5 if AI cooperates</span>
+        </button>
+      </div>
+      <p style="font-size:11px;color:var(--text-hint);text-align:center;">Simultaneous reveal — AI doesn't know your choice yet</p>
+    </div>
+    <div id="pd-reveal-state" style="display:none;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+        <div class="surface" style="text-align:center;padding:1.25rem 0.75rem;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">You</div>
+          <div id="pd-reveal-you" style="font-size:36px;margin-bottom:6px;"></div>
+          <div id="pd-reveal-you-label" style="font-size:13px;font-weight:500;"></div>
+        </div>
+        <div class="surface" style="text-align:center;padding:1.25rem 0.75rem;">
+          <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.05em;">AI</div>
+          <div id="pd-reveal-ai" style="font-size:36px;margin-bottom:6px;"></div>
+          <div id="pd-reveal-ai-label" style="font-size:13px;font-weight:500;"></div>
+        </div>
+      </div>
+      <div id="pd-round-outcome" class="surface" style="text-align:center;padding:1rem;margin-bottom:1rem;font-size:14px;line-height:1.6;"></div>
+      <button id="pd-next-btn" class="btn btn-primary btn-full" style="padding:14px;" onclick="pdNextRound()">Next round →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BHAROSA RESULTS ═══ -->
+<div id="screen-pd-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🤝</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Bharosa — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 2 · Cooperation &amp; Strategy</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Cooperation score</div>
+      <div id="pd-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="pd-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.25rem;">
+      <div class="stat-cell"><div id="pd-r-coop" class="stat-val"></div><div class="stat-lbl">Cooperated</div></div>
+      <div class="stat-cell"><div id="pd-r-defect" class="stat-val"></div><div class="stat-lbl">Defected</div></div>
+      <div class="stat-cell"><div id="pd-r-open" class="stat-val" style="font-size:13px;"></div><div class="stat-lbl">Opening move</div></div>
+    </div>
+    <div class="summary-card"><p id="pd-r-summary"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('PD')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ BURJ INTRO ═══ -->
+<div id="screen-toh-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 3 of 10</span>
+    <div class="game-name-hindi">🗼 Burj</div>
+    <div class="game-name-sub">burj — tower</div>
+    <div style="display:flex;justify-content:center;margin-bottom:1.25rem;">
+      <svg width="200" height="88" viewBox="0 0 200 88">
+        <defs><marker id="arrowhead" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#BA7517"/></marker></defs>
+        <rect x="5" y="74" width="56" height="7" rx="3" fill="#9A9A94" opacity="0.5"/><rect x="72" y="74" width="56" height="7" rx="3" fill="#9A9A94" opacity="0.5"/><rect x="139" y="74" width="56" height="7" rx="3" fill="#9A9A94" opacity="0.5"/>
+        <rect x="30" y="12" width="7" height="63" rx="3" fill="#9A9A94" opacity="0.4"/><rect x="97" y="12" width="7" height="63" rx="3" fill="#9A9A94" opacity="0.4"/><rect x="164" y="12" width="7" height="63" rx="3" fill="#9A9A94" opacity="0.4"/>
+        <rect x="6" y="65" width="56" height="10" rx="5" fill="#7C3F0A"/><rect x="11" y="54" width="46" height="10" rx="5" fill="#BA7517"/><rect x="16" y="43" width="36" height="10" rx="5" fill="#E8A840"/><rect x="21" y="32" width="26" height="10" rx="5" fill="#F5C870"/>
+        <line x1="68" y1="44" x2="134" y2="44" stroke="#BA7517" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#arrowhead)"/>
+        <text x="167" y="10" text-anchor="middle" font-size="10" fill="#BA7517" font-family="DM Sans,sans-serif" font-weight="500">GOAL</text>
+      </svg>
+    </div>
+    <p class="game-intro-para">Four discs stacked on the first peg, largest at the bottom. Move them all to the third peg. One disc at a time. A bigger disc can never sit on a smaller one. Three minutes. Undo costs one move.</p>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">4</div><div class="stat-lbl">discs</div></div>
+      <div class="stat-cell"><div class="stat-val">3:00</div><div class="stat-lbl">time limit</div></div>
+      <div class="stat-cell"><div class="stat-val">15</div><div class="stat-lbl">optimal moves</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startTOH()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══ BURJ GAME ═══ -->
+<div id="screen-toh-game" class="screen">
+  <div class="container" style="max-width:520px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:0.875rem;">
+      <div class="surface" style="padding:10px 8px;text-align:center;"><div class="toh-timer-ring" id="toh-timer">3:00</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px;">time left</div></div>
+      <div class="surface" style="padding:10px 8px;text-align:center;"><div style="font-size:26px;font-weight:500;color:var(--text);" id="toh-moves">0</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px;">moves</div></div>
+      <div class="surface" style="padding:10px 8px;text-align:center;"><div style="font-size:26px;font-weight:500;color:var(--text-muted);" id="toh-undos">0</div><div style="font-size:11px;color:var(--text-muted);margin-top:2px;">undos</div></div>
+    </div>
+    <p style="font-size:12px;color:var(--text-hint);text-align:center;margin-bottom:0.75rem;">Tap a peg to select · Tap again to place · Drag on desktop</p>
+    <div id="toh-board" class="toh-board" style="background:var(--surface);border-radius:var(--radius-lg);padding:12px 10px;margin-bottom:0.875rem;"></div>
+    <p style="font-size:12px;font-weight:500;color:var(--amber);text-align:center;margin-bottom:0.875rem;">🎯 Move all discs to Peg 3</p>
+    <button class="btn btn-secondary btn-full" onclick="tohUndo()" style="font-size:13px;">↩ Undo  <span style="color:var(--text-hint);font-size:12px;">(costs 1 move)</span></button>
+  </div>
+</div>
+
+<!-- ═══ BURJ RESULTS ═══ -->
+<div id="screen-toh-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🗼</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Burj — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 3 · Planning &amp; Sequencing</p>
+      <p id="toh-r-completed" style="font-size:14px;font-weight:500;margin-top:6px;"></p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Planning score</div>
+      <div id="toh-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="toh-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.25rem;">
+      <div class="stat-cell"><div id="toh-r-moves" class="stat-val"></div><div class="stat-lbl">Moves</div></div>
+      <div class="stat-cell"><div id="toh-r-undos" class="stat-val"></div><div class="stat-lbl">Undos</div></div>
+      <div class="stat-cell"><div id="toh-r-time" class="stat-val"></div><div class="stat-lbl">Time used</div></div>
+    </div>
+    <div class="summary-card"><p id="toh-r-summary"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('TOH')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     RANG INTRO — Game 4 Stroop (screen IDs kept as fer-*)
+     ═══════════════════════════════════════════════════════ -->
+<div id="screen-fer-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 4 of 10</span>
+    <div class="game-name-hindi">🎨 Rang</div>
+    <div class="game-name-sub">rang — color</div>
+
+    <!-- Live demo of the conflict -->
+    <div style="display:flex;justify-content:center;align-items:center;gap:32px;margin-bottom:1.5rem;padding:1.5rem;background:var(--surface);border-radius:var(--radius-lg);">
+      <div style="text-align:center;">
+        <div style="font-size:42px;font-weight:700;color:#dc2626;line-height:1;margin-bottom:6px;">RED</div>
+        <div style="font-size:11px;color:var(--teal);">easy — matches</div>
+      </div>
+      <div style="font-size:24px;color:var(--text-hint);">vs</div>
+      <div style="text-align:center;">
+        <div style="font-size:42px;font-weight:700;color:#3b82f6;line-height:1;margin-bottom:6px;">RED</div>
+        <div style="font-size:11px;color:var(--red);">tricky — conflicts</div>
+      </div>
+    </div>
+
+    <p class="game-intro-para">A word appears. Ignore what it says. Tap the color it's <em>written in</em>. That's it. Your brain will try to read the word instead — that's the whole trap. 24 rounds.</p>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">24</div><div class="stat-lbl">trials</div></div>
+      <div class="stat-cell"><div class="stat-val">~3</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">4</div><div class="stat-lbl">colors</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startStroop()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══ RANG GAME (ID: fer-game) ═══ -->
+<div id="screen-fer-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--text-muted);">Trial <span id="stroop-num">1</span> of 24</span>
+      <span id="stroop-feedback" style="font-size:13px;font-weight:500;opacity:0;transition:opacity 0.15s;"></span>
+    </div>
+    <div class="progress-track" style="margin-bottom:1.5rem;"><div id="stroop-prog" class="progress-fill" style="width:4.17%;"></div></div>
+    <div class="stroop-word-display">
+      <div id="stroop-word" class="stroop-word"></div>
+    </div>
+    <p style="text-align:center;font-size:14px;color:var(--text-muted);margin:1rem 0 1.25rem;font-weight:500;">What color is this word written in?</p>
+    <div class="stroop-btn-grid" id="stroop-opts"></div>
+  </div>
+</div>
+
+<!-- ═══ RANG RESULTS (ID: fer-results) ═══ -->
+<div id="screen-fer-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">🎨</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Rang — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 4 · Cognitive Control</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Focus score</div>
+      <div id="fer-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="fer-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1rem;">
+      <div class="stat-cell"><div id="fer-r-correct" class="stat-val"></div><div class="stat-lbl">Correct</div></div>
+      <div class="stat-cell"><div id="fer-r-wrong" class="stat-val" style="color:var(--red);"></div><div class="stat-lbl">Errors</div></div>
+      <div class="stat-cell"><div id="fer-r-accuracy" class="stat-val"></div><div class="stat-lbl">Accuracy</div></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.25rem;">
+      <div class="stat-cell"><div id="fer-r-conrt" class="stat-val" style="font-size:16px;"></div><div class="stat-lbl">Congruent RT</div></div>
+      <div class="stat-cell"><div id="fer-r-incrt" class="stat-val" style="font-size:16px;"></div><div class="stat-lbl">Conflict RT</div></div>
+      <div class="stat-cell"><div id="fer-r-gap" class="stat-val" style="font-size:16px;"></div><div class="stat-lbl">Gap (ms)</div></div>
+    </div>
+    <div class="summary-card"><p id="fer-r-summary"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('FER')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ RUK INTRO ═══ -->
+<div id="screen-gng-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 5 of 10</span>
+    <div class="game-name-hindi">⚡ Ruk</div>
+    <div class="game-name-sub">ruk — stop</div>
+    <div style="display:flex;justify-content:center;gap:28px;margin-bottom:1.5rem;align-items:center;">
+      <div style="text-align:center;">
+        <svg width="72" height="72" viewBox="0 0 72 72"><circle cx="36" cy="36" r="30" fill="#0F6E56" opacity="0.15" stroke="#0F6E56" stroke-width="2.5"/><circle cx="36" cy="36" r="20" fill="#0F6E56" opacity="0.55"/></svg>
+        <div style="font-size:13px;font-weight:500;color:var(--teal);margin-top:6px;">TAP ✓</div>
+        <div style="font-size:11px;color:var(--text-muted);">Circle = Go</div>
+      </div>
+      <div style="font-size:28px;color:var(--text-hint);">vs</div>
+      <div style="text-align:center;">
+        <svg width="72" height="72" viewBox="0 0 72 72"><rect x="8" y="8" width="56" height="56" rx="6" fill="#A32D2D" opacity="0.12" stroke="#A32D2D" stroke-width="2.5"/><rect x="18" y="18" width="36" height="36" rx="4" fill="#A32D2D" opacity="0.5"/></svg>
+        <div style="font-size:13px;font-weight:500;color:var(--red);margin-top:6px;">HOLD BACK ✗</div>
+        <div style="font-size:11px;color:var(--text-muted);">Square = No-Go</div>
+      </div>
+    </div>
+    <p class="game-intro-para">Shapes flash on screen. Circle — tap. Square — don't. Your brain will want to tap everything that appears. That's the whole trap. 40 rounds, each shape visible for under a third of a second.</p>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">40</div><div class="stat-lbl">trials</div></div>
+      <div class="stat-cell"><div class="stat-val">~3</div><div class="stat-lbl">minutes</div></div>
+      <div class="stat-cell"><div class="stat-val">75%</div><div class="stat-lbl">are Go trials</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startGNG()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══ RUK GAME ═══ -->
+<div id="screen-gng-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div class="gng-stat-bar">
+      <div class="gng-stat-cell"><div class="gng-stat-val" id="gng-trial-num">1</div><div class="gng-stat-lbl">of 40</div></div>
+      <div class="gng-stat-cell"><div class="gng-stat-val" id="gng-hits" style="color:var(--teal);">0</div><div class="gng-stat-lbl">hits</div></div>
+      <div class="gng-stat-cell"><div class="gng-stat-val" id="gng-errors" style="color:var(--red);">0</div><div class="gng-stat-lbl">errors</div></div>
+    </div>
+    <div class="gng-trial-dots" id="gng-dots"></div>
+    <div class="gng-arena" id="gng-arena">
+      <div class="gng-shape-wrap" id="gng-shape-wrap"></div>
+      <div class="gng-feedback-strip" id="gng-feedback"></div>
+    </div>
+    <button class="gng-tap-btn" id="gng-tap-btn" onclick="gngTap()">TAP</button>
+    <p style="font-size:12px;color:var(--text-hint);text-align:center;margin-top:10px;">Circle → tap · Square → don't</p>
+  </div>
+</div>
+
+<!-- ═══ RUK RESULTS ═══ -->
+<div id="screen-gng-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">⚡</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Ruk — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 5 · Impulse Control &amp; Attention</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Impulse control score</div>
+      <div id="gng-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="gng-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1rem;">
+      <div class="stat-cell"><div id="gng-r-hits" class="stat-val"></div><div class="stat-lbl">Hits</div></div>
+      <div class="stat-cell"><div id="gng-r-fa" class="stat-val" style="color:var(--red);"></div><div class="stat-lbl">False alarms</div></div>
+      <div class="stat-cell"><div id="gng-r-rt" class="stat-val"></div><div class="stat-lbl">Avg RT (ms)</div></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1rem;">
+      <div class="stat-cell"><div id="gng-r-misses" class="stat-val"></div><div class="stat-lbl">Misses</div></div>
+      <div class="stat-cell"><div id="gng-r-fatigue" class="stat-val" style="font-size:14px;"></div><div class="stat-lbl">Attention trend</div></div>
+      <div class="stat-cell"><div id="gng-r-acc" class="stat-val"></div><div class="stat-lbl">Accuracy</div></div>
+    </div>
+    <div style="margin-bottom:1rem;">
+      <p style="font-size:11px;color:var(--text-hint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;">Trial map</p>
+      <div class="gng-trial-dots" id="gng-r-dots"></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+        <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--teal);display:inline-block;"></span>Hit</span>
+        <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--text-hint);display:inline-block;"></span>Miss</span>
+        <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--red);display:inline-block;"></span>False alarm</span>
+        <span style="font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:5px;"><span style="width:9px;height:9px;border-radius:50%;background:var(--surface);border:1.5px solid var(--border-strong);display:inline-block;"></span>Correct reject</span>
+      </div>
+    </div>
+    <div class="summary-card"><p id="gng-r-summary"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('GNG')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ SAUDAA INTRO ═══ -->
+<div id="screen-ult-intro" class="screen">
+  <div class="container" style="max-width:480px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Game 6 of 10</span>
+    <div class="game-name-hindi">⚖️ Saudaa</div>
+    <div class="game-name-sub">saudaa — deal, bargain</div>
+    <div style="display:flex;justify-content:center;margin-bottom:1.5rem;">
+      <svg width="200" height="80" viewBox="0 0 200 80">
+        <rect x="8" y="18" width="80" height="44" rx="8" fill="var(--amber)" opacity="0.15" stroke="var(--amber)" stroke-width="1.5"/>
+        <text x="48" y="37" text-anchor="middle" font-size="11" fill="var(--amber-dark)" font-family="DM Sans,sans-serif" font-weight="500">YOU GET</text>
+        <text x="48" y="55" text-anchor="middle" font-size="20" fill="var(--amber)" font-family="DM Sans,sans-serif" font-weight="500">₹?</text>
+        <line x1="100" y1="8" x2="100" y2="72" stroke="var(--border-strong)" stroke-width="1.5" stroke-dasharray="4,3"/>
+        <rect x="112" y="18" width="80" height="44" rx="8" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="1.5"/>
+        <text x="152" y="37" text-anchor="middle" font-size="11" fill="var(--text-muted)" font-family="DM Sans,sans-serif" font-weight="500">AI KEEPS</text>
+        <text x="152" y="55" text-anchor="middle" font-size="20" fill="var(--text-muted)" font-family="DM Sans,sans-serif" font-weight="500">₹?</text>
+      </svg>
+    </div>
+    <p class="game-intro-para">There's ₹100 on the table. The AI decides how to split it. You say yes or no. Reject and neither of you gets anything. Accept and you bank your share. Ten rounds. No counter-offers.</p>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.5rem;">
+      <div class="stat-cell"><div class="stat-val">10</div><div class="stat-lbl">rounds</div></div>
+      <div class="stat-cell"><div class="stat-val">₹100</div><div class="stat-lbl">per round</div></div>
+      <div class="stat-cell"><div class="stat-val">~3</div><div class="stat-lbl">minutes</div></div>
+    </div>
+    <button class="btn btn-primary btn-full" style="padding:15px;font-size:16px;" onclick="startULT()">Start →</button>
+  </div>
+</div>
+
+<!-- ═══ SAUDAA GAME ═══ -->
+<div id="screen-ult-game" class="screen">
+  <div class="container" style="max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <span style="font-size:13px;color:var(--text-muted);">Round <span id="ult-round-num">1</span> of 10</span>
+      <span style="font-size:13px;color:var(--text-muted);">Banked: <strong id="ult-earned" style="color:var(--text);">₹0</strong></span>
+    </div>
+    <div class="progress-track" style="margin-bottom:1.5rem;"><div id="ult-prog" class="progress-fill" style="width:0%;"></div></div>
+    <div id="ult-history" style="margin-bottom:1.25rem;"></div>
+    <div id="ult-choice-state">
+      <div class="surface" style="text-align:center;padding:2rem 1.25rem;margin-bottom:1.25rem;">
+        <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">AI offers you</div>
+        <div id="ult-offer-display" style="font-size:56px;font-weight:500;color:var(--amber);line-height:1;margin-bottom:8px;"></div>
+        <div id="ult-offer-label" style="font-size:13px;color:var(--text-muted);margin-bottom:14px;font-weight:500;"></div>
+        <div style="display:flex;justify-content:center;gap:28px;font-size:13px;color:var(--text-muted);">
+          <span>You: <strong id="ult-offer-you" style="color:var(--amber);"></strong></span>
+          <span style="color:var(--border-strong);">|</span>
+          <span>AI keeps: <strong id="ult-offer-ai" style="color:var(--text-muted);"></strong></span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px;">
+        <button class="btn btn-secondary" style="padding:22px 10px;flex-direction:column;gap:7px;height:auto;" onclick="ultChoice(false)">
+          <span style="font-size:28px;">❌</span><span style="font-size:14px;font-weight:500;">Reject</span><span style="font-size:11px;color:var(--text-hint);">Both get nothing</span>
+        </button>
+        <button class="btn btn-primary" style="padding:22px 10px;flex-direction:column;gap:7px;height:auto;" onclick="ultChoice(true)">
+          <span style="font-size:28px;">✅</span><span style="font-size:14px;font-weight:500;">Accept</span><span style="font-size:11px;opacity:0.75;">Bank your share</span>
+        </button>
+      </div>
+      <p style="font-size:11px;color:var(--text-hint);text-align:center;">No counter-offers — accept or walk away</p>
+    </div>
+    <div id="ult-reveal-state" style="display:none;">
+      <div class="surface" style="text-align:center;padding:1.5rem;margin-bottom:1rem;">
+        <p id="ult-reveal-result" style="font-size:15px;font-weight:500;line-height:1.65;"></p>
+      </div>
+      <button id="ult-next-btn" class="btn btn-primary btn-full" style="padding:14px;">Next round →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SAUDAA RESULTS ═══ -->
+<div id="screen-ult-results" class="screen">
+  <div class="container fade-in" style="max-width:480px;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <div style="font-size:48px;margin-bottom:10px;">⚖️</div>
+      <h1 style="font-size:22px;font-weight:500;margin-bottom:4px;">Saudaa — complete!</h1>
+      <p style="color:var(--text-muted);font-size:14px;">Game 6 · Fairness &amp; Negotiation</p>
+    </div>
+    <div class="surface" style="text-align:center;padding:1.75rem;margin-bottom:1rem;">
+      <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:8px;">Fairness score</div>
+      <div id="ult-r-score" style="font-size:52px;font-weight:500;color:var(--amber);line-height:1;"></div>
+      <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">out of 100</div>
+      <div id="ult-r-label" style="font-size:17px;font-weight:500;margin-top:10px;"></div>
+    </div>
+    <div class="stat-grid stat-grid-3" style="margin-bottom:1.25rem;">
+      <div class="stat-cell"><div id="ult-r-reject" class="stat-val" style="color:var(--red);"></div><div class="stat-lbl">Rejected</div></div>
+      <div class="stat-cell"><div id="ult-r-accept" class="stat-val" style="color:var(--teal);"></div><div class="stat-lbl">Accepted</div></div>
+      <div class="stat-cell"><div id="ult-r-earned" class="stat-val"></div><div class="stat-lbl">Banked</div></div>
+    </div>
+    <div class="summary-card"><p id="ult-r-summary"></p></div>
+    <button class="btn btn-primary btn-full" style="padding:14px;" onclick="showB5('ULT')">Continue →</button>
+  </div>
+</div>
+
+<!-- ═══ CONTEXT ═══ -->
+<div id="screen-context" class="screen">
+  <div class="container" style="max-width:480px;">
+    <span class="pill">Almost there</span>
+    <h1 style="font-size:22px;font-weight:500;margin:10px 0 6px;">A few things about you</h1>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.75rem;">Helps us make the results actually about you — not just anyone who plays the games.</p>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">Gender</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1.5rem;">
+      <button class="ctx-opt" id="ctx-g-m" onclick="ctxSelect('gender','M',['ctx-g-m','ctx-g-f','ctx-g-nb','ctx-g-skip'])"><span class="ctx-icon">👨</span><span class="ctx-text">Male</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-g-f" onclick="ctxSelect('gender','F',['ctx-g-m','ctx-g-f','ctx-g-nb','ctx-g-skip'])"><span class="ctx-icon">👩</span><span class="ctx-text">Female</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-g-nb" onclick="ctxSelect('gender','NB',['ctx-g-m','ctx-g-f','ctx-g-nb','ctx-g-skip'])"><span class="ctx-icon">🧑</span><span class="ctx-text">Non-binary</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-g-skip" onclick="ctxSelect('gender','skip',['ctx-g-m','ctx-g-f','ctx-g-nb','ctx-g-skip'])"><span class="ctx-icon">🤐</span><span class="ctx-text">Skip</span><span class="ctx-check">✓</span></button>
+    </div>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">Birth year</p>
+    <div style="margin-bottom:1.5rem;"><select id="ctx-dob-year" onchange="ctxSetVal('dobYear',this.value)"><option value="">Select year</option></select></div>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">Where you are right now</p>
+    <div style="margin-bottom:1.5rem;">
+      <button class="ctx-opt" id="ctx-w-startup" onclick="ctxSelect('work','startup',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🚀</span><span class="ctx-text">Fast startup / small company</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-w-mnc" onclick="ctxSelect('work','mnc',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🏢</span><span class="ctx-text">Large company / MNC</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-w-family" onclick="ctxSelect('work','family',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🏠</span><span class="ctx-text">Family business</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-w-govt" onclick="ctxSelect('work','govt',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🏛️</span><span class="ctx-text">Government / PSU</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-w-study" onclick="ctxSelect('work','studying',['ctx-w-startup','ctx-w-mnc','ctx-w-family','ctx-w-govt','ctx-w-study'])"><span class="ctx-icon">🎓</span><span class="ctx-text">Still studying</span><span class="ctx-check">✓</span></button>
+    </div>
+    <p style="font-size:13px;font-weight:500;margin-bottom:8px;">What you're aiming for</p>
+    <div style="margin-bottom:1.75rem;">
+      <button class="ctx-opt" id="ctx-a-own" onclick="ctxSelect('aspiration','own',['ctx-a-own','ctx-a-lead','ctx-a-deep','ctx-a-fig'])"><span class="ctx-icon">⚡</span><span class="ctx-text">Build my own thing eventually</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-a-lead" onclick="ctxSelect('aspiration','lead',['ctx-a-own','ctx-a-lead','ctx-a-deep','ctx-a-fig'])"><span class="ctx-icon">🧭</span><span class="ctx-text">Lead teams and organizations</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-a-deep" onclick="ctxSelect('aspiration','deep',['ctx-a-own','ctx-a-lead','ctx-a-deep','ctx-a-fig'])"><span class="ctx-icon">🔬</span><span class="ctx-text">Go deep in my field</span><span class="ctx-check">✓</span></button>
+      <button class="ctx-opt" id="ctx-a-fig" onclick="ctxSelect('aspiration','figuring',['ctx-a-own','ctx-a-lead','ctx-a-deep','ctx-a-fig'])"><span class="ctx-icon">🌀</span><span class="ctx-text">Still figuring it out</span><span class="ctx-check">✓</span></button>
+    </div>
+    <div class="err-box" id="ctx-err"></div>
+    <button class="btn btn-primary btn-full" style="padding:15px;" onclick="saveContext()">Let's go →</button>
+  </div>
+</div>
+
+<!-- ═══ B5 QUESTION ═══ -->
+<div id="screen-b5" class="screen">
+  <div class="container" style="max-width:480px;padding-top:3rem;">
+    <span class="pill" id="b5-pill">Quick question</span>
+    <p class="b5-q" id="b5-question"></p>
+    <div id="b5-options"></div>
+    <p style="font-size:12px;color:var(--text-hint);margin-top:1rem;">No right answers. This is just how you see yourself — the games tell us what you actually do.</p>
+  </div>
+</div>
+
+<!-- ═══ TEAM ═══ -->
+<div id="screen-team" class="screen">
+  <div class="container" style="max-width:520px;">
+    <button class="back-btn" onclick="showScreen('dashboard')">← Dashboard</button>
+    <span class="pill">Team snapshot</span>
+    <h1 style="font-size:22px;font-weight:500;margin:10px 0 6px;">How does your team operate?</h1>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:1.5rem;">Upload profile files from each team member. Everyone exports their own file from their dashboard — you upload them all here.</p>
+    <div id="team-upload-area">
+      <div class="team-drop" id="team-dropzone" onclick="document.getElementById('team-file-input').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleTeamDrop(event)">
+        <div style="font-size:32px;margin-bottom:8px;">📂</div>
+        <p style="font-weight:500;margin-bottom:4px;">Drop profile files here</p>
+        <p style="font-size:13px;color:var(--text-muted);">or tap to choose — upload 2 to 10 files</p>
+      </div>
+      <input type="file" id="team-file-input" accept=".json" multiple style="display:none;" onchange="handleTeamFiles(this.files)" />
+      <div id="team-file-list" style="margin-top:1rem;"></div>
+      <div id="team-manager-row" style="display:none;margin-top:1rem;">
+        <p style="font-size:13px;font-weight:500;margin-bottom:6px;">Who's the manager?</p>
+        <select id="team-manager-sel"><option value="">No manager — peer group</option></select>
+        <p style="font-size:12px;color:var(--text-hint);margin-top:5px;">Leave blank if this is a peer-only group.</p>
+      </div>
+      <div style="margin-top:1.25rem;">
+        <button class="btn btn-primary btn-full" style="padding:14px;" id="team-analyse-btn" onclick="analyseTeam()" disabled>Analyse team →</button>
+      </div>
+    </div>
+    <div id="team-results" style="display:none;margin-top:1.5rem;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+        <p style="font-size:16px;font-weight:500;">Your team picture</p>
+        <button class="btn btn-secondary btn-sm" onclick="resetTeam()">Start over</button>
+      </div>
+      <div class="team-out-section"><span class="team-out-label">✅ The good</span><div class="team-good"><p id="team-good-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
+      <div class="team-out-section"><span class="team-out-label">⚠️ The bad</span><div class="team-bad"><p id="team-bad-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
+      <div class="team-out-section"><span class="team-out-label">🔥 The ugly</span><div class="team-ugly"><p id="team-ugly-text" style="font-size:14px;color:var(--text-muted);line-height:1.8;"></p></div></div>
+      <div id="team-mgr-section" style="display:none;" class="team-out-section">
+        <span class="team-out-label">🧭 Manager ↔ team dynamic</span>
+        <div id="team-mgr-text"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+// CORE UTILITIES
+// ═══════════════════════════════════════════════════════════
+const BC = {
+  blue:   {fill:'#3b82f6',shine:'#93c5fd',label:'Blue — lower risk',  bg:'#E6F1FB',tc:'#1e40af',max:64},
+  yellow: {fill:'#d97706',shine:'#fcd34d',label:'Yellow — medium risk',bg:'#FEF3C7',tc:'#92400e',max:32},
+  red:    {fill:'#dc2626',shine:'#fca5a5',label:'Red — higher risk',   bg:'#FEE2E2',tc:'#991b1b',max:16}
+};
+const EARN=5,TOTAL=30;
+let user=null,gameActive=false;
+let balloons=[],ti=0,pumps=0,thresh=0,bcol='',banked=0,trials=[];
+
+function safeKey(p,v){return p+v.toLowerCase().replace(/[^a-z0-9]/g,'_');}
+function lsGet(k){try{return localStorage.getItem(k);}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem(k,v);return true;}catch(e){return false;}}
+function lsDel(k){try{localStorage.removeItem(k);}catch(e){}}
+
+// ═══ SAVE SCORE HELPER ═══
+function saveScore(result){
+  const ek=safeKey('rl_ue_',user.email);
+  const ud=JSON.parse(lsGet(ek)||JSON.stringify({...user,scores:[]}));
+  ud.scores=(ud.scores||[]).filter(s=>s.game!==result.game);
+  ud.scores.push(result);
+  lsSet(ek,JSON.stringify(ud));
+  user=ud;
+}
+
+// ═══════════════════════════════════════════════════════════
+// ROUTING
+// ═══════════════════════════════════════════════════════════
+const SCREENS=['landing','auth','context','b5','dashboard','game-intro','game','results',
+  'pd-intro','pd-game','pd-results','toh-intro','toh-game','toh-results',
+  'fer-intro','fer-game','fer-results','gng-intro','gng-game','gng-results',
+  'ult-intro','ult-game','ult-results','team'];
+
+function showScreen(id){
+  SCREENS.forEach(s=>{const el=document.getElementById('screen-'+s);if(el)el.classList.remove('active');});
+  const t=document.getElementById('screen-'+id);if(t)t.classList.add('active');
+  updateNav(id);
+}
+function updateNav(id){
+  const nr=document.getElementById('nav-right');
+  const li=['dashboard','context','b5','game-intro','game','results','pd-intro','pd-game','pd-results',
+    'toh-intro','toh-game','toh-results','fer-intro','fer-game','fer-results',
+    'gng-intro','gng-game','gng-results','ult-intro','ult-game','ult-results','team'];
+  nr.innerHTML=li.includes(id)
+    ?`<button class="btn btn-secondary btn-sm" onclick="handleLogout()">Logout</button>`
+    :`<button class="btn btn-secondary btn-sm" onclick="showAuth('login')">Login</button>`;
+}
+function goHome(){user?enterDashboard():showScreen('landing');}
+
+// ═══════════════════════════════════════════════════════════
+// AUTH
+// ═══════════════════════════════════════════════════════════
+function showAuth(tab){showScreen('auth');switchTab(tab);}
+function switchTab(tab){
+  document.getElementById('form-signup').style.display=tab==='signup'?'block':'none';
+  document.getElementById('form-login').style.display=tab==='login'?'block':'none';
+  document.getElementById('tab-su').classList.toggle('active',tab==='signup');
+  document.getElementById('tab-li').classList.toggle('active',tab==='login');
+}
+function showErr(id,msg){const e=document.getElementById(id);if(e){e.textContent=msg;e.style.display='block';}}
+function clrErr(id){const e=document.getElementById(id);if(e)e.style.display='none';}
+
+function handleSignup(){
+  clrErr('su-err');
+  const name=document.getElementById('su-name').value.trim();
+  const email=document.getElementById('su-email').value.trim().toLowerCase();
+  const mobile=document.getElementById('su-mobile').value.replace(/\s/g,'');
+  const pw=document.getElementById('su-pw').value;
+  if(!name){showErr('su-err','Enter your name.');return;}
+  if(!email||!email.includes('@')){showErr('su-err','Enter a valid email address.');return;}
+  if(!mobile||mobile.length!==10||!/^\d+$/.test(mobile)){showErr('su-err','Enter a valid 10-digit mobile number.');return;}
+  if(!pw||pw.length<6){showErr('su-err','Password must be at least 6 characters.');return;}
+  const btn=document.getElementById('su-btn');btn.disabled=true;btn.textContent='Creating account...';
+  const ek=safeKey('rl_ue_',email),mk=safeKey('rl_um_',mobile);
+  if(lsGet(ek)){showErr('su-err','Email already registered.');btn.disabled=false;btn.textContent='Create account →';return;}
+  if(lsGet(mk)){showErr('su-err','Mobile already registered.');btn.disabled=false;btn.textContent='Create account →';return;}
+  const u={name,email,mobile,password:pw,scores:[],createdAt:new Date().toISOString()};
+  lsSet(ek,JSON.stringify(u));lsSet(mk,JSON.stringify({emailKey:ek}));
+  lsSet('rl_session',JSON.stringify({emailKey:ek,name}));
+  user=u;btn.disabled=false;btn.textContent='Create account →';showContextScreen();
+}
+function handleLogin(){
+  clrErr('li-err');
+  const id=document.getElementById('li-id').value.trim().toLowerCase();
+  const pw=document.getElementById('li-pw').value;
+  if(!id){showErr('li-err','Enter your email or mobile number.');return;}
+  if(!pw){showErr('li-err','Enter your password.');return;}
+  const btn=document.getElementById('li-btn');btn.disabled=true;btn.textContent='Logging in...';
+  let uData=null;const cleanId=id.replace(/\s/g,'');
+  if(/^\d{10}$/.test(cleanId)){
+    const mref=lsGet(safeKey('rl_um_',cleanId));
+    if(!mref){showErr('li-err','No account with this mobile number.');btn.disabled=false;btn.textContent='Login →';return;}
+    const ur=lsGet(JSON.parse(mref).emailKey);if(ur)uData=JSON.parse(ur);
+  }else{const ur=lsGet(safeKey('rl_ue_',id));if(ur)uData=JSON.parse(ur);}
+  if(!uData){showErr('li-err','No account found.');btn.disabled=false;btn.textContent='Login →';return;}
+  if(uData.password!==pw){showErr('li-err','Incorrect password.');btn.disabled=false;btn.textContent='Login →';return;}
+  const ek=safeKey('rl_ue_',uData.email);
+  lsSet('rl_session',JSON.stringify({emailKey:ek,name:uData.name}));
+  user=uData;btn.disabled=false;btn.textContent='Login →';enterDashboard();
+}
+function handleLogout(){lsDel('rl_session');user=null;showScreen('landing');}
+
+// ═══════════════════════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════════════════════
+function enterDashboard(){
+  if(!user)return;
+  document.getElementById('dash-greet').textContent='Hey, '+user.name.split(' ')[0]+' 👋';
+  const scores=user.scores||[];
+  document.getElementById('prog-txt').textContent=scores.length+' / 10 games';
+  document.getElementById('prog-fill').style.width=(scores.length*10)+'%';
+
+  const bartDone=scores.find(s=>s.game==='BART');
+  document.getElementById('g1-cta').style.display=bartDone?'none':'block';
+  document.getElementById('g1-done').style.display=bartDone?'block':'none';
+  if(bartDone)document.getElementById('g1-preview').textContent=bartDone.label+' · Score '+bartDone.bartScore.toFixed(1);
+
+  const pdDone=scores.find(s=>s.game==='PD');
+  document.getElementById('g2-cta').style.display=(bartDone&&!pdDone)?'block':'none';
+  document.getElementById('g2-done').style.display=pdDone?'block':'none';
+  if(pdDone)document.getElementById('g2-preview').textContent=pdDone.label+' · Score '+pdDone.cooperationScore;
+
+  const tohDone=scores.find(s=>s.game==='TOH');
+  document.getElementById('g3-cta').style.display=(pdDone&&!tohDone)?'block':'none';
+  document.getElementById('g3-done').style.display=tohDone?'block':'none';
+  if(tohDone)document.getElementById('g3-preview').textContent=tohDone.label+' · Score '+tohDone.planningScore;
+
+  const ferDone=scores.find(s=>s.game==='FER');
+  document.getElementById('g4-cta').style.display=(tohDone&&!ferDone)?'block':'none';
+  document.getElementById('g4-done').style.display=ferDone?'block':'none';
+  if(ferDone){
+    const sv=ferDone.stroopScore!==undefined?ferDone.stroopScore:(ferDone.ferScore||'—');
+    document.getElementById('g4-preview').textContent=ferDone.label+' · Score '+sv;
+  }
+
+  const gngDone=scores.find(s=>s.game==='GNG');
+  document.getElementById('g5-cta').style.display=(ferDone&&!gngDone)?'block':'none';
+  document.getElementById('g5-done').style.display=gngDone?'block':'none';
+  if(gngDone)document.getElementById('g5-preview').textContent=gngDone.label+' · Score '+gngDone.gngScore;
+
+  const ultDone=scores.find(s=>s.game==='ULT');
+  document.getElementById('g6-cta').style.display=(gngDone&&!ultDone)?'block':'none';
+  document.getElementById('g6-done').style.display=ultDone?'block':'none';
+  if(ultDone)document.getElementById('g6-preview').textContent=ultDone.label+' · Score '+ultDone.fairnessScore;
+
+  if(scores.length>0){
+    document.getElementById('scores-section').style.display='block';
+    document.getElementById('scores-list').innerHTML=scores.map(s=>{
+      const info=
+        s.game==='BART'?{icon:'🎈',name:'Dum',    label:s.label,val:s.bartScore?s.bartScore.toFixed(1):'—'}:
+        s.game==='PD'  ?{icon:'🤝',name:'Bharosa',label:s.label,val:s.cooperationScore}:
+        s.game==='TOH' ?{icon:'🗼',name:'Burj',   label:s.label,val:s.planningScore}:
+        s.game==='FER' ?{icon:'🎨',name:'Rang',   label:s.label,val:(s.stroopScore!==undefined?s.stroopScore:s.ferScore)||'—'}:
+        s.game==='GNG' ?{icon:'⚡',name:'Ruk',    label:s.label,val:s.gngScore}:
+        s.game==='ULT' ?{icon:'⚖️',name:'Saudaa', label:s.label,val:s.fairnessScore}:
+                        {icon:'🎮',name:s.game,   label:s.label||'—',val:'—'};
+      return`<div class="score-row">
+        <div>
+          <div style="font-weight:500;font-size:14px;">${info.icon} ${info.name}</div>
+          <div style="font-size:12px;color:var(--text-muted);">${new Date(s.date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:13px;font-weight:500;color:var(--amber);">${info.label}</div>
+          <div style="font-size:12px;color:var(--text-muted);">Score ${info.val}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  showScreen('dashboard');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 1: DUM (BART)
+// ═══════════════════════════════════════════════════════════
+function makeBalloons(){
+  const a=[...Array(10).fill('blue'),...Array(10).fill('yellow'),...Array(10).fill('red')];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a.map(c=>({color:c,threshold:Math.floor(Math.random()*BC[c].max)+1}));
+}
+function startGame(){balloons=makeBalloons();ti=0;banked=0;trials=[];showScreen('game');setupBalloon();}
+function setupBalloon(){
+  const b=balloons[ti];bcol=b.color;thresh=b.threshold;pumps=0;gameActive=true;
+  const c=BC[bcol];
+  document.getElementById('g-num').textContent=ti+1;
+  document.getElementById('g-banked').textContent='₹'+banked;
+  document.getElementById('g-earn').textContent='₹0';
+  document.getElementById('g-camt').textContent='0';
+  document.getElementById('g-pumps').textContent='0';
+  document.getElementById('g-boom').style.display='none';
+  document.getElementById('balloon-wrap').style.display='block';
+  document.getElementById('balloon-wrap').style.transform='scale(1)';
+  document.getElementById('g-prog').style.width=((ti+1)/TOTAL*100)+'%';
+  document.getElementById('g-pbtn').disabled=false;document.getElementById('g-cbtn').disabled=false;
+  document.getElementById('b-body').setAttribute('fill',c.fill);
+  document.getElementById('b-shine').setAttribute('fill',c.shine);
+  const badge=document.getElementById('g-badge');
+  badge.textContent=c.label;badge.style.background=c.bg;badge.style.color=c.tc;
+}
+function pump(){
+  if(!gameActive)return;pumps++;const earn=pumps*EARN;
+  document.getElementById('g-earn').textContent='₹'+earn;
+  document.getElementById('g-camt').textContent=earn;
+  document.getElementById('g-pumps').textContent=pumps;
+  const sc=1+(pumps/BC[bcol].max)*1.5;
+  document.getElementById('balloon-wrap').style.transform='scale('+Math.min(sc,3)+')';
+  if(pumps>=thresh)explodeBalloon();
+}
+function explodeBalloon(){
+  gameActive=false;trials.push({color:bcol,pumps,exploded:true,earned:0});
+  document.getElementById('balloon-wrap').style.display='none';
+  document.getElementById('g-boom').style.display='block';
+  document.getElementById('g-earn').textContent='💥 Popped!';
+  document.getElementById('g-pbtn').disabled=true;document.getElementById('g-cbtn').disabled=true;
+  setTimeout(()=>{document.getElementById('g-boom').style.display='none';document.getElementById('balloon-wrap').style.display='block';ti++;if(ti>=TOTAL)endGame();else setupBalloon();},1300);
+}
+function collect(){
+  if(!gameActive||pumps===0)return;gameActive=false;
+  const earned=pumps*EARN;banked+=earned;trials.push({color:bcol,pumps,exploded:false,earned});
+  document.getElementById('g-pbtn').disabled=true;document.getElementById('g-cbtn').disabled=true;
+  document.getElementById('g-banked').textContent='₹'+banked;
+  setTimeout(()=>{ti++;if(ti>=TOTAL)endGame();else setupBalloon();},350);
+}
+function calcBART(tr){const ok=tr.filter(t=>!t.exploded);if(!ok.length)return 0;return ok.reduce((s,t)=>s+t.pumps,0)/ok.length;}
+
+function getBARTSummary(bartScore,learningIndex){
+  const trend=learningIndex>1.15?' You got bolder as the game went on — worth noticing whether that\'s learning or chasing losses.':learningIndex<0.85?' You pulled back as the game progressed — active self-calibration.':'';
+  if(bartScore<8)  return'You protect what you have. Certainty matters more than upside — and that\'s not a weakness.'+trend;
+  if(bartScore<16) return'You evaluate risk, you don\'t avoid it. That distinction is rarer than it sounds.'+trend;
+  if(bartScore<28) return'You pump hard and don\'t flinch — appetite, not recklessness.'+trend;
+  return'You actively seek the edge. Low stakes genuinely bore you.'+trend;
+}
+
+function endGame(){
+  const bartScore=calcBART(trials);const pops=trials.filter(t=>t.exploded).length;
+  const np=trials.filter(t=>!t.exploded);const mid=Math.floor(np.length/2);
+  const fa=np.slice(0,mid).length?np.slice(0,mid).reduce((s,t)=>s+t.pumps,0)/np.slice(0,mid).length:bartScore;
+  const sa=np.slice(mid).length?np.slice(mid).reduce((s,t)=>s+t.pumps,0)/np.slice(mid).length:bartScore;
+  const li=fa>0?sa/fa:1;
+  const label=bartScore<8?'The Protector':bartScore<16?'The Calibrated':bartScore<28?'The Bold One':'The High-Roller';
+  const trendLabel=li>1.1?'↑ Escalating':li<0.9?'↓ Calibrating':'→ Steady';
+  const result={game:'BART',bartScore,label,learningIndex:li,totalBanked:banked,pops,date:new Date().toISOString()};
+  saveScore(result);
+  document.getElementById('r-score').textContent=bartScore.toFixed(1);
+  document.getElementById('r-label').textContent=label;
+  document.getElementById('r-banked').textContent='₹'+banked;
+  document.getElementById('r-pops').textContent=pops;
+  document.getElementById('r-trend').textContent=trendLabel;
+  document.getElementById('r-summary').textContent=getBARTSummary(bartScore,li);
+  showScreen('results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 2: BHAROSA (PD)
+// ═══════════════════════════════════════════════════════════
+const PD_ROUNDS=10,PD_PAYOFF={CC:[3,3],CD:[0,5],DC:[5,0],DD:[1,1]};
+let pdRound=0,pdPlayerMoves=[],pdAIMoves=[],pdPlayerPts=0,pdAIPts=0,pdWaiting=false;
+
+function startPD(){pdRound=0;pdPlayerMoves=[];pdAIMoves=[];pdPlayerPts=0;pdAIPts=0;pdWaiting=false;showScreen('pd-game');pdSetupRound();}
+function pdSetupRound(){
+  document.getElementById('pd-round-num').textContent=pdRound+1;
+  document.getElementById('pd-prog').style.width=(pdRound/PD_ROUNDS*100)+'%';
+  document.getElementById('pd-your-score').textContent=pdPlayerPts;
+  document.getElementById('pd-ai-score').textContent=pdAIPts;
+  document.getElementById('pd-choice-state').style.display='block';
+  document.getElementById('pd-reveal-state').style.display='none';
+  pdWaiting=false;pdRenderHistory();
+}
+function pdAIMove(){if(pdRound===0)return'C';if(Math.random()<0.1)return Math.random()<0.5?'C':'D';return pdPlayerMoves[pdRound-1];}
+function pdChoice(playerMove){
+  if(pdWaiting)return;pdWaiting=true;
+  const aiMove=pdAIMove();pdPlayerMoves.push(playerMove);pdAIMoves.push(aiMove);
+  const key=playerMove+aiMove;const[pp,ap]=PD_PAYOFF[key];pdPlayerPts+=pp;pdAIPts+=ap;pdRound++;
+  document.getElementById('pd-round-num').textContent=pdRound;
+  document.getElementById('pd-prog').style.width=(pdRound/PD_ROUNDS*100)+'%';
+  document.getElementById('pd-your-score').textContent=pdPlayerPts;
+  document.getElementById('pd-ai-score').textContent=pdAIPts;
+  document.getElementById('pd-choice-state').style.display='none';
+  document.getElementById('pd-reveal-state').style.display='block';
+  document.getElementById('pd-reveal-you').textContent=playerMove==='C'?'🤝':'🔪';
+  document.getElementById('pd-reveal-ai').textContent=aiMove==='C'?'🤝':'🔪';
+  document.getElementById('pd-reveal-you-label').textContent=playerMove==='C'?'Cooperated':'Defected';
+  document.getElementById('pd-reveal-ai-label').textContent=aiMove==='C'?'Cooperated':'Defected';
+  const msgs={CC:'Both cooperated — <strong>+3 each.</strong> Trust pays off. 🤝',CD:'AI defected while you cooperated — <strong>you get +0, AI gets +5.</strong> 😤',DC:'You defected while AI cooperated — <strong>you get +5, AI gets +0.</strong>',DD:'Both defected — <strong>+1 each.</strong> Mutual distrust costs everyone. 😐'};
+  document.getElementById('pd-round-outcome').innerHTML=msgs[key];
+  const nb=document.getElementById('pd-next-btn');
+  if(pdRound>=PD_ROUNDS){nb.textContent='See results →';nb.onclick=pdEndGame;}else{nb.textContent='Next round →';nb.onclick=pdNextRound;}
+  pdRenderHistory();
+}
+function pdNextRound(){pdSetupRound();}
+function pdRenderHistory(){
+  const el=document.getElementById('pd-history');
+  if(pdPlayerMoves.length===0){el.innerHTML='<p style="font-size:12px;color:var(--text-hint);text-align:center;padding:8px 0;">Your choices will appear here</p>';return;}
+  el.innerHTML=[...pdPlayerMoves].reverse().slice(0,5).map((pm,ri)=>{
+    const i=pdPlayerMoves.length-1-ri;const am=pdAIMoves[i];const[pp]=PD_PAYOFF[pm+am];
+    const col=pp>=3?'var(--teal)':pp===0?'var(--red)':'var(--text-muted)';
+    return`<div style="display:flex;align-items:center;font-size:12px;padding:5px 9px;background:var(--surface);border-radius:6px;margin-bottom:3px;">
+      <span style="color:var(--text-hint);width:26px;flex-shrink:0;font-size:11px;">R${i+1}</span>
+      <span style="flex:1;">You ${pm==='C'?'🤝':'🔪'}</span><span style="flex:1;">AI ${am==='C'?'🤝':'🔪'}</span>
+      <span style="font-weight:500;color:${col};font-size:12px;">+${pp} pts</span>
+    </div>`;
+  }).join('');
+}
+
+function getPDSummary(cooperations,openingMove,endgameD){
+  const rate=cooperations/PD_ROUNDS;
+  const openNote=openingMove==='C'?' You opened by cooperating — trust before it\'s been earned.':' You opened by defecting — leverage isn\'t given away just to seem friendly.';
+  const endNote=endgameD>=2?' And you defected at the end when the finish line was in sight.':'';
+  if(rate>=0.8) return'You lead with trust even before it\'s verified.'+openNote+endNote;
+  if(rate>=0.5) return'You cooperate when it makes sense, not out of habit.'+openNote+endNote;
+  if(rate>=0.3) return'You play your own game — self-directed, not easily herd-pressured.'+openNote+endNote;
+  return'You run an independent strategy regardless of what others do.'+openNote+endNote;
+}
+
+function pdEndGame(){
+  const cooperations=pdPlayerMoves.filter(m=>m==='C').length;
+  const defections=pdPlayerMoves.filter(m=>m==='D').length;
+  const openingMove=pdPlayerMoves[0]||'C';
+  const endgameD=pdPlayerMoves.slice(-3).filter(m=>m==='D').length;
+  const rate=cooperations/PD_ROUNDS;
+  const score=Math.round(rate*100);
+  const label=rate>=0.8?'The Collaborator':rate>=0.5?'The Strategist':rate>=0.3?'The Opportunist':'The Independent';
+  const result={game:'PD',cooperationScore:score,label,cooperations,defections,openingMove,endgameD,playerScore:pdPlayerPts,aiScore:pdAIPts,date:new Date().toISOString()};
+  saveScore(result);
+  document.getElementById('pd-r-score').textContent=score;
+  document.getElementById('pd-r-label').textContent=label;
+  document.getElementById('pd-r-coop').textContent=cooperations+'/10';
+  document.getElementById('pd-r-defect').textContent=defections+'/10';
+  document.getElementById('pd-r-open').textContent=openingMove==='C'?'🤝 Trust':'🔪 Guard';
+  document.getElementById('pd-r-summary').textContent=getPDSummary(cooperations,openingMove,endgameD);
+  showScreen('pd-results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 3: BURJ (TOH)
+// ═══════════════════════════════════════════════════════════
+const TOH_DISCS=4,TOH_OPTIMAL=15,TOH_TIME=180;
+const TOH_COLORS=['#F5C870','#E8A840','#BA7517','#7C3F0A'];
+const TOH_WIDTHS=[32,50,68,86];
+let tohPegs=[],tohMoves=0,tohUndos=0,tohHistory=[],tohSelected=null;
+let tohTimeLeft=TOH_TIME,tohTimerInterval=null,tohComplete=false,tohDragFrom=null;
+
+function startTOH(){
+  tohPegs=[[4,3,2,1],[],[]];tohMoves=0;tohUndos=0;tohHistory=[];tohSelected=null;tohComplete=false;tohDragFrom=null;tohTimeLeft=TOH_TIME;
+  if(tohTimerInterval){clearInterval(tohTimerInterval);tohTimerInterval=null;}
+  showScreen('toh-game');
+  document.getElementById('toh-moves').textContent='0';document.getElementById('toh-undos').textContent='0';
+  const tel=document.getElementById('toh-timer');tel.textContent='3:00';tel.classList.remove('toh-timer-warn');
+  tohRender();
+  setTimeout(()=>{
+    tohTimerInterval=setInterval(()=>{
+      tohTimeLeft--;
+      const el=document.getElementById('toh-timer');
+      if(el){const m=Math.floor(tohTimeLeft/60),s=tohTimeLeft%60;el.textContent=m+':'+(s<10?'0':'')+s;if(tohTimeLeft<=30)el.classList.add('toh-timer-warn');}
+      if(tohTimeLeft<=0){clearInterval(tohTimerInterval);tohTimerInterval=null;tohEndGame(false);}
+    },1000);
+  },400);
+}
+function tohRender(){
+  const board=document.getElementById('toh-board');if(!board)return;
+  const DH=22,DG=3;
+  board.innerHTML=tohPegs.map((peg,pi)=>{
+    const isSel=tohSelected===pi;
+    const discs=peg.map((d,di)=>{
+      const isTop=di===peg.length-1,bot=di*(DH+DG),wp=TOH_WIDTHS[d-1],col=TOH_COLORS[d-1];
+      return`<div class="toh-disc${isTop?' top-disc':''}" style="bottom:${bot}px;width:${wp}%;height:${DH}px;background:${col};"${isTop?` draggable="true" ondragstart="event.stopPropagation();tohDragStart(${pi})"`:''} ></div>`;
+    }).join('');
+    const lbl=pi===0?'Peg 1 · start':pi===2?'Peg 3 · goal':'Peg 2';
+    return`<div class="toh-peg-col${isSel?' selected':''}" onclick="tohPegClick(${pi})" ondragover="event.preventDefault()" ondrop="event.preventDefault();tohDrop(${pi})">
+      <div class="toh-disc-area"><div class="toh-rod"></div>${discs}</div>
+      <div class="toh-base"></div><div class="toh-peg-label">${lbl}</div>
+    </div>`;
+  }).join('');
+}
+function tohPegClick(pi){
+  if(tohComplete)return;
+  if(tohSelected===null){if(tohPegs[pi].length===0)return;tohSelected=pi;tohRender();}
+  else if(tohSelected===pi){tohSelected=null;tohRender();}
+  else{tohTryMove(tohSelected,pi);tohSelected=null;}
+}
+function tohDragStart(pi){tohDragFrom=pi;}
+function tohDrop(pi){if(tohDragFrom!==null&&tohDragFrom!==pi){tohTryMove(tohDragFrom,pi);}tohDragFrom=null;}
+function tohTryMove(from,to){
+  if(tohPegs[from].length===0)return;
+  const mv=tohPegs[from][tohPegs[from].length-1];
+  const top=tohPegs[to].length>0?tohPegs[to][tohPegs[to].length-1]:null;
+  if(top!==null&&top<mv){
+    const cols=document.getElementById('toh-board').querySelectorAll('.toh-peg-col');
+    if(cols[to]){cols[to].classList.remove('toh-shake');void cols[to].offsetWidth;cols[to].classList.add('toh-shake');setTimeout(()=>cols[to].classList.remove('toh-shake'),400);}
+    return;
+  }
+  tohHistory.push(JSON.parse(JSON.stringify(tohPegs)));
+  tohPegs[from].pop();tohPegs[to].push(mv);tohMoves++;
+  document.getElementById('toh-moves').textContent=tohMoves;
+  if(tohPegs[2].length===TOH_DISCS){
+    tohComplete=true;if(tohTimerInterval){clearInterval(tohTimerInterval);tohTimerInterval=null;}
+    tohRender();const board=document.getElementById('toh-board');if(board)board.classList.add('toh-win');
+    setTimeout(()=>tohEndGame(true),700);return;
+  }
+  tohRender();
+}
+function tohUndo(){
+  if(tohHistory.length===0||tohComplete)return;
+  tohPegs=tohHistory.pop();tohUndos++;tohMoves++;
+  document.getElementById('toh-moves').textContent=tohMoves;document.getElementById('toh-undos').textContent=tohUndos;
+  tohSelected=null;tohRender();
+}
+function tohCalcScore(moves,timeLeft,completed){
+  if(!completed){return Math.max(5,Math.round((tohPegs[2].length/TOH_DISCS)*35));}
+  const eff=Math.min(100,Math.round((TOH_OPTIMAL/moves)*100));
+  const tu=TOH_TIME-timeLeft;let bonus=0;
+  if(tu<45)bonus=10;else if(tu<90)bonus=5;else if(tu<150)bonus=2;
+  return Math.min(100,eff+bonus);
+}
+function getTOHSummary(score,completed,undos,moves){
+  if(!completed) return'You worked right to the clock. The timer got in the way more than the puzzle did.';
+  if(score>=85)  return'You mapped it before you touched it. Most people literally can\'t do that.';
+  if(score>=65)  return'A step ahead, consistently.'+(undos>0?' You course-corrected '+undos+' time'+(undos>1?'s':'')+' — structure and adaptability together.':' Zero undos — committed to every move.');
+  if(score>=40)  return'You figure it out by doing, not by pre-planning. Faster than people give it credit for.';
+  return'Wrong moves are information to you, not failures. Good relationship with uncertainty.';
+}
+function tohEndGame(completed){
+  const planningScore=tohCalcScore(tohMoves,tohTimeLeft,completed);
+  const timeUsed=TOH_TIME-tohTimeLeft;
+  const label=!completed?'The Solver':planningScore>=85?'The Architect':planningScore>=65?'The Planner':planningScore>=40?'The Adapter':'The Explorer';
+  const result={game:'TOH',planningScore,label,moves:tohMoves,undos:tohUndos,timeUsed,completed,date:new Date().toISOString()};
+  saveScore(result);
+  document.getElementById('toh-r-score').textContent=planningScore;
+  document.getElementById('toh-r-label').textContent=label;
+  document.getElementById('toh-r-moves').textContent=tohMoves;
+  document.getElementById('toh-r-undos').textContent=tohUndos;
+  const mins=Math.floor(timeUsed/60),secs=timeUsed%60;
+  document.getElementById('toh-r-time').textContent=completed?(mins>0?mins+'m ':'')+secs+'s':'Timeout';
+  const cel=document.getElementById('toh-r-completed');
+  cel.textContent=completed?'✓ Puzzle solved!':'⏰ Time ran out';
+  cel.style.color=completed?'var(--teal)':'var(--red)';
+  document.getElementById('toh-r-summary').textContent=getTOHSummary(planningScore,completed,tohUndos,tohMoves);
+  showScreen('toh-results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 4: RANG — STROOP (game code FER for backwards compat)
+// ═══════════════════════════════════════════════════════════
+const STROOP_WORDS  = ['RED','BLUE','GREEN','YELLOW'];
+const STROOP_HEX    = {RED:'#dc2626',BLUE:'#3b82f6',GREEN:'#16a34a',YELLOW:'#d97706'};
+let stroopTrials=[],stroopIdx=0,stroopResults=[],stroopAnswered=false,stroopOnset=0,stroopAdvTimer=null;
+
+function buildStroopTrials(){
+  const t=[];
+  // 12 congruent (3 per color)
+  STROOP_WORDS.forEach(w=>{for(let i=0;i<3;i++)t.push({word:w,ink:w,type:'congruent'});});
+  // 12 incongruent (3 per word — one of each non-matching ink, trimmed to 3)
+  STROOP_WORDS.forEach(w=>{
+    STROOP_WORDS.filter(c=>c!==w).slice(0,3).forEach(ink=>t.push({word:w,ink,type:'incongruent'}));
+  });
+  for(let i=t.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[t[i],t[j]]=[t[j],t[i]];}
+  return t;
+}
+
+function startStroop(){
+  stroopTrials=buildStroopTrials();stroopIdx=0;stroopResults=[];stroopAnswered=false;
+  clearTimeout(stroopAdvTimer);
+  showScreen('fer-game');
+  stroopRenderTrial();
+}
+// alias so old code paths don't break
+function startFER(){startStroop();}
+
+function stroopRenderTrial(){
+  stroopAnswered=false;
+  const t=stroopTrials[stroopIdx];
+  document.getElementById('stroop-num').textContent=stroopIdx+1;
+  document.getElementById('stroop-prog').style.width=((stroopIdx+1)/24*100)+'%';
+  const fb=document.getElementById('stroop-feedback');fb.textContent='';fb.style.opacity='0';
+  const wd=document.getElementById('stroop-word');wd.textContent=t.word;wd.style.color=STROOP_HEX[t.ink];
+  // shuffle color buttons
+  const cols=[...STROOP_WORDS];for(let i=cols.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[cols[i],cols[j]]=[cols[j],cols[i]];}
+  document.getElementById('stroop-opts').innerHTML=cols.map(c=>
+    `<button id="sb-${c}" class="stroop-btn" onclick="stroopAnswer('${c}')" style="color:${STROOP_HEX[c]};">${c}</button>`
+  ).join('');
+  stroopOnset=performance.now();
+}
+
+function stroopAnswer(chosen){
+  if(stroopAnswered)return;stroopAnswered=true;
+  const t=stroopTrials[stroopIdx];const correct=t.ink;const isRight=chosen===correct;
+  const rt=performance.now()-stroopOnset;
+  stroopResults.push({word:t.word,ink:t.ink,chosen,correct:isRight,rt,type:t.type});
+  // feedback
+  const fb=document.getElementById('stroop-feedback');
+  fb.textContent=isRight?'✓ Correct':'✗ '+correct;fb.style.color=isRight?'var(--teal)':'var(--red)';fb.style.opacity='1';
+  // button flash
+  document.querySelectorAll('.stroop-btn').forEach(btn=>{
+    btn.disabled=true;
+    const c=btn.id.replace('sb-','');
+    if(c===correct)btn.classList.add('correct');
+    else if(c===chosen&&!isRight)btn.classList.add('wrong');
+  });
+  // word pop
+  const wd=document.getElementById('stroop-word');wd.classList.remove('stroop-pop');void wd.offsetWidth;wd.classList.add('stroop-pop');
+  clearTimeout(stroopAdvTimer);
+  stroopAdvTimer=setTimeout(()=>{stroopIdx++;if(stroopIdx>=24)stroopEndGame();else stroopRenderTrial();},800);
+}
+
+function calcStroopStats(results){
+  const con=results.filter(r=>r.type==='congruent'  &&r.correct&&r.rt>50&&r.rt<3000);
+  const inc=results.filter(r=>r.type==='incongruent'&&r.correct&&r.rt>50&&r.rt<3000);
+  const conRT=con.length?Math.round(con.reduce((s,r)=>s+r.rt,0)/con.length):500;
+  const incRT=inc.length?Math.round(inc.reduce((s,r)=>s+r.rt,0)/inc.length):700;
+  const gap=Math.max(0,incRT-conRT);
+  const correct=results.filter(r=>r.correct).length;
+  const accuracy=Math.round(correct/results.length*100);
+  // Score: 0ms gap=100, 300ms gap=0
+  const stroopScore=Math.max(0,Math.min(100,Math.round(100-gap/3)));
+  return{stroopScore,gap,conRT,incRT,correct,errors:results.length-correct,accuracy};
+}
+
+function getStroopSummary(score,gap){
+  if(score>=75) return'Your brain filters out noise cleanly — the automatic response fires, and you override it before it lands.';
+  if(score>=50) return'Solid control under cognitive conflict. The distraction gets through sometimes, but you catch it most of the time.';
+  if(score>=28) return'Competing signals cost you time — the gap is about '+gap+'ms. The automatic response has real pull on you.';
+  return'Attention gets grabbed by irrelevant information more than it should. The gap is real, but it\'s trainable.';
+}
+
+function stroopEndGame(){
+  const stats=calcStroopStats(stroopResults);
+  const label=stats.stroopScore>=75?'The Filter':stats.stroopScore>=50?'The Focused':stats.stroopScore>=28?'The Susceptible':'The Overwhelmed';
+  const result={
+    game:'FER', // kept as FER for localStorage compatibility
+    stroopScore:stats.stroopScore,
+    label,correct:stats.correct,errors:stats.errors,accuracy:stats.accuracy,
+    avgConRT:stats.conRT,avgIncRT:stats.incRT,interference:stats.gap,
+    date:new Date().toISOString()
+  };
+  saveScore(result);
+  document.getElementById('fer-r-score').textContent=stats.stroopScore;
+  document.getElementById('fer-r-label').textContent=label;
+  document.getElementById('fer-r-correct').textContent=stats.correct;
+  document.getElementById('fer-r-wrong').textContent=stats.errors;
+  document.getElementById('fer-r-accuracy').textContent=stats.accuracy+'%';
+  document.getElementById('fer-r-conrt').textContent=stats.conRT+'ms';
+  document.getElementById('fer-r-incrt').textContent=stats.incRT+'ms';
+  document.getElementById('fer-r-gap').textContent='+'+stats.gap;
+  document.getElementById('fer-r-summary').textContent=getStroopSummary(stats.stroopScore,stats.gap);
+  showScreen('fer-results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 5: RUK (GNG)
+// ═══════════════════════════════════════════════════════════
+const GNG_TRIALS=40,GNG_GO_RATIO=0.75,GNG_STIM_MS=300,GNG_ISI_MIN=900,GNG_ISI_MAX=1600;
+let gngTrialList=[],gngTrialIdx=0,gngResults=[],gngStimOnset=0,gngWaiting=false,gngActive=false;
+let gngCurrentType=null,gngStimTimer=null,gngNextTimer=null,gngRespondedThisTrial=false;
+
+function gngBuildTrialList(){
+  const go=Math.round(GNG_TRIALS*GNG_GO_RATIO),nogo=GNG_TRIALS-go;
+  const list=[...Array(go).fill({type:'go'}),...Array(nogo).fill({type:'nogo'})];
+  for(let i=list.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[list[i],list[j]]=[list[j],list[i]];}
+  while(list[0].type==='nogo'&&list.length>1&&list[1].type==='nogo'){const s=list.findIndex((t,i)=>i>1&&t.type==='go');if(s===-1)break;[list[0],list[s]]=[list[s],list[0]];}
+  return list;
+}
+function gngCircleSVG(sz){return`<svg width="${sz}" height="${sz}" viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="#0F6E56" opacity="0.18" stroke="#0F6E56" stroke-width="3"/><circle cx="50" cy="50" r="32" fill="#0F6E56" opacity="0.7"/><circle cx="37" cy="37" r="9" fill="white" opacity="0.25"/></svg>`;}
+function gngSquareSVG(sz){return`<svg width="${sz}" height="${sz}" viewBox="0 0 100 100"><rect x="8" y="8" width="84" height="84" rx="10" fill="#A32D2D" opacity="0.15" stroke="#A32D2D" stroke-width="3"/><rect x="18" y="18" width="64" height="64" rx="7" fill="#A32D2D" opacity="0.65"/><rect x="23" y="23" width="20" height="12" rx="4" fill="white" opacity="0.2"/></svg>`;}
+function gngRenderDots(){
+  const el=document.getElementById('gng-dots');if(!el)return;
+  el.innerHTML=gngResults.map(r=>{const cl=r.response==='hit'?'hit':r.response==='miss'?'miss':r.response==='fa'?'fa':'cr';return`<div class="gng-dot ${cl}"></div>`;}).join('')+(gngTrialIdx<GNG_TRIALS?[...Array(GNG_TRIALS-gngTrialIdx)].map(()=>'<div class="gng-dot"></div>').join(''):'');
+}
+function startGNG(){
+  gngTrialList=gngBuildTrialList();gngTrialIdx=0;gngResults=[];gngActive=true;gngWaiting=false;gngStimTimer=null;gngNextTimer=null;
+  showScreen('gng-game');
+  document.getElementById('gng-hits').textContent='0';document.getElementById('gng-errors').textContent='0';document.getElementById('gng-trial-num').textContent='1';document.getElementById('gng-tap-btn').disabled=false;
+  gngRenderDots();setTimeout(gngRunTrial,600);
+}
+function gngRunTrial(){
+  if(!gngActive||gngTrialIdx>=GNG_TRIALS){gngEndGame();return;}
+  const trial=gngTrialList[gngTrialIdx];gngCurrentType=trial.type;gngRespondedThisTrial=false;gngWaiting=false;
+  document.getElementById('gng-trial-num').textContent=gngTrialIdx+1;
+  document.getElementById('gng-feedback').textContent='';document.getElementById('gng-feedback').style.opacity='0';
+  const wrap=document.getElementById('gng-shape-wrap');
+  if(wrap)wrap.innerHTML=trial.type==='go'?gngCircleSVG(130):gngSquareSVG(130);
+  gngStimOnset=performance.now();
+  gngStimTimer=setTimeout(()=>{
+    if(wrap)wrap.innerHTML='';
+    if(gngCurrentType==='go'&&!gngRespondedThisTrial)gngRecordResponse('miss',null);
+    const isi=GNG_ISI_MIN+Math.random()*(GNG_ISI_MAX-GNG_ISI_MIN);
+    gngNextTimer=setTimeout(()=>{gngTrialIdx++;gngRunTrial();},isi);
+  },GNG_STIM_MS);
+}
+function gngTap(){
+  if(!gngActive||gngRespondedThisTrial)return;
+  const rt=performance.now()-gngStimOnset;
+  if(gngCurrentType==='go'){gngRespondedThisTrial=true;gngRecordResponse('hit',rt);}
+  else if(gngCurrentType==='nogo'){gngRespondedThisTrial=true;gngRecordResponse('fa',rt);}
+}
+function gngRecordResponse(type,rt){
+  gngResults.push({type:gngCurrentType,response:type,rt});
+  const hits=gngResults.filter(r=>r.response==='hit').length;
+  const errors=gngResults.filter(r=>r.response==='fa'||r.response==='miss').length;
+  document.getElementById('gng-hits').textContent=hits;document.getElementById('gng-errors').textContent=errors;
+  const btn=document.getElementById('gng-tap-btn'),fb=document.getElementById('gng-feedback');
+  if(type==='hit'){btn.classList.remove('gng-flash-wrong');void btn.offsetWidth;btn.classList.add('gng-flash-correct');setTimeout(()=>btn.classList.remove('gng-flash-correct'),350);if(fb){fb.textContent='✓';fb.style.color='var(--teal)';fb.style.opacity='1';}}
+  else if(type==='fa'){btn.classList.remove('gng-flash-correct');void btn.offsetWidth;btn.classList.add('gng-flash-wrong');setTimeout(()=>btn.classList.remove('gng-flash-wrong'),350);if(fb){fb.textContent='✗ No!';fb.style.color='var(--red)';fb.style.opacity='1';}}
+  else if(type==='miss'&&fb){fb.textContent='— missed';fb.style.color='var(--text-hint)';fb.style.opacity='1';}
+  gngRenderDots();
+}
+function gngCalcScore(results){
+  const goT=results.filter(r=>r.type==='go'),nogoT=results.filter(r=>r.type==='nogo');
+  const hits=results.filter(r=>r.response==='hit'),misses=results.filter(r=>r.response==='miss'),fas=results.filter(r=>r.response==='fa');
+  const hr=goT.length?hits.length/goT.length:0,far=nogoT.length?fas.length/nogoT.length:0;
+  const cHR=Math.max(0.01,Math.min(0.99,hr)),cFAR=Math.max(0.01,Math.min(0.99,far));
+  const dP=normInv(cHR)-normInv(cFAR);
+  const gngScore=Math.max(0,Math.min(100,Math.round(((dP+1)/5)*100)));
+  const f20=results.slice(0,20),l20=results.slice(20);
+  const fHR=f20.filter(r=>r.type==='go').length?f20.filter(r=>r.type==='go'&&r.response==='hit').length/f20.filter(r=>r.type==='go').length:0;
+  const lHR=l20.filter(r=>r.type==='go').length?l20.filter(r=>r.type==='go'&&r.response==='hit').length/l20.filter(r=>r.type==='go').length:0;
+  const fatigueDelta=lHR-fHR;
+  const hitRTs=hits.map(r=>r.rt).filter(v=>v!==null&&v>0&&v<3000);
+  const avgRT=hitRTs.length?Math.round(hitRTs.reduce((s,v)=>s+v,0)/hitRTs.length):null;
+  return{gngScore,hitRate:hr,faRate:far,misses:misses.length,fas:fas.length,hits:hits.length,fatigueDelta,avgRT,dPrime:dP};
+}
+function normInv(p){
+  const a=[0,-3.969683028665376e+01,2.209460984245205e+02,-2.759285104469687e+02,1.383577518672690e+02,-3.066479806614716e+01,2.506628277459239e+00];
+  const b=[0,-5.447609879822406e+01,1.615858368580409e+02,-1.556989798598866e+02,6.680131188771972e+01,-1.328068155288572e+01];
+  const c=[0,-7.784894002430293e-03,-3.223964580411365e-01,-2.400758277161838e+00,-2.549732539343734e+00,4.374664141464968e+00,2.938163982698783e+00];
+  const d=[0,7.784695709041462e-03,3.224671290700398e-01,2.445134137142996e+00,3.754408661907416e+00];
+  const pLow=0.02425,pH=1-pLow;let q,r;
+  if(p<pLow){q=Math.sqrt(-2*Math.log(p));return(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1);}
+  if(p<=pH){q=p-0.5;r=q*q;return(((((a[1]*r+a[2])*r+a[3])*r+a[4])*r+a[5])*r+a[6])*q/(((((b[1]*r+b[2])*r+b[3])*r+b[4])*r+b[5])*r+1);}
+  q=Math.sqrt(-2*Math.log(1-p));return-(((((c[1]*q+c[2])*q+c[3])*q+c[4])*q+c[5])*q+c[6])/((((d[1]*q+d[2])*q+d[3])*q+d[4])*q+1);
+}
+function getGNGSummary(score,faRate,fatigueDelta){
+  const fades=fatigueDelta<=-0.2;
+  if(score>=78) return'You hold back when it counts — composed, not slow.'+(fades?' Attention fades a bit in the second half though.':'');
+  if(score>=55) return'Reliable under moderate pressure.'+(fades?' Attention drifts in longer stretches — worth knowing.':' Consistent all the way through.');
+  if(score>=35) return'You\'re fast. The false alarms are the signal — responding when you shouldn\'t.';
+  return'The brake engages late. High-volume, fast-feedback environments suit you best.';
+}
+function gngEndGame(){
+  gngActive=false;clearTimeout(gngStimTimer);clearTimeout(gngNextTimer);document.getElementById('gng-tap-btn').disabled=true;
+  const stats=gngCalcScore(gngResults);
+  const label=stats.gngScore>=78?'The Focused One':stats.gngScore>=55?'The Steady One':stats.gngScore>=35?'The Reactor':'The Impulsive';
+  const fatigueLabel=stats.fatigueDelta<=-0.2?'↓ Fades':stats.fatigueDelta>=0.1?'↑ Warms up':'→ Steady';
+  const result={game:'GNG',gngScore:stats.gngScore,label,hits:stats.hits,misses:stats.misses,falseAlarms:stats.fas,hitRate:Math.round(stats.hitRate*100),faRate:Math.round(stats.faRate*100),avgRT:stats.avgRT,fatigueDelta:Math.round(stats.fatigueDelta*100),dPrime:Math.round(stats.dPrime*100)/100,date:new Date().toISOString()};
+  saveScore(result);
+  document.getElementById('gng-r-score').textContent=stats.gngScore;
+  document.getElementById('gng-r-label').textContent=label;
+  document.getElementById('gng-r-hits').textContent=stats.hits+'/'+gngResults.filter(r=>r.type==='go').length;
+  document.getElementById('gng-r-fa').textContent=stats.fas;
+  document.getElementById('gng-r-rt').textContent=stats.avgRT!==null?stats.avgRT:'—';
+  document.getElementById('gng-r-misses').textContent=stats.misses;
+  document.getElementById('gng-r-fatigue').textContent=fatigueLabel;
+  document.getElementById('gng-r-acc').textContent=stats.gngScore+'%';
+  const de=document.getElementById('gng-r-dots');
+  if(de)de.innerHTML=gngResults.map(r=>{const cl=r.response==='hit'?'hit':r.response==='miss'?'miss':r.response==='fa'?'fa':'cr';return`<div class="gng-dot ${cl}"></div>`;}).join('');
+  document.getElementById('gng-r-summary').textContent=getGNGSummary(stats.gngScore,stats.faRate,stats.fatigueDelta);
+  showScreen('gng-results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// GAME 6: SAUDAA (ULT)
+// ═══════════════════════════════════════════════════════════
+const ULT_OFFERS=[50,40,60,20,50,30,70,15,35,45],ULT_ROUNDS=10,ULT_TOTAL=100;
+let ultRound=0,ultResults=[],ultEarned=0;
+
+function startULT(){ultRound=0;ultResults=[];ultEarned=0;showScreen('ult-game');ultSetupRound();}
+function ultSetupRound(){
+  const offer=ULT_OFFERS[ultRound],aik=ULT_TOTAL-offer;
+  document.getElementById('ult-round-num').textContent=ultRound+1;
+  document.getElementById('ult-prog').style.width=(ultRound/ULT_ROUNDS*100)+'%';
+  document.getElementById('ult-earned').textContent='₹'+ultEarned;
+  document.getElementById('ult-offer-display').textContent='₹'+offer;
+  document.getElementById('ult-offer-you').textContent='₹'+offer;
+  document.getElementById('ult-offer-ai').textContent='₹'+aik;
+  const lbl=document.getElementById('ult-offer-label');
+  if(offer>=60){lbl.textContent='Generous offer';lbl.style.color='var(--teal)';}
+  else if(offer>=45){lbl.textContent='Fair offer';lbl.style.color='var(--teal)';}
+  else if(offer>=30){lbl.textContent='Unfair offer';lbl.style.color='var(--amber)';}
+  else{lbl.textContent='Insulting offer';lbl.style.color='var(--red)';}
+  document.getElementById('ult-choice-state').style.display='block';
+  document.getElementById('ult-reveal-state').style.display='none';
+  ultRenderHistory();
+}
+function ultChoice(accept){
+  const offer=ULT_OFFERS[ultRound],earned=accept?offer:0;
+  ultResults.push({offer,accepted:accept,earned});
+  if(accept)ultEarned+=earned;
+  ultRound++;
+  document.getElementById('ult-round-num').textContent=ultRound;
+  document.getElementById('ult-prog').style.width=(ultRound/ULT_ROUNDS*100)+'%';
+  document.getElementById('ult-earned').textContent='₹'+ultEarned;
+  document.getElementById('ult-choice-state').style.display='none';
+  document.getElementById('ult-reveal-state').style.display='block';
+  const re=document.getElementById('ult-reveal-result');
+  if(accept){re.textContent='✓ Accepted — ₹'+offer+' added to your bank.';re.style.color='var(--teal)';}
+  else{re.textContent='✗ Rejected. Neither of you gets anything this round.';re.style.color='var(--red)';}
+  const nb=document.getElementById('ult-next-btn');
+  if(ultRound>=ULT_ROUNDS){nb.textContent='See results →';nb.onclick=ultEndGame;}
+  else{nb.textContent='Next round →';nb.onclick=()=>{document.getElementById('ult-reveal-state').style.display='none';ultSetupRound();};}
+  ultRenderHistory();
+}
+function ultRenderHistory(){
+  const el=document.getElementById('ult-history');
+  if(ultResults.length===0){el.innerHTML='<p style="font-size:12px;color:var(--text-hint);text-align:center;padding:8px 0;">Your decisions will appear here</p>';return;}
+  el.innerHTML=[...ultResults].reverse().slice(0,5).map((r,ri)=>{
+    const i=ultResults.length-1-ri,col=r.accepted?'var(--teal)':'var(--red)',lbl=r.accepted?`✓ Accepted +₹${r.offer}`:'✗ Rejected';
+    return`<div style="display:flex;align-items:center;font-size:12px;padding:5px 9px;background:var(--surface);border-radius:6px;margin-bottom:3px;">
+      <span style="color:var(--text-hint);width:26px;flex-shrink:0;font-size:11px;">R${i+1}</span>
+      <span style="flex:1;">AI offered ₹${r.offer}</span>
+      <span style="font-weight:500;color:${col};font-size:12px;">${lbl}</span>
+    </div>`;
+  }).join('');
+}
+function getULTSummary(results){
+  const rejs=results.filter(r=>!r.accepted);const rate=rejs.length/ULT_ROUNDS;
+  const accOffers=results.filter(r=>r.accepted).map(r=>r.offer);
+  const rejOffers=results.filter(r=>!r.accepted).map(r=>r.offer);
+  const rejectedFair=rejOffers.some(o=>o>=40);const acceptedInsult=accOffers.some(o=>o<25);
+  let score=Math.round(rate*100);
+  if(rejectedFair)score=Math.min(100,score+20);if(acceptedInsult)score=Math.max(0,score-20);
+  let label,summary;
+  if(score>=70){label='The Equity Seeker';summary='Fairness isn\'t a preference — it\'s a requirement. You\'ll actually walk, not just threaten to.'+(rejectedFair?' You rejected offers most people would have taken.':'');}
+  else if(score>=40){label='The Principled One';summary='You have a floor and you know where it is. That\'s leverage most people quietly give away for free.';}
+  else if(score>=15){label='The Pragmatist-Strategist';summary='Outcomes over signals. You take the deal and keep moving — a real advantage when speed matters more than precedent.';}
+  else{label='The Pragmatist';summary='You take what\'s on the table. Deadlock costs more than a bad deal. True — and also, some of those baselines stick.';}
+  return{score,label,summary};
+}
+function ultEndGame(){
+  const p=getULTSummary(ultResults);const rejs=ultResults.filter(r=>!r.accepted).length;
+  const result={game:'ULT',fairnessScore:p.score,label:p.label,rejections:rejs,acceptances:ULT_ROUNDS-rejs,totalEarned:ultEarned,date:new Date().toISOString()};
+  saveScore(result);
+  document.getElementById('ult-r-score').textContent=p.score;
+  document.getElementById('ult-r-label').textContent=p.label;
+  document.getElementById('ult-r-reject').textContent=rejs+'/10';
+  document.getElementById('ult-r-accept').textContent=(ULT_ROUNDS-rejs)+'/10';
+  document.getElementById('ult-r-earned').textContent='₹'+ultEarned;
+  document.getElementById('ult-r-summary').textContent=p.summary;
+  showScreen('ult-results');
+}
+
+// ═══════════════════════════════════════════════════════════
+// CONTEXT
+// ═══════════════════════════════════════════════════════════
+let ctxDraft={};
+function showContextScreen(){
+  ctxDraft={};
+  const sel=document.getElementById('ctx-dob-year');
+  if(sel.options.length<=1){const cur=new Date().getFullYear();for(let y=cur-14;y>=1955;y--){const o=document.createElement('option');o.value=y;o.textContent=y;sel.appendChild(o);}}
+  showScreen('context');
+}
+function ctxSelect(field,val,ids){
+  ctxDraft[field]=val;ids.forEach(id=>document.getElementById(id).classList.remove('selected'));
+  ids.forEach(id=>{const b=document.getElementById(id);if(b.getAttribute('onclick').includes("'"+val+"'"))b.classList.add('selected');});
+}
+function ctxSetVal(field,val){ctxDraft[field]=val;}
+function saveContext(){
+  clrErr('ctx-err');
+  if(!ctxDraft.gender){showErr('ctx-err','Pick a gender option (or skip).');return;}
+  if(!ctxDraft.dobYear){showErr('ctx-err','Select your birth year.');return;}
+  if(!ctxDraft.work){showErr('ctx-err','Tell us where you are right now.');return;}
+  if(!ctxDraft.aspiration){showErr('ctx-err','Pick what you\'re aiming for.');return;}
+  const ek=safeKey('rl_ue_',user.email);const ud=JSON.parse(lsGet(ek));
+  ud.context={...ctxDraft,savedAt:new Date().toISOString()};lsSet(ek,JSON.stringify(ud));user=ud;enterDashboard();
+}
+
+// ═══════════════════════════════════════════════════════════
+// B5 SELF-PERCEPTION
+// ═══════════════════════════════════════════════════════════
+const B5_QUESTIONS={
+  BART:{pill:'After Dum',q:'Honestly — how do you see yourself when it comes to taking risks?',opts:[{label:'I take risks. Sometimes more than I probably should.',val:'high'},{label:'Depends on the situation. I can go either way.',val:'mid'},{label:'I tend to play it safe. I like knowing what I\'m walking into.',val:'low'}],dim:'risk'},
+  PD:{pill:'After Bharosa',q:'When you meet someone new — trust first, or wait and see?',opts:[{label:'Trust first. I\'ll adjust if they give me a reason to.',val:'high'},{label:'Neutral. I watch how they behave before I decide.',val:'mid'},{label:'Wait and see. Trust is earned, not given.',val:'low'}],dim:'trust'},
+  TOH:{pill:'After Burj',q:'Plan ahead and stick to it — or figure it out as you go?',opts:[{label:'I always have a plan. Winging it makes me uncomfortable.',val:'high'},{label:'A rough plan, then I adapt as things unfold.',val:'mid'},{label:'I work best when I can just react. Plans feel like cages.',val:'low'}],dim:'plan'},
+  FER:{pill:'After Rang',q:'When two things pull at you at once — what you know and what you feel — which wins?',opts:[{label:'What I feel. Gut instinct is usually right.',val:'high'},{label:'Depends. I try to weigh both.',val:'mid'},{label:'What I know. Feelings muddy the picture.',val:'low'}],dim:'eq'},
+  GNG:{pill:'After Ruk',q:'In real life — do you act first and think after, or think before you move?',opts:[{label:'I act on instinct. Thinking too long makes me miss the moment.',val:'high'},{label:'Depends on the stakes.',val:'mid'},{label:'I think it through first. Acting without thinking makes me anxious.',val:'low'}],dim:'impulse'},
+  ULT:{pill:'After Saudaa',q:'When you get a raw deal — do you walk away on principle, or take what you can get?',opts:[{label:'Walk away. Some things are worth more than the money.',val:'high'},{label:'Depends how bad the deal actually is.',val:'mid'},{label:'Take what\'s on the table. Holding out costs more than it gives.',val:'low'}],dim:'fairness'}
+};
+let b5CurrentGame=null;
+function showB5(gameCode){
+  const q=B5_QUESTIONS[gameCode];if(!q){enterDashboard();return;}
+  b5CurrentGame=gameCode;
+  document.getElementById('b5-pill').textContent=q.pill;
+  document.getElementById('b5-question').textContent=q.q;
+  document.getElementById('b5-options').innerHTML=q.opts.map(o=>`<button class="b5-opt" onclick="saveB5('${o.val}')">${o.label}</button>`).join('');
+  showScreen('b5');
+}
+function saveB5(val){
+  if(!b5CurrentGame){enterDashboard();return;}
+  const ek=safeKey('rl_ue_',user.email);const ud=JSON.parse(lsGet(ek));
+  if(!ud.b5self)ud.b5self={};
+  ud.b5self[b5CurrentGame]={dim:B5_QUESTIONS[b5CurrentGame].dim,val};
+  lsSet(ek,JSON.stringify(ud));user=ud;b5CurrentGame=null;enterDashboard();
+}
+
+// ═══════════════════════════════════════════════════════════
+// EXPORT PROFILE
+// ═══════════════════════════════════════════════════════════
+function exportProfile(){
+  if(!user)return;
+  const payload={alias:user.name.split(' ')[0],context:user.context||{},scores:user.scores||[],b5self:user.b5self||{},exportedAt:new Date().toISOString(),v:2};
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download='raah-profile-'+payload.alias.toLowerCase()+'.json';a.click();URL.revokeObjectURL(url);
+}
+
+// ═══════════════════════════════════════════════════════════
+// TEAM DYNAMICS
+// ═══════════════════════════════════════════════════════════
+let teamProfiles=[];
+function handleTeamDrop(e){e.preventDefault();document.getElementById('team-dropzone').classList.remove('dragover');handleTeamFiles(e.dataTransfer.files);}
+function handleTeamFiles(files){
+  const toRead=Array.from(files).filter(f=>f.name.endsWith('.json'));if(!toRead.length)return;let loaded=0;
+  toRead.forEach(file=>{const reader=new FileReader();reader.onload=e=>{try{const p=JSON.parse(e.target.result);if(p.scores!==undefined&&p.alias){if(!teamProfiles.find(x=>x.alias===p.alias))teamProfiles.push(p);}}catch(err){}loaded++;if(loaded===toRead.length)renderTeamFileList();};reader.readAsText(file);});
+}
+function renderTeamFileList(){
+  const list=document.getElementById('team-file-list'),mgrSel=document.getElementById('team-manager-sel'),mgrRow=document.getElementById('team-manager-row'),btn=document.getElementById('team-analyse-btn');
+  list.innerHTML=teamProfiles.map((p,i)=>`<div class="team-file-item"><span style="font-size:20px;">🧑</span><span style="flex:1;font-weight:500;font-size:14px;">${p.alias}</span><span style="font-size:12px;color:var(--text-muted);">${(p.scores||[]).length} games</span><button onclick="removeTeamProfile(${i})" style="border:none;background:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:0 4px;">×</button></div>`).join('');
+  if(teamProfiles.length>=2){mgrRow.style.display='block';mgrSel.innerHTML='<option value="">No manager — peer group</option>'+teamProfiles.map(p=>`<option value="${p.alias}">${p.alias}</option>`).join('');btn.disabled=false;}
+  else{mgrRow.style.display='none';btn.disabled=true;}
+}
+function removeTeamProfile(i){teamProfiles.splice(i,1);renderTeamFileList();}
+function analyseTeam(){
+  if(teamProfiles.length<2)return;const mgAlias=document.getElementById('team-manager-sel').value;
+  function avg(arr){return arr.length?arr.reduce((s,v)=>s+v,0)/arr.length:null;}
+  function gs(p,game,field){const s=(p.scores||[]).find(x=>x.game===game);return s?s[field]:null;}
+  const rS=teamProfiles.map(p=>gs(p,'BART','bartScore')).filter(v=>v!==null);
+  const cS=teamProfiles.map(p=>gs(p,'PD','cooperationScore')).filter(v=>v!==null);
+  const pS=teamProfiles.map(p=>gs(p,'TOH','planningScore')).filter(v=>v!==null);
+  const gS=teamProfiles.map(p=>gs(p,'GNG','gngScore')).filter(v=>v!==null);
+  const uS=teamProfiles.map(p=>gs(p,'ULT','fairnessScore')).filter(v=>v!==null);
+  const aR=avg(rS),aC=avg(cS),aP=avg(pS),aG=avg(gS),aU=avg(uS);
+  function spread(arr){if(arr.length<2)return 0;const m=avg(arr);return Math.sqrt(arr.reduce((s,v)=>s+(v-m)**2,0)/arr.length);}
+  const isHR=aR!==null&&aR>=16,isHC=aC!==null&&aC>=55,isHP=aP!==null&&aP>=65,isHG=aG!==null&&aG>=55,isHU=aU!==null&&aU>=40;
+  const divR=spread(rS)>8,divC=spread(cS)>20;
+  const goodBits=[];
+  if(isHC)goodBits.push('This team has genuine collaborative instinct — people here default to working with each other, not against each other.');
+  if(isHP)goodBits.push('Collective planning strength is real here. When this group commits to something, it actually gets mapped out — not just agreed on.');
+  if(isHG)goodBits.push('Good collective impulse control — they pause before reacting, which in high-pressure situations is exactly what you want.');
+  if(isHR&&isHC)goodBits.push('Bold and collaborative at the same time — a rare combination. This team can take swings together.');
+  if(isHU&&isHC)goodBits.push('Cooperates and holds the line on fairness — a rare combo that builds real accountability.');
+  if(divR)goodBits.push('Genuine range in how this group handles risk. That tension, managed well, produces better decisions than a team that all thinks the same way.');
+  if(!goodBits.length)goodBits.push('The team has played fewer games so far — this picture will sharpen as more data comes in.');
+  const badBits=[];
+  if(!isHC&&aC!==null)badBits.push('Cooperation scores trend low. This team may operate more as a collection of individuals than as a unit.');
+  if(!isHP&&aP!==null)badBits.push('Planning isn\'t a collective strength. Strong momentum early, then struggle when execution requires sequencing.');
+  if(divC)badBits.push('Big gap in how cooperative different members are — some building trust, others quietly protecting their position.');
+  if(!badBits.length)badBits.push('No glaring collective weaknesses visible from current game data.');
+  const uglyBits=[];
+  if(isHR&&!isHC)uglyBits.push('High risk appetite without collaborative glue is genuinely dangerous — everyone betting on themselves, not each other.');
+  if(!isHR&&!isHP)uglyBits.push('Cautious and unstructured. This team will neither move fast nor move deliberately — it will drift.');
+  if(aG!==null&&aG<40&&isHR)uglyBits.push('High risk appetite paired with low impulse control — overcommit and over-react simultaneously. Volatile combination.');
+  if(!uglyBits.length)uglyBits.push('Nothing catastrophic in the data. The thing to watch: whether "good enough" becomes the ceiling.');
+  document.getElementById('team-good-text').textContent=goodBits[0];
+  document.getElementById('team-bad-text').textContent=badBits[0];
+  document.getElementById('team-ugly-text').textContent=uglyBits[0];
+  const mgrSec=document.getElementById('team-mgr-section');
+  if(mgAlias){
+    const mgr=teamProfiles.find(p=>p.alias===mgAlias),team=teamProfiles.filter(p=>p.alias!==mgAlias);
+    const mgrRisk=gs(mgr,'BART','bartScore'),mgrCoop=gs(mgr,'PD','cooperationScore'),mgrGNG=gs(mgr,'GNG','gngScore');
+    const taR=avg(team.map(p=>gs(p,'BART','bartScore')).filter(v=>v!==null));
+    const taC=avg(team.map(p=>gs(p,'PD','cooperationScore')).filter(v=>v!==null));
+    const lines=[];
+    if(mgrRisk!==null&&taR!==null){const gap=mgrRisk-taR;if(gap>8)lines.push(`${mgAlias} is more risk-tolerant than the team. Expect the team to feel pushed into moves they haven't fully processed.`);else if(gap<-8)lines.push(`${mgAlias} is more cautious than the people they lead. The team has appetite the manager may be holding back.`);else lines.push(`${mgAlias}'s risk appetite is well-matched with the team's.`);}
+    if(mgrCoop!==null&&taC!==null){const gap=mgrCoop-taC;if(gap<-15)lines.push('The team is more collaborative than the manager — people extending trust that isn\'t being fully returned.');else if(gap>15)lines.push(`${mgAlias} leads with more openness than the team — the manager may feel isolated.`);}
+    if(mgrGNG!==null&&mgrGNG<40)lines.push(`${mgAlias}'s impulse control is low — under pressure they may react faster than the situation calls for.`);
+    const mc=document.getElementById('team-mgr-text');
+    mc.innerHTML=lines.length?lines.map(l=>`<div class="team-dyn"><p style="font-size:14px;color:var(--text-muted);line-height:1.8;">${l}</p></div>`).join(''):`<div class="team-dyn"><p style="font-size:14px;color:var(--text-muted);">Not enough game data from ${mgAlias} yet.</p></div>`;
+    mgrSec.style.display='block';
+  }else{mgrSec.style.display='none';}
+  document.getElementById('team-upload-area').style.display='none';
+  document.getElementById('team-results').style.display='block';
+}
+function resetTeam(){teamProfiles=[];document.getElementById('team-file-list').innerHTML='';document.getElementById('team-manager-row').style.display='none';document.getElementById('team-analyse-btn').disabled=true;document.getElementById('team-upload-area').style.display='block';document.getElementById('team-results').style.display='none';}
+
+// ═══════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════
+(function init(){
+  const session=lsGet('rl_session');
+  if(session){
+    const sd=JSON.parse(session);const ur=lsGet(sd.emailKey);
+    user=ur?JSON.parse(ur):{name:sd.name,email:'',scores:[]};
+    if(!user.context){showContextScreen();return;}
+    enterDashboard();return;
+  }
+  showScreen('landing');
+})();
+</script>
+</body>
+</html>
