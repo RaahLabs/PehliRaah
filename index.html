@@ -1113,12 +1113,12 @@ function enterDashboard() {
 
   const doneSet = new Set(scores.map(s => s.game));
   const allLocked = [
-    {code:'GNG', icon:'⚡',name:'Go / No-Go',sub:'Impulse control'},
-    {code:'DIG', icon:'🔢',name:'Digit memory',sub:'Memory'},
-    {code:'ULT', icon:'💸',name:'Money exchange',sub:'Fairness'},
-    {code:'RXT', icon:'⏱',name:'Reaction time',sub:'Speed'},
-    {code:'PAT', icon:'🔷',name:'Pattern finder',sub:'Reasoning'},
-    {code:'B5',  icon:'📊',name:'Big 5 survey',sub:'Personality'}
+    {code:'GNG', icon:'⚡',name:'A',sub:'some behavior'},
+    {code:'DIG', icon:'🔢',name:'B',sub:'some behavior'},
+    {code:'ULT', icon:'💸',name:'C',sub:'some behavior'},
+    {code:'RXT', icon:'⏱',name:'D',sub:'some behavior'},
+    {code:'PAT', icon:'🔷',name:'E',sub:'some behavior'},
+    {code:'B5',  icon:'📊',name:'F',sub:'some behavior'}
   ];
   const stillLocked = allLocked.filter(g => !doneSet.has(g.code));
   document.getElementById('games-grid').innerHTML = stillLocked.map(g =>
