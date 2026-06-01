@@ -790,6 +790,12 @@
       <button class="btn btn-primary btn-full" onclick="goToTeaser('BART')">Continue →</button>
     </div>
   </div>
+  <div style="display:none;" aria-hidden="true">
+    <span id="r-archetype-icon"></span><span id="r-archetype-name"></span>
+    <span id="r-summary"></span><span id="r-score"></span><span id="r-label"></span>
+    <span id="r-banked"></span><span id="r-pops"></span><span id="r-trend"></span>
+    <div id="r-vector-bars"></div>
+  </div>
 </div>
 
 <!-- ═══════════════════════════════════════════════
@@ -4078,8 +4084,8 @@ function dumEndGame(){
 }
 
 function renderDumVectorBars(v){
+  const el=document.getElementById('r-vector-bars');if(!el)return;
   const dims=[
-    {key:'risk_appetite',label:'Risk appetite',lo:'Cautious',hi:'Bold'},
     {key:'EV_alignment',label:'Decision calibration',lo:'Uncalibrated',hi:'Sharp'},
     {key:'impulsivity',label:'Impulsivity',lo:'Deliberate',hi:'Reactive'},
     {key:'loss_sensitivity',label:'Loss sensitivity',lo:'Resilient',hi:'Sensitive'},
@@ -4088,7 +4094,7 @@ function renderDumVectorBars(v){
     {key:'recovery_speed',label:'Recovery after loss',lo:'Slow',hi:'Fast'},
     {key:'exploration_exploitation',label:'Exploration tendency',lo:'Conservative',hi:'Exploratory'},
   ];
-  document.getElementById('r-vector-bars').innerHTML=dims.map(d=>{
+  el.innerHTML=dims.map(d=>{
     const raw=v[d.key];const val=d.invert?(1-raw):raw;const pct=Math.round(clamp01(val)*100);
     const barCol=pct>=65?'var(--teal)':pct>=35?'var(--amber)':'var(--text-muted)';const side=pct>=65?d.hi:pct<=35?d.lo:'—';
     return`<div class="vec-row"><div class="vec-label-row"><span style="font-weight:500;">${d.label}</span><span style="font-size:0.76rem;color:${barCol};font-weight:500;">${side}</span></div><div class="vec-bar-track"><div class="vec-bar-fill" style="width:${pct}%;background:${barCol};"></div></div></div>`;
