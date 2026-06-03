@@ -442,56 +442,73 @@
 
     /* ═══ BAZAAR ═══ */
     :root { --co-a:#2563EB; --co-b:#7C3AED; --co-c:#D97706; }
-    .bz-result-overlay { position:fixed;inset:0;z-index:100;background:rgba(250,250,247,0.94);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:1.25rem;opacity:0;pointer-events:none;transition:opacity 0.25s; }
-    .bz-result-overlay.visible { opacity:1;pointer-events:all; }
-    .bz-result-card { background:var(--card);border:0.5px solid var(--border-strong);border-radius:var(--radius-lg);padding:1.5rem;max-width:380px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,0.1); }
-    .bz-result-year-label { font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.09em;color:var(--text-hint);margin-bottom:14px; }
-    .bz-result-table { width:100%;border-collapse:collapse;margin-bottom:12px; }
-    .bz-result-table th { font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-hint);padding:4px 0;text-align:right; }
-    .bz-result-table th:first-child { text-align:left; }
-    .bz-result-table td { font-size:13px;padding:7px 0;border-top:0.5px solid var(--border);text-align:right;font-family:'DM Mono',monospace;font-weight:500; }
-    .bz-result-table td:first-child { text-align:left;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:7px; }
-    .bz-result-table tr.bz-total-row td { font-weight:700;font-size:14px;border-top:1px solid var(--border-strong);padding-top:10px; }
-    .bz-result-narrative { font-size:13px;color:var(--text-muted);line-height:1.75;font-style:italic;background:var(--surface);border-radius:8px;padding:10px 12px;margin-bottom:14px; }
-    .bz-game-header { position:sticky;top:0;z-index:20;background:rgba(250,250,247,0.97);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border-strong);padding:0.875rem 1.25rem; }
-    @media(prefers-color-scheme:dark){.bz-game-header{background:rgba(23,23,26,0.97);}}
-    .bz-game-header-top { display:flex;justify-content:space-between;align-items:center;margin-bottom:8px; }
-    .bz-year-label { font-size:13px;color:var(--text-muted);font-weight:500; }
-    .bz-pnl-strip { display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px; }
-    .bz-pnl-cell { background:var(--surface);border-radius:7px;padding:6px 8px;text-align:center; }
-    .bz-pnl-val { font-family:'DM Mono',monospace;font-size:13px;font-weight:600;line-height:1; }
-    .bz-pnl-lbl { font-size:9px;color:var(--text-hint);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px; }
-    .bz-companies-area { padding:1.25rem 1.25rem 0; }
-    .bz-co-card { background:var(--card);border:0.5px solid var(--border-strong);border-radius:var(--radius-lg);padding:1rem;margin-bottom:10px;transition:border-color 0.2s; }
-    .bz-co-card.has-alloc { border-width:1.5px; }
-    .bz-co-card.co-a.has-alloc{border-color:var(--co-a);} .bz-co-card.co-b.has-alloc{border-color:var(--co-b);} .bz-co-card.co-c.has-alloc{border-color:var(--co-c);}
-    .bz-co-header { display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px; }
-    .bz-co-identity { display:flex;align-items:center;gap:8px; }
-    .bz-co-dot { width:10px;height:10px;border-radius:50%;flex-shrink:0; }
-    .bz-co-name { font-size:14px;font-weight:600; }
-    .bz-co-sector { font-size:11px;color:var(--text-hint);margin-top:1px; }
-    .bz-co-last-return { text-align:right; }
-    .bz-co-last-val { font-family:'DM Mono',monospace;font-size:16px;font-weight:600;line-height:1; }
-    .bz-co-last-lbl { font-size:10px;color:var(--text-hint);text-transform:uppercase;margin-top:2px; }
-    .bz-sparkline-wrap { margin-bottom:8px;height:28px; }
-    .bz-sparkline-canvas { width:100%;height:28px;display:block; }
-    .bz-allocator { display:flex;align-items:center;gap:0; }
-    .bz-alloc-btn { width:38px;height:38px;border-radius:8px;border:0.5px solid var(--border-strong);background:var(--surface);font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.1s;color:var(--text-muted);user-select:none;-webkit-tap-highlight-color:transparent;flex-shrink:0; }
-    .bz-alloc-btn:hover { background:var(--amber-light);border-color:var(--amber);color:var(--amber); }
-    .bz-alloc-btn:active { transform:scale(0.92); }
-    .bz-alloc-btn:disabled { opacity:0.25;cursor:not-allowed;transform:none; }
-    .bz-alloc-center { flex:1;text-align:center; }
-    .bz-alloc-display { font-family:'DM Mono',monospace;font-size:22px;font-weight:600;line-height:1; }
-    .bz-alloc-unit { font-size:11px;color:var(--text-hint);margin-top:2px; }
-    .bz-invest-bar { position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:15;background:rgba(250,250,247,0.97);backdrop-filter:blur(12px);border-top:0.5px solid var(--border-strong);padding:10px 1.25rem 14px;max-width:680px;width:100%; }
-    @media(prefers-color-scheme:dark){.bz-invest-bar{background:rgba(23,23,26,0.97);}}
-    .bz-invest-summary { display:flex;justify-content:space-between;align-items:center;margin-bottom:8px; }
-    .bz-invest-label { font-size:13px;color:var(--text-muted); }
-    .bz-invest-remaining { font-family:'DM Mono',monospace;font-size:15px;font-weight:600; }
-    .bz-invest-remaining.zero{color:var(--teal);} .bz-invest-remaining.over{color:var(--red);} .bz-invest-remaining.under{color:var(--amber);}
-    .bz-alloc-pips { display:flex;gap:3px;margin-bottom:8px; }
-    .bz-pip { width:100%;height:5px;border-radius:3px;background:var(--border-strong);transition:background 0.1s;flex:1; }
-    .bz-pip.filled { background:var(--amber); }
+    /* ── BAZAAR GAME UI ── */
+    .bz-header{position:sticky;top:0;z-index:20;background:rgba(250,250,247,0.97);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border-strong);padding:.75rem 1.5rem;}
+    @media(prefers-color-scheme:dark){.bz-header{background:rgba(23,23,26,.97);}}
+    .bz-header-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+    .bz-year-badge{font-size:14px;font-weight:600;letter-spacing:-.01em;}
+    .bz-fund-tag{font-size:12px;color:var(--text-hint);}
+    .bz-pnl-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+    .bz-pnl-cell{background:var(--surface);border-radius:8px;padding:7px 10px;text-align:center;}
+    .bz-pnl-val{font-family:'DM Mono',monospace;font-size:14px;font-weight:600;line-height:1;}
+    .bz-pnl-lbl{font-size:9px;color:var(--text-hint);text-transform:uppercase;letter-spacing:.05em;margin-top:3px;}
+    .bz-cards-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:1.25rem 1.5rem;}
+    @media(max-width:600px){.bz-cards-grid{grid-template-columns:1fr;}}
+    .bz-co-card{border-radius:var(--radius-lg);border:1.5px solid var(--border-strong);background:var(--card);overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,box-shadow .2s,background .25s;}
+    .bz-co-card.has-alloc{box-shadow:0 4px 24px rgba(0,0,0,.08);}
+    .bz-co-card.co-a.has-alloc{border-color:var(--co-a);background:linear-gradient(180deg,rgba(37,99,235,0.06) 0%,var(--card) 70px);}
+    .bz-co-card.co-b.has-alloc{border-color:var(--co-b);background:linear-gradient(180deg,rgba(124,58,237,0.06) 0%,var(--card) 70px);}
+    .bz-co-card.co-c.has-alloc{border-color:var(--co-c);background:linear-gradient(180deg,rgba(217,119,6,0.06) 0%,var(--card) 70px);}
+    .bz-co-stripe{height:5px;width:100%;flex-shrink:0;}
+    .bz-co-card.co-a .bz-co-stripe{background:var(--co-a);}
+    .bz-co-card.co-b .bz-co-stripe{background:var(--co-b);}
+    .bz-co-card.co-c .bz-co-stripe{background:var(--co-c);}
+    .bz-co-body{padding:1rem;flex:1;display:flex;flex-direction:column;gap:10px;}
+    .bz-co-name{font-size:14px;font-weight:700;line-height:1.25;}
+    .bz-co-sector{font-size:11px;color:var(--text-hint);line-height:1.45;}
+    .bz-co-last{display:flex;align-items:baseline;gap:5px;}
+    .bz-co-last-val{font-family:'DM Mono',monospace;font-size:19px;font-weight:700;line-height:1;}
+    .bz-co-last-lbl{font-size:10px;color:var(--text-hint);text-transform:uppercase;letter-spacing:.05em;}
+    .bz-spark-wrap{height:30px;border-radius:6px;overflow:hidden;background:var(--surface);}
+    .bz-spark-canvas{width:100%;height:30px;display:block;}
+    .bz-allocator{display:flex;align-items:center;gap:6px;margin-top:auto;padding-top:4px;}
+    .bz-alloc-btn{width:46px;height:46px;border-radius:10px;border:1px solid var(--border-strong);background:var(--surface);font-size:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;color:var(--text-muted);user-select:none;-webkit-tap-highlight-color:transparent;flex-shrink:0;font-weight:300;line-height:1;}
+    .bz-alloc-btn:hover:not(:disabled){background:var(--amber-light);border-color:var(--amber);color:var(--amber);}
+    .bz-alloc-btn:active:not(:disabled){transform:scale(.88);}
+    .bz-alloc-btn:disabled{opacity:.18;cursor:not-allowed;}
+    .bz-alloc-center{flex:1;text-align:center;}
+    .bz-alloc-amount{font-family:'DM Mono',monospace;font-size:24px;font-weight:700;line-height:1;transition:color .2s;}
+    .bz-alloc-unit{font-size:10px;color:var(--text-hint);margin-top:3px;}
+    .bz-bottom-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:960px;background:rgba(250,250,247,.97);backdrop-filter:blur(12px);border-top:0.5px solid var(--border-strong);padding:10px 1.5rem 20px;z-index:15;}
+    @media(prefers-color-scheme:dark){.bz-bottom-bar{background:rgba(23,23,26,.97);}}
+    .bz-pips{display:flex;gap:4px;margin-bottom:8px;}
+    .bz-pip{flex:1;height:5px;border-radius:3px;background:var(--border-strong);transition:background .12s;}
+    .bz-pip.filled{background:var(--amber);}
+    .bz-warning{background:var(--amber-light);border:1px solid rgba(186,117,23,.25);border-radius:var(--radius);padding:9px 14px;font-size:13px;color:var(--amber-dark);font-weight:500;line-height:1.55;margin-bottom:9px;display:none;}
+    .bz-warning.show{display:block;}
+    .bz-invest-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    .bz-invest-status{font-size:13px;color:var(--text-muted);flex:1;}
+    .bz-invest-btn{min-width:150px;padding:12px 24px;background:var(--amber);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all .15s;flex-shrink:0;}
+    .bz-invest-btn:hover:not(:disabled){background:var(--amber-dark);}
+    .bz-invest-btn:active:not(:disabled){transform:scale(.97);}
+    .bz-invest-btn:disabled{background:var(--surface);border:1px solid var(--border-strong);color:var(--text-hint);cursor:not-allowed;}
+    .bz-result-overlay{position:fixed;inset:0;z-index:100;background:rgba(250,250,247,.95);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:1.25rem;opacity:0;pointer-events:none;transition:opacity .25s;}
+    @media(prefers-color-scheme:dark){.bz-result-overlay{background:rgba(23,23,26,.95);}}
+    .bz-result-overlay.visible{opacity:1;pointer-events:all;}
+    .bz-result-card{background:var(--card);border:0.5px solid var(--border-strong);border-radius:var(--radius-lg);padding:1.5rem;max-width:440px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.12);max-height:88vh;overflow-y:auto;}
+    .bz-result-yr{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--text-hint);margin-bottom:16px;}
+    .bz-result-table{width:100%;border-collapse:collapse;margin-bottom:14px;}
+    .bz-result-table th{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--text-hint);padding:0 0 8px;text-align:right;}
+    .bz-result-table th:first-child{text-align:left;}
+    .bz-result-table td{font-size:14px;padding:8px 0;border-top:0.5px solid var(--border);text-align:right;font-family:'DM Mono',monospace;font-weight:500;}
+    .bz-result-table td.bz-co-cell{text-align:left;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:7px;}
+    .bz-total-row td{font-weight:700;font-size:15px;border-top:1px solid var(--border-strong);padding-top:10px;}
+    .bz-dot-xs{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0;}
+    .bz-commentary{background:var(--surface);border-left:3px solid var(--amber);border-radius:0 var(--radius) var(--radius) 0;padding:12px 14px;margin-bottom:14px;font-size:13.5px;color:var(--text-muted);line-height:1.75;}
+    .bz-result-footer{display:flex;justify-content:space-between;align-items:center;}
+    .bz-next-lbl{font-size:12px;color:var(--text-hint);}
+    .bz-next-btn{padding:11px 24px;background:var(--text);color:var(--bg);border:none;border-radius:var(--radius);cursor:pointer;font-size:15px;font-weight:600;font-family:'DM Sans',sans-serif;transition:opacity .15s;}
+    .bz-next-btn:hover{opacity:.82;}
     .bz-final-pnl-row { display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1.25rem; }
     .bz-final-pnl-cell { background:var(--card);border:0.5px solid var(--border-strong);border-radius:var(--radius);padding:12px;text-align:center; }
     .bz-final-pnl-val { font-family:'DM Mono',monospace;font-size:18px;font-weight:600; }
@@ -1103,28 +1120,50 @@
 </div>
 
 <!-- BAZAAR GAME -->
-<div id="screen-bazaar-game" class="screen">
-  <div class="bz-game-header">
-    <div class="bz-game-header-top">
-      <div class="bz-year-label">Year <strong id="bz-hdr-year">1</strong> of 20</div>
-      <div style="font-size:0.76rem;color:var(--text-hint);">Allocate ₹9L across companies</div>
+<div id="screen-bazaar-game" class="screen" style="padding:0;">
+  <!-- STICKY HEADER -->
+  <div class="bz-header">
+    <div class="bz-header-top">
+      <div class="bz-year-badge">Year <span id="bz-hdr-year">1</span> of 20</div>
+      <div class="bz-fund-tag">₹99L fund · ₹9L / year</div>
     </div>
     <div class="bz-pnl-strip">
-      <div class="bz-pnl-cell"><div class="bz-pnl-val" id="bz-pnl-deployed" style="color:var(--text-muted);">₹0L</div><div class="bz-pnl-lbl">Deployed</div></div>
-      <div class="bz-pnl-cell"><div class="bz-pnl-val" id="bz-pnl-returned" style="color:var(--teal);">₹0L</div><div class="bz-pnl-lbl">Returned</div></div>
-      <div class="bz-pnl-cell"><div class="bz-pnl-val" id="bz-pnl-net" style="color:var(--text-muted);">₹0L</div><div class="bz-pnl-lbl">Net P&amp;L</div></div>
+      <div class="bz-pnl-cell"><div class="bz-pnl-val" id="bz-pnl-deployed">₹0L</div><div class="bz-pnl-lbl">Deployed</div></div>
+      <div class="bz-pnl-cell"><div class="bz-pnl-val" id="bz-pnl-returned">₹0L</div><div class="bz-pnl-lbl">Returned</div></div>
+      <div class="bz-pnl-cell"><div class="bz-pnl-val" id="bz-pnl-net" style="color:var(--text-hint);">—</div><div class="bz-pnl-lbl">Net P&amp;L</div></div>
     </div>
   </div>
-  <div class="bz-companies-area" id="bz-companies-area"></div>
-  <div class="bz-invest-bar">
-    <div class="bz-invest-summary">
-      <div class="bz-invest-label">Allocated</div>
-      <div><span class="bz-invest-remaining" id="bz-invest-placed">₹0L</span><span style="font-size:0.82rem;color:var(--text-hint);"> / ₹9L · remaining: </span><span class="bz-invest-remaining under" id="bz-invest-remaining">₹9L</span></div>
+  <!-- 3-COL CARDS -->
+  <div class="bz-cards-grid" id="bz-cards-grid"></div>
+  <div style="height:130px;"></div>
+  <!-- BOTTOM BAR -->
+  <div class="bz-bottom-bar">
+    <div class="bz-pips" id="bz-alloc-pips"></div>
+    <div class="bz-warning" id="bz-warning"></div>
+    <div class="bz-invest-row">
+      <div class="bz-invest-status" id="bz-invest-status"></div>
+      <button class="bz-invest-btn" id="bz-invest-btn" onclick="bzTryInvest()">Invest →</button>
     </div>
-    <div class="bz-alloc-pips" id="bz-alloc-pips"></div>
-    <button class="btn btn-primary btn-full" id="bz-invest-btn" onclick="bzExecuteTrade()">Invest →</button>
   </div>
-  <div style="height:120px;"></div>
+  <!-- PER-ROUND RESULT OVERLAY -->
+  <div class="bz-result-overlay" id="bz-round-overlay">
+    <div class="bz-result-card">
+      <div class="bz-result-yr" id="bz-ro-yr"></div>
+      <table class="bz-result-table">
+        <thead><tr>
+          <th style="width:38%;text-align:left;">Company</th>
+          <th>In</th><th>Out</th><th>Net</th>
+        </tr></thead>
+        <tbody id="bz-ro-body"></tbody>
+        <tfoot id="bz-ro-foot"></tfoot>
+      </table>
+      <div class="bz-commentary" id="bz-commentary"></div>
+      <div class="bz-result-footer">
+        <div class="bz-next-lbl" id="bz-ro-next-lbl"></div>
+        <button class="bz-next-btn" onclick="bzCloseOverlay()">Next year →</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- BAZAAR B5 (internal, before results) -->
@@ -2457,177 +2496,255 @@ function bzSampleReturn(compId, round) {
   return parseFloat(mult.toFixed(3));
 }
 
-function bzAutoFill() {
-  const placed = bzAllocation.A+bzAllocation.B+bzAllocation.C;
-  let rem = BZ_DEPLOY_PER_ROUND - placed;
-  if(rem<=0) return;
-  const order=['A','B','C']; let i=0;
-  while(rem>0){bzAllocation[order[i%3]]++;rem--;i++;}
-}
-
 function startBazaar() {
-  bzShiftAt = 9+Math.floor(Math.random()*5);
-  bzRoundNum=0; bzAllocation={A:3,B:3,C:3};
-  bzHistory=[]; bzTotalDeployed=0; bzTotalReturned=0; bzB5Answers={};
+  bzShiftAt = 9 + Math.floor(Math.random()*5);
+  bzRoundNum = 0;
+  bzAllocation = {A:0, B:0, C:0};   // starts at zero — user must allocate
+  bzHistory = []; bzTotalDeployed = 0; bzTotalReturned = 0; bzB5Answers = {};
   showScreen('bazaar-game');
-  bzRenderCompanies(); bzRenderPips(); bzUpdateInvestBar(); bzUpdatePnL();
+  bzRenderAll();
 }
 
-function bzRenderCompanies() {
-  const area = document.getElementById('bz-companies-area');
-  if(!area) return;
-  area.innerHTML = BZ_COMPANIES.map(co => {
-    const lastEntry = bzHistory.length>0 ? bzHistory[bzHistory.length-1] : null;
-    const hasAlloc = bzAllocation[co.id]>0;
-    let lastReturnHTML = lastEntry
-      ? `<div class="bz-co-last-return"><div class="bz-co-last-val" style="color:${lastEntry.returns[co.id].net>=0?'var(--teal)':'var(--red)'};">${lastEntry.returns[co.id].net>=0?'+':'−'}₹${Math.abs(lastEntry.returns[co.id].net).toFixed(2)}L</div><div class="bz-co-last-lbl">Last year</div></div>`
-      : `<div class="bz-co-last-return"><div class="bz-co-last-val" style="color:var(--text-hint);">—</div><div class="bz-co-last-lbl">No data</div></div>`;
-    return `<div class="bz-co-card ${co.cssClass} ${hasAlloc?'has-alloc':''}" id="bz-co-card-${co.id}">
-      <div class="bz-co-header"><div class="bz-co-identity"><div class="bz-co-dot" style="background:${co.color};"></div><div><div class="bz-co-name">${co.shortName}</div><div class="bz-co-sector">${co.sector}</div></div></div>${lastReturnHTML}</div>
-      <div class="bz-sparkline-wrap"><canvas class="bz-sparkline-canvas" id="bz-spark-${co.id}" height="28"></canvas></div>
-      <div class="bz-allocator">
-        <button class="bz-alloc-btn" onclick="bzChangeAlloc('${co.id}',-1)" id="bz-btn-minus-${co.id}">−</button>
-        <div class="bz-alloc-center"><div class="bz-alloc-display" id="bz-alloc-${co.id}" style="color:${hasAlloc?co.color:'var(--text-hint)'};">₹${bzAllocation[co.id]}L</div><div class="bz-alloc-unit">lacs this year</div></div>
-        <button class="bz-alloc-btn" onclick="bzChangeAlloc('${co.id}',+1)" id="bz-btn-plus-${co.id}">+</button>
+function bzRenderAll() {
+  document.getElementById('bz-hdr-year').textContent = bzRoundNum + 1;
+  bzRenderCards();
+  bzRenderPips();
+  bzUpdateBottomBar();
+  bzUpdatePnL();
+}
+
+function bzRenderCards() {
+  const lastH = bzHistory.length > 0 ? bzHistory[bzHistory.length - 1] : null;
+  document.getElementById('bz-cards-grid').innerHTML = BZ_COMPANIES.map(co => {
+    const a = bzAllocation[co.id];
+    const hasAlloc = a > 0;
+    const amtColor = hasAlloc ? co.color : 'var(--text-hint)';
+    let lastHTML;
+    if (lastH) {
+      const net = lastH.returns[co.id].net;
+      const sign = net >= 0 ? '+' : '−';
+      const col = net > 0 ? 'var(--teal)' : net < 0 ? 'var(--red)' : 'var(--text-hint)';
+      lastHTML = `<div class="bz-co-last"><div class="bz-co-last-val" style="color:${col};">${sign}₹${Math.abs(net).toFixed(1)}L</div><div class="bz-co-last-lbl">Last year</div></div>`;
+    } else {
+      lastHTML = `<div class="bz-co-last"><div class="bz-co-last-val" style="color:var(--text-hint);">—</div><div class="bz-co-last-lbl">No data yet</div></div>`;
+    }
+    return `<div class="bz-co-card ${co.cssClass}${hasAlloc?' has-alloc':''}" id="bz-co-card-${co.id}">
+      <div class="bz-co-stripe"></div>
+      <div class="bz-co-body">
+        <div><div class="bz-co-name">${co.shortName}</div><div class="bz-co-sector">${co.sector}</div></div>
+        ${lastHTML}
+        <div class="bz-spark-wrap"><canvas class="bz-spark-canvas" id="bz-spark-${co.id}" height="30"></canvas></div>
+        <div class="bz-allocator">
+          <button class="bz-alloc-btn" id="bz-btn-minus-${co.id}" onclick="bzChangeAlloc('${co.id}',-1)">−</button>
+          <div class="bz-alloc-center">
+            <div class="bz-alloc-amount" id="bz-alloc-${co.id}" style="color:${amtColor};">₹${a}L</div>
+            <div class="bz-alloc-unit">lacs this year</div>
+          </div>
+          <button class="bz-alloc-btn" id="bz-btn-plus-${co.id}" onclick="bzChangeAlloc('${co.id}',+1)">+</button>
+        </div>
       </div>
     </div>`;
   }).join('');
-  BZ_COMPANIES.forEach(co => bzDrawSparkline(co.id, co.hex));
+  requestAnimationFrame(() => BZ_COMPANIES.forEach(co => bzDrawSparkline(co.id, co.hex)));
   bzUpdateAllocButtons();
-  document.getElementById('bz-hdr-year').textContent = bzRoundNum+1;
+}
+
+function bzUpdateCardState(coId) {
+  const co = BZ_COMPANIES.find(c => c.id === coId);
+  const a = bzAllocation[coId];
+  const card = document.getElementById('bz-co-card-' + coId);
+  const amt  = document.getElementById('bz-alloc-' + coId);
+  if (card) { if(a > 0) card.classList.add('has-alloc'); else card.classList.remove('has-alloc'); }
+  if (amt)  { amt.textContent = '₹' + a + 'L'; amt.style.color = a > 0 ? co.color : 'var(--text-hint)'; }
 }
 
 function bzDrawSparkline(coId, hexColor) {
-  const canvas = document.getElementById('bz-spark-'+coId);
-  if(!canvas) return;
+  const canvas = document.getElementById('bz-spark-' + coId);
+  if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  const W = canvas.offsetWidth||260;
-  canvas.width=W*window.devicePixelRatio; canvas.height=28*window.devicePixelRatio;
-  ctx.scale(window.devicePixelRatio,window.devicePixelRatio);
-  ctx.clearRect(0,0,W,28);
-  const vals = bzHistory.map(h=>h.returns[coId].net);
-  if(vals.length<2){ctx.fillStyle='rgba(0,0,0,0.06)';ctx.fillRect(0,13,W,2);return;}
-  const min=Math.min(-1,...vals), max=Math.max(1,...vals);
-  const scaleY=v=>22-((v-min)/(max-min))*18;
-  const stepX=W/(vals.length-1);
-  ctx.beginPath();ctx.moveTo(0,scaleY(0));ctx.lineTo(W,scaleY(0));ctx.strokeStyle='rgba(0,0,0,0.08)';ctx.lineWidth=1;ctx.stroke();
-  ctx.beginPath();ctx.moveTo(0,scaleY(vals[0]));vals.forEach((v,i)=>{if(i>0)ctx.lineTo(i*stepX,scaleY(v));});
-  ctx.strokeStyle=hexColor;ctx.lineWidth=1.8;ctx.stroke();
-  ctx.lineTo((vals.length-1)*stepX,28);ctx.lineTo(0,28);ctx.closePath();ctx.fillStyle=hexColor+'22';ctx.fill();
+  const W = canvas.offsetWidth || 280;
+  canvas.width = W * window.devicePixelRatio;
+  canvas.height = 30 * window.devicePixelRatio;
+  ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  ctx.clearRect(0, 0, W, 30);
+  const vals = bzHistory.map(h => h.returns[coId].net);
+  if (vals.length < 2) { ctx.fillStyle = 'rgba(0,0,0,0.06)'; ctx.fillRect(0, 14, W, 2); return; }
+  const min = Math.min(-0.5, ...vals), max = Math.max(0.5, ...vals);
+  const sy = v => 25 - ((v - min) / (max - min)) * 20;
+  const sx = i => i * (W / (vals.length - 1));
+  ctx.beginPath(); ctx.moveTo(0, sy(0)); ctx.lineTo(W, sy(0));
+  ctx.strokeStyle = 'rgba(0,0,0,0.07)'; ctx.lineWidth = 1; ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(sx(0), sy(vals[0]));
+  vals.forEach((v, i) => { if (i > 0) ctx.lineTo(sx(i), sy(v)); });
+  ctx.strokeStyle = hexColor; ctx.lineWidth = 1.8; ctx.stroke();
+  ctx.lineTo(sx(vals.length - 1), 30); ctx.lineTo(0, 30); ctx.closePath();
+  ctx.fillStyle = hexColor + '22'; ctx.fill();
 }
 
 function bzChangeAlloc(coId, delta) {
-  const total = bzAllocation.A+bzAllocation.B+bzAllocation.C;
-  if(delta>0&&total>=BZ_DEPLOY_PER_ROUND) return;
-  if(delta<0&&bzAllocation[coId]<=0) return;
-  bzAllocation[coId]=Math.max(0,bzAllocation[coId]+delta);
-  bzUpdateAllocDisplay(coId); bzRenderPips(); bzUpdateInvestBar();
-}
-
-function bzUpdateAllocDisplay(coId) {
-  const co=BZ_COMPANIES.find(c=>c.id===coId);
-  const el=document.getElementById('bz-alloc-'+coId);
-  const card=document.getElementById('bz-co-card-'+coId);
-  if(el){el.textContent='₹'+bzAllocation[coId]+'L';el.style.color=bzAllocation[coId]>0?co.color:'var(--text-hint)';}
-  if(card){if(bzAllocation[coId]>0)card.classList.add('has-alloc');else card.classList.remove('has-alloc');}
+  const total = bzAllocation.A + bzAllocation.B + bzAllocation.C;
+  if (delta > 0 && total >= BZ_DEPLOY_PER_ROUND) return;
+  if (delta < 0 && bzAllocation[coId] <= 0) return;
+  bzAllocation[coId] = Math.max(0, bzAllocation[coId] + delta);
+  bzUpdateCardState(coId);
   bzUpdateAllocButtons();
+  bzRenderPips();
+  bzUpdateBottomBar();
 }
 
 function bzUpdateAllocButtons() {
-  const total=bzAllocation.A+bzAllocation.B+bzAllocation.C;
-  BZ_COMPANIES.forEach(co=>{
-    const bp=document.getElementById('bz-btn-plus-'+co.id);
-    const bm=document.getElementById('bz-btn-minus-'+co.id);
-    if(bp) bp.disabled=total>=BZ_DEPLOY_PER_ROUND;
-    if(bm) bm.disabled=bzAllocation[co.id]<=0;
+  const total = bzAllocation.A + bzAllocation.B + bzAllocation.C;
+  BZ_COMPANIES.forEach(co => {
+    const bp = document.getElementById('bz-btn-plus-' + co.id);
+    const bm = document.getElementById('bz-btn-minus-' + co.id);
+    if (bp) bp.disabled = total >= BZ_DEPLOY_PER_ROUND;
+    if (bm) bm.disabled = bzAllocation[co.id] <= 0;
   });
 }
 
 function bzRenderPips() {
-  const el=document.getElementById('bz-alloc-pips'); if(!el)return;
-  const total=bzAllocation.A+bzAllocation.B+bzAllocation.C;
-  el.innerHTML=Array(BZ_DEPLOY_PER_ROUND).fill(0).map((_,i)=>`<div class="bz-pip ${i<total?'filled':''}"></div>`).join('');
+  const el = document.getElementById('bz-alloc-pips');
+  if (!el) return;
+  const total = bzAllocation.A + bzAllocation.B + bzAllocation.C;
+  el.innerHTML = Array(BZ_DEPLOY_PER_ROUND).fill(0).map((_, i) =>
+    `<div class="bz-pip${i < total ? ' filled' : ''}"></div>`
+  ).join('');
 }
 
-function bzUpdateInvestBar() {
-  const placed=bzAllocation.A+bzAllocation.B+bzAllocation.C;
-  const remaining=BZ_DEPLOY_PER_ROUND-placed;
-  const pe=document.getElementById('bz-invest-placed'), re=document.getElementById('bz-invest-remaining');
-  if(pe) pe.textContent='₹'+placed+'L';
-  if(re){re.textContent='₹'+remaining+'L';re.className='bz-invest-remaining '+(remaining===0?'zero':remaining<0?'over':'under');}
+function bzUpdateBottomBar() {
+  const placed = bzAllocation.A + bzAllocation.B + bzAllocation.C;
+  const rem    = BZ_DEPLOY_PER_ROUND - placed;
+  const warnEl = document.getElementById('bz-warning');
+  const statEl = document.getElementById('bz-invest-status');
+  const btn    = document.getElementById('bz-invest-btn');
+  if (!warnEl || !statEl || !btn) return;
+  if (rem === 0) {
+    warnEl.classList.remove('show'); warnEl.textContent = '';
+    statEl.innerHTML = '<span style="color:var(--teal);font-weight:600;">All ₹9L allocated ✓</span>';
+    btn.disabled = false; btn.textContent = 'Invest →';
+  } else {
+    warnEl.classList.add('show');
+    warnEl.textContent = bzAllocWarning(placed, rem);
+    statEl.innerHTML = '<span style="font-weight:600;">₹' + placed + 'L</span> placed · <span style="font-weight:600;color:var(--amber);">₹' + rem + 'L</span> idle';
+    btn.disabled = true; btn.textContent = 'Allocate first';
+  }
+}
+
+function bzAllocWarning(placed, rem) {
+  if (placed === 0) return "₹9L is sitting in your account doing nothing. Pick your bets — even a ₹3-3-3 split gets you started.";
+  if (rem >= 6)    return "₹" + rem + "L still on the sidelines. Idle money doesn't earn — put it to work.";
+  if (rem >= 3)    return "₹" + rem + "L left to allocate. All funds need a home before you can invest.";
+  return "Almost there — just ₹" + rem + "L left. Squeeze it into one of the three.";
+}
+
+function bzTryInvest() {
+  if (bzAllocation.A + bzAllocation.B + bzAllocation.C < BZ_DEPLOY_PER_ROUND) return;
+  bzExecuteTrade();
 }
 
 function bzUpdatePnL() {
-  const net=parseFloat((bzTotalReturned-bzTotalDeployed).toFixed(2));
-  const de=document.getElementById('bz-pnl-deployed'),re=document.getElementById('bz-pnl-returned'),ne=document.getElementById('bz-pnl-net');
-  if(de) de.textContent='₹'+bzTotalDeployed.toFixed(1)+'L';
-  if(re) re.textContent='₹'+bzTotalReturned.toFixed(1)+'L';
-  if(ne){ne.textContent=(net>=0?'+':'')+'₹'+net.toFixed(1)+'L';ne.style.color=net>0?'var(--teal)':net<0?'var(--red)':'var(--text-muted)';}
+  const net = parseFloat((bzTotalReturned - bzTotalDeployed).toFixed(2));
+  const de = document.getElementById('bz-pnl-deployed');
+  const re = document.getElementById('bz-pnl-returned');
+  const ne = document.getElementById('bz-pnl-net');
+  if (de) de.textContent = '₹' + bzTotalDeployed.toFixed(1) + 'L';
+  if (re) re.textContent = '₹' + bzTotalReturned.toFixed(1) + 'L';
+  if (ne) { ne.textContent = (net >= 0 ? '+' : '') + '₹' + net.toFixed(1) + 'L'; ne.style.color = net > 0 ? 'var(--teal)' : net < 0 ? 'var(--red)' : 'var(--text-hint)'; }
 }
 
 function bzExecuteTrade() {
-  bzAutoFill();
-  ['A','B','C'].forEach(id=>bzUpdateAllocDisplay(id));
-  const returns={};
-  let roundReturned=0;
-  BZ_COMPANIES.forEach(co=>{
-    const mult=bzSampleReturn(co.id,bzRoundNum);
-    const invested=bzAllocation[co.id];
-    const returned=parseFloat((invested*mult).toFixed(2));
-    const net=parseFloat((returned-invested).toFixed(2));
-    returns[co.id]={multiplier:mult,invested,returned,net};
-    roundReturned+=returned;
+  const returns = {};
+  let roundReturned = 0;
+  BZ_COMPANIES.forEach(co => {
+    const mult     = bzSampleReturn(co.id, bzRoundNum);
+    const invested = bzAllocation[co.id];
+    const returned = parseFloat((invested * mult).toFixed(2));
+    const net      = parseFloat((returned - invested).toFixed(2));
+    returns[co.id] = {multiplier: mult, invested, returned, net};
+    roundReturned += returned;
   });
-  const roundDeployed=BZ_DEPLOY_PER_ROUND;
-  const roundNet=parseFloat((roundReturned-roundDeployed).toFixed(2));
-  bzTotalDeployed+=roundDeployed;
-  bzTotalReturned+=parseFloat(roundReturned.toFixed(2));
-  bzHistory.push({round:bzRoundNum,alloc:{...bzAllocation},returns,net:roundNet});
+  const roundNet = parseFloat((roundReturned - BZ_DEPLOY_PER_ROUND).toFixed(2));
+  bzTotalDeployed  += BZ_DEPLOY_PER_ROUND;
+  bzTotalReturned  += parseFloat(roundReturned.toFixed(2));
+  bzHistory.push({round: bzRoundNum, alloc: {...bzAllocation}, returns, net: roundNet});
   bzUpdatePnL();
-  bzShowResultOverlay(returns,roundNet,bzRoundNum);
+  bzShowRoundOverlay(returns, roundNet);
 }
 
-function bzShowResultOverlay(returns, roundNet, round) {
-  document.getElementById('bz-ro-year-label').textContent=`Year ${round+1} of ${BZ_TOTAL_ROUNDS}`;
-  document.getElementById('bz-ro-next-num').textContent=round+2<=BZ_TOTAL_ROUNDS?round+2:'—';
-  let tableBody='';
-  BZ_COMPANIES.forEach(co=>{
-    const r=returns[co.id];
-    const netStr=(r.net>=0?'+':'−')+'₹'+Math.abs(r.net).toFixed(2)+'L';
-    const netColor=r.net>0?'var(--teal)':r.net<0?'var(--red)':'var(--text-muted)';
-    tableBody+=`<tr><td><span style="width:8px;height:8px;border-radius:50%;background:${co.color};display:inline-block;flex-shrink:0;"></span>${co.shortName}</td><td>₹${r.invested}L</td><td>₹${r.returned.toFixed(2)}L</td><td style="color:${netColor};">${netStr}</td></tr>`;
+function bzShowRoundOverlay(returns, roundNet) {
+  const round = bzRoundNum;
+  document.getElementById('bz-ro-yr').textContent = 'Year ' + (round + 1) + ' of ' + BZ_TOTAL_ROUNDS;
+  let tbody = '';
+  BZ_COMPANIES.forEach(co => {
+    const r  = returns[co.id];
+    const nc = r.net > 0 ? 'var(--teal)' : r.net < 0 ? 'var(--red)' : 'var(--text-hint)';
+    const ns = (r.net >= 0 ? '+' : '−') + '₹' + Math.abs(r.net).toFixed(2) + 'L';
+    tbody += `<tr><td class="bz-co-cell"><span class="bz-dot-xs" style="background:${co.color};"></span>${co.shortName}</td><td>₹${r.invested}L</td><td>₹${r.returned.toFixed(2)}L</td><td style="color:${nc};">${ns}</td></tr>`;
   });
-  document.getElementById('bz-ro-table-body').innerHTML=tableBody;
-  const totalNetColor=roundNet>0?'var(--teal)':roundNet<0?'var(--red)':'var(--text-muted)';
-  const totalNetStr=(roundNet>=0?'+':'−')+'₹'+Math.abs(roundNet).toFixed(2)+'L';
-  document.getElementById('bz-ro-table-foot').innerHTML=`<tr class="bz-total-row"><td>Total</td><td>₹9L</td><td>₹${(roundNet+9).toFixed(2)}L</td><td style="color:${totalNetColor};">${totalNetStr}</td></tr>`;
-  document.getElementById('bz-ro-narrative').textContent=bzGetRoundNarrative(returns,bzAllocation,round);
-  document.getElementById('bz-result-overlay').classList.add('visible');
+  document.getElementById('bz-ro-body').innerHTML = tbody;
+  const totalRet = parseFloat((roundNet + BZ_DEPLOY_PER_ROUND).toFixed(2));
+  const tnc = roundNet > 0 ? 'var(--teal)' : roundNet < 0 ? 'var(--red)' : 'var(--text-hint)';
+  const tns = (roundNet >= 0 ? '+' : '−') + '₹' + Math.abs(roundNet).toFixed(2) + 'L';
+  document.getElementById('bz-ro-foot').innerHTML = `<tr class="bz-total-row"><td class="bz-co-cell">Total</td><td>₹${BZ_DEPLOY_PER_ROUND}L</td><td>₹${totalRet}L</td><td style="color:${tnc};">${tns}</td></tr>`;
+  document.getElementById('bz-commentary').textContent = bzGetRoundNarrative(returns, bzAllocation, bzHistory, round);
+  document.getElementById('bz-ro-next-lbl').textContent = round + 1 < BZ_TOTAL_ROUNDS ? 'Coming up: Year ' + (round + 2) : 'That was Year 20.';
+  document.getElementById('bz-round-overlay').classList.add('visible');
 }
 
-function bzGetRoundNarrative(returns, alloc, round) {
-  const nets=BZ_COMPANIES.map(co=>({id:co.id,net:returns[co.id].net,alloc:alloc[co.id]}));
-  const totalNet=nets.reduce((s,n)=>s+n.net,0);
-  const userBest=[...nets].sort((a,b)=>b.alloc-a.alloc)[0];
-  const bestCo=[...nets].sort((a,b)=>b.net-a.net)[0];
-  const bVenturesZero=returns['B'].multiplier===0;
-  if(round===bzShiftAt) return 'Market conditions shifted this year. What worked before may not hold going forward.';
-  if(round===17) return "Carnation just put up unusual numbers. Whether that's a new trend or a one-off — only the next year will tell.";
-  if(bVenturesZero&&alloc['B']>=3) return `Bharat Ventures had a bad year — returned nothing. ₹${alloc['B']}L deployed, ₹0 back.`;
-  if(totalNet>3) return `Strong year. ₹9L deployed, ₹${(totalNet+9).toFixed(2)}L back.`;
-  if(totalNet<-2) return `Tough year — net loss of ₹${Math.abs(totalNet).toFixed(2)}L.`;
-  if(userBest.alloc>=7) return `Heavy bet on ${BZ_COMPANIES.find(c=>c.id===userBest.id).shortName}. ₹${userBest.alloc}L of ₹9L.`;
-  if(bestCo.id!==userBest.id&&bestCo.net>0) return `${BZ_COMPANIES.find(c=>c.id===bestCo.id).shortName} was the best returner. Your heaviest allocation was in ${BZ_COMPANIES.find(c=>c.id===userBest.id).shortName}.`;
-  return 'Year complete. Watch the trends.';
+function bzGetRoundNarrative(returns, alloc, history, round) {
+  const nets = {A: returns.A.net, B: returns.B.net, C: returns.C.net};
+  const totalNet = parseFloat((nets.A + nets.B + nets.C).toFixed(2));
+  const N = {A: 'Aakash Infra', B: 'Bharat Ventures', C: 'Carnation'};
+  const byAlloc = ['A','B','C'].sort((a,b) => alloc[b] - alloc[a]);
+  const topId = byAlloc[0], botId = byAlloc[2];
+  const bestId = ['A','B','C'].sort((a,b) => nets[b] - nets[a])[0];
+  const prev = history.slice(0, -1);
+  const roundsHeavyTop   = prev.filter(h => h.alloc[topId] >= 6).length;
+  const roundsIgnoredBot = prev.filter(h => h.alloc[botId] === 0).length + (alloc[botId] === 0 ? 1 : 0);
+  let verdict = '';
+  if (returns.B.multiplier === 0 && alloc.B >= 3) {
+    verdict = 'Bharat Ventures had a zero-return year — ₹' + alloc.B + 'L deployed, nothing back. High-risk cuts both ways.';
+  } else if (totalNet > 3) {
+    verdict = 'Good year — ₹' + (9 + totalNet).toFixed(1) + 'L back on ₹9L.';
+  } else if (totalNet > 0.5) {
+    verdict = 'Decent return — up ₹' + totalNet.toFixed(1) + 'L this year.';
+  } else if (totalNet < -3) {
+    verdict = 'Tough year — down ₹' + Math.abs(totalNet).toFixed(1) + 'L. Not every round will go this way.';
+  } else if (totalNet < -0.5) {
+    verdict = 'Down ₹' + Math.abs(totalNet).toFixed(1) + 'L. These happen — the 20-round picture matters more.';
+  } else {
+    verdict = 'Near flat — ₹' + Math.abs(totalNet).toFixed(2) + 'L ' + (totalNet >= 0 ? 'up' : 'down') + '.';
+  }
+  let behavior = '';
+  if (alloc[topId] >= 7) {
+    if (roundsHeavyTop >= 3) {
+      const others = byAlloc.slice(1).map(id => N[id]).join(' and ');
+      behavior = "You've been heavy on " + N[topId] + " for a while — looks like you're pretty sure about it. " + others + " are getting very little from you. Even a small split gives you better reads.";
+    } else {
+      const topNet = nets[topId];
+      behavior = topNet >= 0
+        ? '₹' + alloc[topId] + 'L of conviction in ' + N[topId] + '. Paid off this round.'
+        : "₹" + alloc[topId] + "L of conviction in " + N[topId] + ". Didn't land — not every year will be bad.";
+    }
+  } else if (alloc.A === alloc.B && alloc.B === alloc.C) {
+    behavior = 'Equal split — ₹' + alloc.A + 'L each. No strong lean either way.';
+  } else if (roundsIgnoredBot >= 3 && alloc[botId] === 0) {
+    behavior = N[botId] + " hasn't seen a rupee from you in " + roundsIgnoredBot + " rounds. Deliberate call, or just not on your radar?";
+  }
+  if (!behavior && bestId !== topId && nets[bestId] > 1 && alloc[bestId] <= 2) {
+    behavior = N[bestId] + ' had the best year of the three — on just ₹' + alloc[bestId] + 'L from you. Worth mixing in more?';
+  }
+  return [verdict, behavior].filter(Boolean).join(' ');
 }
 
-function bzCloseResultOverlay() {
-  document.getElementById('bz-result-overlay').classList.remove('visible');
+function bzCloseOverlay() {
+  document.getElementById('bz-round-overlay').classList.remove('visible');
   bzRoundNum++;
-  if(bzRoundNum>=BZ_TOTAL_ROUNDS){showScreen('bazaar-b5');bzRenderB5();return;}
-  bzAllocation={A:3,B:3,C:3};
-  bzRenderCompanies(); bzRenderPips(); bzUpdateInvestBar();
+  if (bzRoundNum >= BZ_TOTAL_ROUNDS) { showScreen('bazaar-b5'); bzRenderB5(); return; }
+  bzAllocation = {A:0, B:0, C:0};   // reset to zero — user allocates fresh each round
+  bzRenderAll();
 }
+
 
 const BZ_B5_QS = [
   {key:'b5_explore',text:"When something is working well for you, what's your natural instinct?",
