@@ -2479,14 +2479,14 @@ const BZ_COMPANIES = [
   {id:'C',name:'Carnation Consumer FMCG',shortName:'Carnation',sector:'Consumer Goods · Food, Personal Care',color:'var(--co-c)',hex:'#D97706',cssClass:'co-c'}
 ];
 const BZ_DEPLOY_PER_ROUND = 9;
-const BZ_TOTAL_ROUNDS = 20;
+const BZ_TOTAL_ROUNDS = 11;
 
-let bzRoundNum=0, bzShiftAt=9, bzAllocation={A:3,B:3,C:3};
+let bzRoundNum=0, bzShiftAt=5, bzAllocation={A:0,B:0,C:0};
 let bzHistory=[], bzTotalDeployed=0, bzTotalReturned=0, bzB5Answers={};
 
 function bzSampleReturn(compId, round) {
   const isPhase2 = round >= bzShiftAt;
-  const isCSpike = round >= 17;
+  const isCSpike = round >= 9;
   let mult;
   switch(compId) {
     case 'A': mult = isPhase2 ? 0.85+Math.random()*0.35 : 1.25+Math.random()*0.40; break;
@@ -2497,7 +2497,7 @@ function bzSampleReturn(compId, round) {
 }
 
 function startBazaar() {
-  bzShiftAt = 9 + Math.floor(Math.random()*5);
+  bzShiftAt = 5 + Math.floor(Math.random()*2);
   bzRoundNum = 0;
   bzAllocation = {A:0, B:0, C:0};   // starts at zero — user must allocate
   bzHistory = []; bzTotalDeployed = 0; bzTotalReturned = 0; bzB5Answers = {};
@@ -2687,7 +2687,7 @@ function bzShowRoundOverlay(returns, roundNet) {
   const tns = (roundNet >= 0 ? '+' : '−') + '₹' + Math.abs(roundNet).toFixed(2) + 'L';
   document.getElementById('bz-ro-foot').innerHTML = `<tr class="bz-total-row"><td class="bz-co-cell">Total</td><td>₹${BZ_DEPLOY_PER_ROUND}L</td><td>₹${totalRet}L</td><td style="color:${tnc};">${tns}</td></tr>`;
   document.getElementById('bz-commentary').textContent = bzGetRoundNarrative(returns, bzAllocation, bzHistory, round);
-  document.getElementById('bz-ro-next-lbl').textContent = round + 1 < BZ_TOTAL_ROUNDS ? 'Coming up: Year ' + (round + 2) : 'That was Year 20.';
+  document.getElementById('bz-ro-next-lbl').textContent = round + 1 < BZ_TOTAL_ROUNDS ? 'Coming up: Year ' + (round + 2) : 'That was Year ' + BZ_TOTAL_ROUNDS + '.';
   document.getElementById('bz-round-overlay').classList.add('visible');
 }
 
@@ -2789,7 +2789,7 @@ function bzComputeDimensions() {
   let stratHits=0,stratTotal=0;
   h.forEach((r,i)=>{if(i>=h.length-1)return;const next=h[i+1];BZ_COMPANIES.forEach(co=>{const good=r.returns[co.id].net>0.5,bad=r.returns[co.id].net<-0.5,inc=next.alloc[co.id]>r.alloc[co.id],dec=next.alloc[co.id]<r.alloc[co.id];if(good&&inc)stratHits++;if(bad&&dec)stratHits++;if(good||bad)stratTotal++;});});
   const strategy=stratTotal>0?Math.min(1,stratHits/stratTotal):0.5;
-  const cSpike=h.filter(r=>r.round>=17);
+  const cSpike=h.filter(r=>r.round>=9);
   const decoy_response=cSpike.length>0?cSpike.reduce((s,r)=>s+r.alloc.C,0)/(cSpike.length*BZ_DEPLOY_PER_ROUND):0;
   const aAllocs=h.map(r=>r.alloc.A);
   const avgA=aAllocs.reduce((s,v)=>s+v,0)/(aAllocs.length||1);
