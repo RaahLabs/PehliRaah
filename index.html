@@ -1197,7 +1197,7 @@
         <svg width="110" height="140" viewBox="0 0 110 140">
           <ellipse id="b-body" cx="55" cy="58" rx="44" ry="52" fill="#EF9F27"/>
           <ellipse id="b-shine" cx="38" cy="35" rx="15" ry="10" fill="#FAC775" opacity="0.5"/>
-          <path d="M55 110 Q52 122 55 128" stroke="#BA7517" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <path id="b-string" d="M55 110 Q52 122 55 128" stroke="#BA7517" stroke-width="2" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
       <div id="g-boom" style="display:none;position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);font-size:60px;line-height:1;">💥</div>
@@ -1476,7 +1476,7 @@
       <div class="intro-left">
         <div class="game-name-hindi">⚖️ Saudaa</div>
         <div class="game-name-sub">saudaa — deal, bargain</div>
-        <p class="game-intro-para">Three rounds of decision-making. Each round tests a different angle of how you value risk, framing, and fairness. No math required — just pick what you'd actually do.</p>
+        <p class="game-intro-para">Three rounds of decisions. Real stakes, no right answers. No math required — just pick what you'd actually do.</p>
         <div class="card" style="background:var(--amber-light);border-color:rgba(186,117,23,0.25);">
           <div style="display:flex;gap:10px;align-items:flex-start;">
             <span style="font-size:1rem;flex-shrink:0;">⏱</span>
@@ -1500,7 +1500,7 @@
           </div>
           <div style="padding:0.875rem 1rem;background:var(--surface);border-radius:var(--radius);border-left:3px solid #26A69A;">
             <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="font-size:1rem;">🏷️</span><span style="font-size:0.85rem;font-weight:600;">Round 2 — Same numbers, different words</span></div>
-            <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.55;">Mathematically identical to Round 1 — but framed as gains or losses. Watch if your gut shifts.</p>
+            <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.55;">Same stakes as Round 1. The way they're described has changed. Pick what feels right.</p>
           </div>
           <div style="padding:0.875rem 1rem;background:var(--surface);border-radius:var(--radius);border-left:3px solid #AB47BC;">
             <div style="display:flex;gap:8px;align-items:center;margin-bottom:5px;"><span style="font-size:1rem;">🤝</span><span style="font-size:0.85rem;font-weight:600;">Round 3 — Someone else decides your share</span></div>
@@ -2040,7 +2040,7 @@
       <span>Disagree strongly</span>
       <span>Agree strongly</span>
     </div>
-    <p style="font-size:0.74rem;color:var(--text-hint);margin-top:1.25rem;line-height:1.6;">No right answers. This tells us how you see yourself — the games tell us what you actually do.</p>
+    <p style="font-size:0.74rem;color:var(--text-hint);margin-top:1.25rem;line-height:1.6;">No right answers.</p>
   </div>
 </div>
 
@@ -2209,7 +2209,26 @@ function updateNav(id) {
   }
 }
 
+function stopAllGames() {
+  // Dum
+  clearTimeout(b2TimerTimeout);clearTimeout(b2TimerWarning);
+  b2TimerTimeout=null;b2TimerWarning=null;b2Active=false;
+  // Rang
+  clearTimeout(rangTimer);rangTimer=null;rangTapEnabled=false;
+  // Ruk
+  clearTimeout(rukStimTimer);clearTimeout(rukNextTimer);
+  rukStimTimer=null;rukNextTimer=null;rukActive=false;
+  rukIdleConsec=0;
+  // Saudaa
+  clearTimeout(psTimerTimeout);psTimerTimeout=null;psActive=false;
+  // Hide game overlays
+  ['ruk-block-overlay','ps-block-overlay','idle-overlay'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.style.display='none';
+  });
+}
+
 function goHome() {
+  stopAllGames();
   const el = document.getElementById('landing-continue');
   if(el) el.style.display = user ? 'block' : 'none';
   showScreen('landing');
@@ -2316,6 +2335,7 @@ const GAME_DEFS = [
 ];
 
 function enterDashboard() {
+  stopAllGames();
   if(!user) return;
   document.getElementById('dash-greet').textContent = `Hey, ${user.name.split(' ')[0]} 👋`;
   const scores = user.scores || [];
@@ -3015,6 +3035,7 @@ function startRuk() {
   rukTrials=[]; let idx=0;
   RUK_BLOCKS.forEach(b=>{const bt=buildRukBlock(b,idx);rukTrials.push(...bt);idx+=bt.length;});
   rukIdx=0;rukResults=[];rukScore=0;rukHits=0;rukFAs=0;rukActive=false;
+  document.getElementById('ruk-tap-btn').disabled=false;
   showScreen('ruk-game');
   document.getElementById('ruk-dots').innerHTML=Array(40).fill('<div class="ruk-dot"></div>').join('');
   rukShowBlockOverlay(RUK_BLOCKS[0],()=>setTimeout(rukRunTrial,400));
@@ -5630,6 +5651,8 @@ function dumRenderBalloonUI(balloon){
   document.getElementById('b-shine').setAttribute('fill',cfg.shine);
   const badge=document.getElementById('g-badge');
   badge.textContent=cfg.label;badge.style.background=cfg.bg;badge.style.color=cfg.tc;badge.classList.remove('timer-urgent');
+  document.getElementById('g-earn').style.color=cfg.fill;
+  document.getElementById('b-string').setAttribute('stroke',cfg.tc);
   document.getElementById('g-reward-hint').textContent='₹'+cfg.reward+' per pump';
 }
 
