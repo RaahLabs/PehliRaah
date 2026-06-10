@@ -1109,14 +1109,9 @@
 ═══════════════════════════════════════════════ -->
 <div id="screen-dashboard" class="screen">
   <div style="max-width:960px;margin:0 auto;padding:1.5rem 1.5rem 2rem;max-height:calc(100vh - 68px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border-strong) transparent;">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px;">
-      <div>
-        <p id="dash-greet" style="font-size:1.35rem;font-weight:500;margin-bottom:4px;"></p>
-        <p style="color:var(--text-muted);font-size:0.88rem;">Complete all 7 games to unlock your full career profile.</p>
-      </div>
-      <div id="dash-profile-btn-wrap" style="display:none;">
-        <button class="btn btn-primary" onclick="renderReport()">Proceed →</button>
-      </div>
+    <div style="margin-bottom:1.5rem;">
+      <p id="dash-greet" style="font-size:1.35rem;font-weight:500;margin-bottom:4px;"></p>
+      <p style="color:var(--text-muted);font-size:0.88rem;">Complete all 7 games to unlock your full career profile.</p>
     </div>
 
     <!-- Progress -->
@@ -1132,6 +1127,10 @@
       <!-- rendered by JS -->
     </div>
 
+    <!-- Profile CTA — shown only after all 7 done -->
+    <div id="dash-profile-btn-wrap" style="display:none;margin-top:1.5rem;">
+      <button class="btn btn-primary btn-full" style="padding:16px;font-size:1rem;" onclick="renderReport()">See your Profile →</button>
+    </div>
 
   </div>
 </div>
