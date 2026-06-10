@@ -3051,7 +3051,10 @@ function rukShowBlockOverlay(blk,cb) {
     const nogoCells=blk.nogoStims.map(s=>`<div class="stim-preview-cell">${RUK_SVG[s]||''}<div class="stim-preview-label nogo-label">DON'T TAP ✗</div></div>`).join('');
     prev.innerHTML=goCell+nogoCells;
   } else {
-    prev.innerHTML=`<div class="stim-preview-cell">${RUK_SVG['bomb']||''}<div class="stim-preview-label go-label">TAP ✓</div></div><div class="stim-preview-cell">${RUK_SVG['square']||''}<div class="stim-preview-label go-label">TAP ✓</div></div>`;
+    const mkCell=(s,labelTxt,labelColor)=>`<div style="text-align:center;width:46px;flex-shrink:0;">${RUK_SVG[s]||''}<div style="font-size:10px;font-weight:700;color:${labelColor};margin-top:4px;letter-spacing:.02em;">${labelTxt}</div></div>`;
+    const nowGo=blk.goStims.map(s=>mkCell(s,'TAP ✓','#0F6E56')).join('');
+    const nowNogo=blk.nogoStims.map(s=>mkCell(s,'HOLD ✗','#A32D2D')).join('');
+    prev.innerHTML=`<div style="width:100%;"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#0F6E56;margin-bottom:7px;">Was no-go \u2192 now tap</div><div style="display:flex;justify-content:center;gap:10px;margin-bottom:14px;">${nowGo}</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#A32D2D;margin-bottom:7px;">Was go \u2192 now hold</div><div style="display:flex;justify-content:center;gap:10px;">${nowNogo}</div></div>`;
   }
   document.getElementById('ruk-block-overlay').style.display='flex';
 }
